@@ -7,3 +7,4 @@ It's a Android app for OucFreeTalk
 |Service   |服务器端|
 |app       |app前端部分|
 |UI        |app设计稿|
+|database  |数据库|
