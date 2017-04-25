@@ -50,13 +50,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_above="@+id/tab">
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/main_recyview"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="111111111">
+                    <!--<android.support.v7.widget.RecyclerView-->
+                        <!--android:id="@+id/main_recyview"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="match_parent"-->
+                        <!--android:text="111111111">-->
 
-                    </android.support.v7.widget.RecyclerView>
+                    <!--</android.support.v7.widget.RecyclerView>-->
 
                 </com.lovingrabbit.www.oucfreetalk.other.NoTouchViewPager>
 

@@ -4,12 +4,14 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.lovingrabbit.www.oucfreetalk.MainActivity;
 import com.lovingrabbit.www.oucfreetalk.R;
 
 /**
@@ -30,16 +32,24 @@ public class AFragment extends Fragment
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
-    {
-        View view = inflater.from(getContext()).inflate(R.layout.activity_main,container,false);
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.main_recyview);
-//        String content = getArguments().getString(ARG_C);
-//        TextView textView = new TextView(getContext());
-//        textView.setTextSize(30);
-//        textView.setGravity(Gravity.CENTER);
-//        textView.setText("Test\n\n" +content);
-//        textView.setBackgroundColor(0xFFececec);
-        return recyclerView;
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view;
+//        container.removeView();
+        String content = getArguments().getString(ARG_C);
+        Log.v("content:",content);
+        switch (content){
+            case "0":
+                view = inflater.from(getContext()).inflate(R.layout.mian_recycler, container, false);
+                return view;
+            case "1":
+                view = inflater.from(getContext()).inflate(R.layout.test, container, false);
+                return view;
+            case "2":
+                view = inflater.from(getContext()).inflate(R.layout.test, container, false);
+                return view;
+            default:
+                view = inflater.from(getContext()).inflate(R.layout.test, container, false);
+                return view;
+        }
     }
 }
