@@ -1,8 +1,24 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="FruitActivityTheme" parent="AppTheme">
-        <item name="android:statusBarColor">@android:color/transparent</item>
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="toolbarStyle">@style/ClubToolStyle</item>
+        <item name="actionBarStyle">@style/MyActionBarStyle</item>
+    </style>
+
+    <style name="IntentActivityTheme" parent="AppTheme">
+    </style>
+
+    <style name="ClubToolStyle" parent="Widget.AppCompat.Toolbar">
+        <item name="contentInsetStart">0dp</item>
+    </style>
+    <style name="MyActionBarStyle" parent="Widget.AppCompat.Light.ActionBar.Solid">
+        <item name="contentInsetStart">0dp</item>
+        <item name="contentInsetEnd">0dp</item>
     </style>
 
 </resources>

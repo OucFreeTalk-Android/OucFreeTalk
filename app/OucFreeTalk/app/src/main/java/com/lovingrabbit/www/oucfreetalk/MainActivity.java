@@ -1,94 +1,123 @@
 package com.lovingrabbit.www.oucfreetalk;
 
-import android.support.design.widget.FloatingActionButton;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
+import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import com.lovingrabbit.www.oucfreetalk.other.MyViewPagerAdapter;
+
+import me.majiajie.pagerbottomtabstrip.MaterialMode;
+import me.majiajie.pagerbottomtabstrip.NavigationController;
+import me.majiajie.pagerbottomtabstrip.PageBottomTabLayout;
+import me.majiajie.pagerbottomtabstrip.listener.OnTabItemSelectedListener;
+
 
 public class MainActivity extends AppCompatActivity {
+    DrawerLayout drawerLayout;
+    SwipeRefreshLayout swipeRefreshLayout;
 
-    private DrawerLayout mDrawerLayout;
+    //
+    int[] testColors = {0xFF455A64, 0xFF00796B, 0xFF795548, 0xFF5B4947, 0xFFF57C00};
+//    int[] testColors = {0xFF009688, 0xFF009688, 0xFF009688, 0xFF009688, 0xFF009688};
 
-    private Fruit[] fruits = {new Fruit("Apple", R.drawable.apple), new Fruit("Banana", R.drawable.banana),
-            new Fruit("Orange", R.drawable.orange), new Fruit("Watermelon", R.drawable.watermelon),
-            new Fruit("Pear", R.drawable.pear), new Fruit("Grape", R.drawable.grape),
-            new Fruit("Pineapple", R.drawable.pineapple), new Fruit("Strawberry", R.drawable.strawberry),
-            new Fruit("Cherry", R.drawable.cherry), new Fruit("Mango", R.drawable.mango)};
-
-    private List<Fruit> fruitList = new ArrayList<>();
-
-    private FruitAdapter adapter;
-
-    private SwipeRefreshLayout swipeRefresh;
-
+    NavigationController mNavigationController;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //设置自定义标题栏
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         setSupportActionBar(toolbar);
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        NavigationView navView = (NavigationView) findViewById(R.id.nav_view);
+
+        //设置home键
         ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
+        if (actionBar != null){
             actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
+            actionBar.setHomeAsUpIndicator(R.drawable.logo);
         }
-        navView.setCheckedItem(R.id.nav_call);
-        navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+
+        //home键被点击滑出菜单栏,菜单栏默认选中第一个
+        navigationView.setCheckedItem(R.id.nav_call);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public boolean onNavigationItemSelected(MenuItem item) {
-                mDrawerLayout.closeDrawers();
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                drawerLayout.closeDrawers();
                 return true;
             }
         });
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Data deleted", Snackbar.LENGTH_SHORT)
-                        .setAction("Undo", new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Toast.makeText(MainActivity.this, "Data restored", Toast.LENGTH_SHORT).show();
-                            }
-                        })
-                        .show();
-            }
-        });
-        initFruits();
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
-        recyclerView.setLayoutManager(layoutManager);
-        adapter = new FruitAdapter(fruitList);
-        recyclerView.setAdapter(adapter);
-        swipeRefresh = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
-        swipeRefresh.setColorSchemeResources(R.color.colorPrimary);
-        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        //下拉刷新
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
+        swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                refreshFruits();
+                refresh();
             }
         });
+        //底部标签栏
+        PageBottomTabLayout pageBottomTabLayout = (PageBottomTabLayout) findViewById(R.id.tab);
+
+        mNavigationController = pageBottomTabLayout.material()
+                .addItem(R.drawable.ic_ondemand_video_black_24dp,"Movies & TV",testColors[0])
+                .addItem(R.drawable.ic_audiotrack_black_24dp, "Music",testColors[1])
+                .addItem(R.drawable.ic_book_black_24dp, "Books",testColors[2])
+                .addItem(R.drawable.ic_news_black_24dp, "Newsstand",testColors[3])
+                .setDefaultColor(0x89FFFFFF)//未选中状态的颜色
+                .setMode(MaterialMode.CHANGE_BACKGROUND_COLOR | MaterialMode.HIDE_TEXT)//这里可以设置样式模式，总共可以组合出4种效果
+                .build();
+
+        ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
+        viewPager.setAdapter(new MyViewPagerAdapter(getSupportFragmentManager(),mNavigationController.getItemCount()));
+
+        //自动适配ViewPager页面切换
+        mNavigationController.setupWithViewPager(viewPager);
+
+        //也可以设置Item选中事件的监听
+        mNavigationController.addTabItemSelectedListener(new OnTabItemSelectedListener() {
+            @Override
+            public void onSelected(int index, int old) {
+                Log.i("asd","selected: " + index + " old: " + old);
+            }
+
+            @Override
+            public void onRepeat(int index) {
+                Log.i("asd","onRepeat selected: " + index);
+            }
+        });
+
+        //设置消息圆点
+//        mNavigationController.setMessageNumber(1,12);
+//        mNavigationController.setHasMessage(1,true);
     }
 
-    private void refreshFruits() {
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.toolbar,menu);
+//        return true;
+//    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                drawerLayout.openDrawer(GravityCompat.START);
+                break;
+
+        }
+        return true;
+    }
+    public void refresh(){
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -100,47 +129,10 @@ public class MainActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        initFruits();
-                        adapter.notifyDataSetChanged();
-                        swipeRefresh.setRefreshing(false);
+                        swipeRefreshLayout.setRefreshing(false);
                     }
                 });
             }
         }).start();
     }
-
-    private void initFruits() {
-        fruitList.clear();
-        for (int i = 0; i < 50; i++) {
-            Random random = new Random();
-            int index = random.nextInt(fruits.length);
-            fruitList.add(fruits[index]);
-        }
-    }
-
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.toolbar, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                mDrawerLayout.openDrawer(GravityCompat.START);
-                break;
-            case R.id.backup:
-                Toast.makeText(this, "You clicked Backup", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.delete:
-                Toast.makeText(this, "You clicked Delete", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.settings:
-                Toast.makeText(this, "You clicked Settings", Toast.LENGTH_SHORT).show();
-                break;
-            default:
-        }
-        return true;
-    }
-
 }

@@ -10,16 +10,12 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
-            android:label="Fruits">
+            android:label="FreeTalk">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity
-            android:name=".IntentActivity"
-            android:theme="@style/IntentActivityTheme">
         </activity>
     </application>
 
