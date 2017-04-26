@@ -1,5 +1,6 @@
 package com.lovingrabbit.www.oucfreetalk.talkadapter;
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 import android.os.Bundle;
 
 import com.lovingrabbit.www.oucfreetalk.R;
+import com.lovingrabbit.www.oucfreetalk.TalkDetail;
 
 import java.util.List;
 
@@ -23,14 +25,24 @@ public class TalkAdapter extends RecyclerView.Adapter<TalkAdapter.ViewHolder> {
         talkList = talks;
     }
     @Override
-    public TalkAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public TalkAdapter.ViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.talk_list,parent,false);
-        ViewHolder holder = new ViewHolder(view);
+        final ViewHolder holder = new ViewHolder(view);
+
+        holder.talkView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int position = holder.getAdapterPosition();
+                Talk talk = talkList.get(position);
+                Intent intent = new Intent(parent.getContext(), TalkDetail.class);
+                intent.putExtra("title",talk.getArticle_tile());
+            }
+        });
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(TalkAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(final TalkAdapter.ViewHolder holder, int position) {
         Talk talk = talkList.get(position);
         if (talk.getIsimg() == 0){
             holder.isImg.setVisibility(View.GONE);

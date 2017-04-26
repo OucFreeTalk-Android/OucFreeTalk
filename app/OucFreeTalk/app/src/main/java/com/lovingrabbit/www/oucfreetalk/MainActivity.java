@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 
+import com.lovingrabbit.www.oucfreetalk.other.AFragment;
 import com.lovingrabbit.www.oucfreetalk.other.MyViewPagerAdapter;
 import com.lovingrabbit.www.oucfreetalk.talkadapter.Talk;
 
@@ -136,6 +137,8 @@ public class MainActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        AFragment aFragment = new AFragment();
+                        aFragment.initTalk();
                         swipeRefreshLayout.setRefreshing(false);
                     }
                 });

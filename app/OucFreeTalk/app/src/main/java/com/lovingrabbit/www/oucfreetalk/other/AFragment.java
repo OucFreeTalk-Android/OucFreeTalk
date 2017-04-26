@@ -74,11 +74,11 @@ public class AFragment extends Fragment
     }
 
     public void initTalk(){
-        for (int i = 0;i<10;i++){
+        for (int i = 0;i<=20;i++){
             Talk talk1 = new Talk(R.drawable.nav_icon,R.drawable.apple,article_title,article_tag,article_content);
             talkList.add(talk1);
-            Talk talk2 = new Talk(R.drawable.nav_icon,article_title,article_tag,article_content);
-            talkList.add(talk2);
+//            Talk talk2 = new Talk(R.drawable.nav_icon,article_title,article_tag,article_content);
+//            talkList.add(talk2);
 
         }
 
