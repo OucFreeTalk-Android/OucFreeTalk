@@ -36,6 +36,10 @@ public class TalkAdapter extends RecyclerView.Adapter<TalkAdapter.ViewHolder> {
                 Talk talk = talkList.get(position);
                 Intent intent = new Intent(parent.getContext(), TalkDetail.class);
                 intent.putExtra("title",talk.getArticle_tile());
+                intent.putExtra("tag",talk.getArticle_tag());
+                intent.putExtra("icon",talk.getPeople_icon());
+                intent.putExtra("content",talk.getArticle_content());
+                parent.getContext().startActivity(intent);
             }
         });
         return holder;
