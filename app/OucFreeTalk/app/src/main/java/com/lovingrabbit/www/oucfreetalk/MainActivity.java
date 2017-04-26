@@ -14,6 +14,10 @@ import android.util.Log;
 import android.view.MenuItem;
 
 import com.lovingrabbit.www.oucfreetalk.other.MyViewPagerAdapter;
+import com.lovingrabbit.www.oucfreetalk.talkadapter.Talk;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import me.majiajie.pagerbottomtabstrip.MaterialMode;
 import me.majiajie.pagerbottomtabstrip.NavigationController;
@@ -24,7 +28,6 @@ import me.majiajie.pagerbottomtabstrip.listener.OnTabItemSelectedListener;
 public class MainActivity extends AppCompatActivity {
     DrawerLayout drawerLayout;
     SwipeRefreshLayout swipeRefreshLayout;
-
     //
     int[] testColors = {0xFF455A64, 0xFF00796B, 0xFF795548, 0xFF5B4947, 0xFFF57C00};
 //    int[] testColors = {0xFF009688, 0xFF009688, 0xFF009688, 0xFF009688, 0xFF009688};
@@ -59,6 +62,8 @@ public class MainActivity extends AppCompatActivity {
         //下拉刷新
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
         swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
+        swipeRefreshLayout.setProgressViewOffset(false,0,120);
+
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -99,6 +104,8 @@ public class MainActivity extends AppCompatActivity {
         //设置消息圆点
 //        mNavigationController.setMessageNumber(1,12);
 //        mNavigationController.setHasMessage(1,true);
+
+
     }
 
 //    @Override
