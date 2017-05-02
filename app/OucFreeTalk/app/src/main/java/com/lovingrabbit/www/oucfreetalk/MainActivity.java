@@ -1,6 +1,5 @@
 package com.lovingrabbit.www.oucfreetalk;
 
-
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -14,8 +13,12 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 
-import com.lovingrabbit.www.oucfreetalk.other.TalkFragment;
+import com.lovingrabbit.www.oucfreetalk.other.AFragment;
 import com.lovingrabbit.www.oucfreetalk.other.MyViewPagerAdapter;
+import com.lovingrabbit.www.oucfreetalk.talkadapter.Talk;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import me.majiajie.pagerbottomtabstrip.MaterialMode;
 import me.majiajie.pagerbottomtabstrip.NavigationController;
@@ -26,8 +29,6 @@ import me.majiajie.pagerbottomtabstrip.listener.OnTabItemSelectedListener;
 public class MainActivity extends AppCompatActivity {
     DrawerLayout drawerLayout;
     SwipeRefreshLayout swipeRefreshLayout;
-    TalkFragment talkFragment;
-    android.support.v4.app.FragmentManager supportFragmentManager;
     //
     int[] testColors = {0xFF455A64, 0xFF00796B, 0xFF795548, 0xFF5B4947, 0xFFF57C00};
 //    int[] testColors = {0xFF009688, 0xFF009688, 0xFF009688, 0xFF009688, 0xFF009688};
@@ -37,17 +38,17 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //初始化Fragment
-        initFragment();
-
         //设置自定义标题栏
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        setSupportActionBar(toolbar);
 
         //设置home键
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null){
-            actionBar.hide();
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeAsUpIndicator(R.drawable.logo);
         }
 
         //home键被点击滑出菜单栏,菜单栏默认选中第一个
@@ -90,14 +91,9 @@ public class MainActivity extends AppCompatActivity {
 
         //也可以设置Item选中事件的监听
         mNavigationController.addTabItemSelectedListener(new OnTabItemSelectedListener() {
-            android.support.v4.app.FragmentTransaction transaction = supportFragmentManager.beginTransaction();
             @Override
             public void onSelected(int index, int old) {
-//                switch (index){
-//                    case 0:
-//                        transaction.show(talkFragment);
-//                        transaction.commit();
-//                }
+                Log.i("asd","selected: " + index + " old: " + old);
             }
 
             @Override
@@ -107,12 +103,17 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //设置消息圆点
-        mNavigationController.setMessageNumber(1,12);
-        mNavigationController.setHasMessage(1,true);
+//        mNavigationController.setMessageNumber(1,12);
+//        mNavigationController.setHasMessage(1,true);
 
 
     }
 
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.toolbar,menu);
+//        return true;
+//    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -136,16 +137,12 @@ public class MainActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        TalkFragment aFragment = new TalkFragment();
+                        AFragment aFragment = new AFragment();
                         aFragment.initTalk();
                         swipeRefreshLayout.setRefreshing(false);
                     }
                 });
             }
         }).start();
-    }
-    private void initFragment(){
-        talkFragment = new TalkFragment();
-        supportFragmentManager = getSupportFragmentManager();
     }
 }
