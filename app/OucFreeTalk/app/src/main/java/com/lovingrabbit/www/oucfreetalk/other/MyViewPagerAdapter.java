@@ -18,7 +18,13 @@ public class MyViewPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return AFragment.newInstance(position + "");
+        switch (position){
+            case 0:
+                return TalkFragment.newInstance();
+            default:
+                return TalkFragment.newInstance();
+        }
+
     }
 
     @Override
