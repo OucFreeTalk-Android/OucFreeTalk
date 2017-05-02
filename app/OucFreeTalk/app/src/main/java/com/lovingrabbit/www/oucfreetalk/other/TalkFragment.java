@@ -2,20 +2,13 @@ package com.lovingrabbit.www.oucfreetalk.other;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.Toast;
-
-import com.lovingrabbit.www.oucfreetalk.MainActivity;
 import com.lovingrabbit.www.oucfreetalk.R;
 import com.lovingrabbit.www.oucfreetalk.talkadapter.Talk;
 import com.lovingrabbit.www.oucfreetalk.talkadapter.TalkAdapter;
@@ -33,7 +26,6 @@ public class TalkFragment extends Fragment
     private List<Talk> talkList = new ArrayList<Talk>();
     private String article_title ="这是一个简洁好用的标题";
     private String article_tag = "#这是一个标签";
-    DrawerLayout drawerLayout;
     private String article_content = "“钢铁骑士”曾是美泰一款风行全球的男孩人偶玩具，也曾被拍成电视系列动画片，此次真人电影版的故事是《雷神2：黑暗世界》...";
 
     public static TalkFragment newInstance() {
@@ -42,10 +34,9 @@ public class TalkFragment extends Fragment
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view,getView;
+        View view;
 
         view = inflater.from(getContext()).inflate(R.layout.talk_main, container, false);
-        getView = inflater.inflate(R.layout.activity_main,container,false);
         /*
          * recyclerView 填充'
          */
@@ -55,6 +46,7 @@ public class TalkFragment extends Fragment
         recyclerView.setLayoutManager(linearLayoutManager);
         TalkAdapter adapter = new TalkAdapter(talkList);
         recyclerView.setAdapter(adapter);
+        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         return view;
 
     }

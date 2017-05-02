@@ -23,18 +23,8 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-                <ImageButton
-                    android:background="#fff"
-                    android:id="@+id/logo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="5dp"
-                    android:src="@drawable/logo"
-                    />
                 <EditText
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="50dp"
                     android:layout_width="match_parent"
                     android:layout_height="36dp"
                     android:paddingLeft="15dp"
@@ -59,7 +49,7 @@
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_marginTop="?attr/actionBarSize"
         android:layout_height="match_parent"
         android:id="@+id/main_recyview">
 
