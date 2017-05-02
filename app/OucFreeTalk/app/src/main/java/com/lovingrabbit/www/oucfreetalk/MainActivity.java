@@ -10,12 +10,16 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.Toast;
+
 
 import com.lovingrabbit.www.oucfreetalk.other.TalkFragment;
 import com.lovingrabbit.www.oucfreetalk.other.MyViewPagerAdapter;
+
 
 import me.majiajie.pagerbottomtabstrip.MaterialMode;
 import me.majiajie.pagerbottomtabstrip.NavigationController;
@@ -49,6 +53,16 @@ public class MainActivity extends AppCompatActivity {
         if (actionBar != null){
             actionBar.hide();
         }
+
+        ImageView imageView = (ImageView) findViewById(R.id.logo);
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this,"1",Toast.LENGTH_SHORT).show();
+                drawerLayout.openDrawer(GravityCompat.START);
+            }
+        });
 
         //home键被点击滑出菜单栏,菜单栏默认选中第一个
         navigationView.setCheckedItem(R.id.nav_call);
@@ -105,25 +119,12 @@ public class MainActivity extends AppCompatActivity {
                 Log.i("asd","onRepeat selected: " + index);
             }
         });
-
         //设置消息圆点
         mNavigationController.setMessageNumber(1,12);
         mNavigationController.setHasMessage(1,true);
 
-
     }
 
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case android.R.id.home:
-                drawerLayout.openDrawer(GravityCompat.START);
-                break;
-
-        }
-        return true;
-    }
     public void refresh(){
         new Thread(new Runnable() {
             @Override
