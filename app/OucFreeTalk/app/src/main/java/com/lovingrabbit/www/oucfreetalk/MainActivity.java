@@ -12,13 +12,10 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.lovingrabbit.www.oucfreetalk.other.AFragment;
 import com.lovingrabbit.www.oucfreetalk.other.MyViewPagerAdapter;
-import com.lovingrabbit.www.oucfreetalk.talkadapter.Talk;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import me.majiajie.pagerbottomtabstrip.MaterialMode;
 import me.majiajie.pagerbottomtabstrip.NavigationController;

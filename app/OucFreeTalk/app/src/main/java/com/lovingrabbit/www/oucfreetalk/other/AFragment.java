@@ -6,13 +6,10 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
-import com.lovingrabbit.www.oucfreetalk.MainActivity;
 import com.lovingrabbit.www.oucfreetalk.R;
 import com.lovingrabbit.www.oucfreetalk.talkadapter.Talk;
 import com.lovingrabbit.www.oucfreetalk.talkadapter.TalkAdapter;
@@ -49,7 +46,7 @@ public class AFragment extends Fragment
         Log.v("content:",content);
         switch (content){
             case "0":
-                view = inflater.from(getContext()).inflate(R.layout.mian_recycler, container, false);
+                view = inflater.from(getContext()).inflate(R.layout.talk_main, container, false);
                 /*
                  * recyclerView 填充'
                  */
@@ -62,7 +59,7 @@ public class AFragment extends Fragment
 
                 return view;
             case "1":
-                view = inflater.from(getContext()).inflate(R.layout.talk_list, container, false);
+                view = inflater.from(getContext()).inflate(R.layout.notice, container, false);
                 return view;
             case "2":
                 view = inflater.from(getContext()).inflate(R.layout.test, container, false);
