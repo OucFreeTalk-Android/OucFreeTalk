@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize">
+
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/detail_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="#fff"
+                app:contentInsetStart="0dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:id="@+id/airtcle_detail_title"
+                    android:textSize="20sp"
+                    android:textColor="#222"
+                    android:gravity="center_horizontal"
+                    android:maxLines="1"
+                    android:layout_gravity="center"
+                    android:text="@string/register_title"
+                    android:layout_height="wrap_content" />
+            </android.support.v7.widget.Toolbar>
+        </android.support.design.widget.AppBarLayout>
+    </android.support.design.widget.CoordinatorLayout>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/high_light_height"
+        android:background="#c7ced4"/>
+    <EditText
+        android:layout_marginTop="@dimen/mid_margin_top"
+        android:layout_width="@dimen/wide_width"
+        android:hint="@string/set_username"
+        android:layout_gravity="center"
+        android:layout_height="@dimen/input_height" />
+
+    <EditText
+        android:layout_width="@dimen/wide_width"
+        android:hint="@string/set_password"
+        android:layout_gravity="center"
+        android:layout_height="@dimen/input_height" />
+    <EditText
+        android:layout_width="@dimen/wide_width"
+        android:hint="@string/set_password_again"
+        android:layout_gravity="center"
+        android:layout_height="@dimen/input_height" />
+    <RelativeLayout
+        android:layout_width="@dimen/wide_width"
+        android:layout_gravity="center"
+        android:layout_height="@dimen/input_height">
+        <EditText
+            android:layout_width="match_parent"
+            android:hint="@string/input_code"
+            android:layout_gravity="center"
+            android:layout_height="match_parent" />
+        <Button
+            android:layout_marginRight="8dp"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:text="@string/get_code"
+            android:background="@drawable/border"
+            android:layout_height="@dimen/mid_margin_top" />
+    </RelativeLayout>
+    <Button
+        android:layout_marginTop="@dimen/big_margin_top"
+        android:id="@+id/button"
+        android:layout_width="@dimen/wide_width"
+        android:layout_height="@dimen/input_height"
+        android:textSize="20sp"
+        android:text="@string/register"
+        android:layout_gravity="center"
+        android:background="#79b4ff"
+        />
+
+
+</LinearLayout>

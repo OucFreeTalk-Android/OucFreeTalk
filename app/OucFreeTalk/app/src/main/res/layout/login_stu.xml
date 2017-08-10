@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#d8f2fe"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingTop="50dp">
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/circleImageView"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/nav_icon" />
+        <RelativeLayout
+            android:layout_marginTop="@dimen/margin_edit"
+            android:layout_width="@dimen/login_wide_width"
+            android:layout_height="@dimen/input_height"
+            android:layout_gravity="center">
+            <EditText
+                android:layout_width="@dimen/login_wide_width"
+                android:layout_height="match_parent"
+                android:hint="@string/username"
+                />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="@dimen/login_wide_width"
+            android:layout_height="@dimen/input_height"
+            android:layout_gravity="center">
+            <EditText
+                android:layout_width="@dimen/login_wide_width"
+                android:layout_height="match_parent"
+                android:hint="@string/password"
+                android:inputType="textPassword"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true" />
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginTop="@dimen/margin_edit"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/lock"
+                />
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="@dimen/login_wide_width"
+            android:layout_gravity="center"
+            android:layout_height="@dimen/input_height">
+            <CheckBox
+                android:layout_width="30dp"
+                android:layout_height="30dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:text="@string/remember_password"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="30dp"
+                android:background="null"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:layout_alignParentRight="true"
+                android:text="@string/forget_password"
+                android:layout_marginTop="5dp"
+                android:background="null"/>
+
+        </RelativeLayout>
+
+        <Button
+            android:layout_marginTop="@dimen/big_margin_top"
+            android:id="@+id/button"
+            android:layout_width="@dimen/login_wide_width"
+            android:layout_height="@dimen/mid_margin_top"
+            android:textSize="20sp"
+            android:text="@string/login"
+            android:layout_gravity="center"
+            android:background="#79b4ff"
+            />
+    </LinearLayout>
+
+</LinearLayout>
