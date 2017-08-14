@@ -1,5 +1,6 @@
 package com.lovingrabbit.www.oucfreetalk;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,6 +14,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.lovingrabbit.www.oucfreetalk.other.AFragment;
 import com.lovingrabbit.www.oucfreetalk.other.MyViewPagerAdapter;
@@ -26,6 +29,8 @@ import me.majiajie.pagerbottomtabstrip.listener.OnTabItemSelectedListener;
 public class MainActivity extends AppCompatActivity {
     DrawerLayout drawerLayout;
     SwipeRefreshLayout swipeRefreshLayout;
+    boolean isLogin = false;
+    NavigationView navigationView;
     //
     int[] testColors = {0xFF455A64, 0xFF00796B, 0xFF795548, 0xFF5B4947, 0xFFF57C00};
 //    int[] testColors = {0xFF009688, 0xFF009688, 0xFF009688, 0xFF009688, 0xFF009688};
@@ -38,7 +43,9 @@ public class MainActivity extends AppCompatActivity {
         //设置自定义标题栏
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        View draw = navigationView.inflateHeaderView(R.layout.nav_header);
         setSupportActionBar(toolbar);
 
         //设置home键
@@ -86,6 +93,18 @@ public class MainActivity extends AppCompatActivity {
         //自动适配ViewPager页面切换
         mNavigationController.setupWithViewPager(viewPager);
 
+
+        RelativeLayout rl = (RelativeLayout) draw.findViewById(R.id.header);
+        rl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!isLogin){
+                    Intent intent = new Intent(MainActivity.this,Login.class);
+                    startActivity(intent);
+                }
+            }
+        });
+
         //也可以设置Item选中事件的监听
         mNavigationController.addTabItemSelectedListener(new OnTabItemSelectedListener() {
             @Override
@@ -98,6 +117,8 @@ public class MainActivity extends AppCompatActivity {
                 Log.i("asd","onRepeat selected: " + index);
             }
         });
+
+
 
         //设置消息圆点
 //        mNavigationController.setMessageNumber(1,12);

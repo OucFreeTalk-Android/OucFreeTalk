@@ -40,17 +40,20 @@
         android:layout_width="@dimen/wide_width"
         android:hint="@string/set_username"
         android:layout_gravity="center"
+        android:id="@+id/setName"
         android:layout_height="@dimen/input_height" />
 
     <EditText
         android:layout_width="@dimen/wide_width"
         android:hint="@string/set_password"
         android:layout_gravity="center"
+        android:id="@+id/setPasswd"
         android:layout_height="@dimen/input_height" />
     <EditText
         android:layout_width="@dimen/wide_width"
         android:hint="@string/set_password_again"
         android:layout_gravity="center"
+        android:id="@+id/setPasswdAgain"
         android:layout_height="@dimen/input_height" />
     <RelativeLayout
         android:layout_width="@dimen/wide_width"
@@ -60,6 +63,7 @@
             android:layout_width="match_parent"
             android:hint="@string/input_code"
             android:layout_gravity="center"
+            android:id="@+id/setCode"
             android:layout_height="match_parent" />
         <Button
             android:layout_marginRight="8dp"
@@ -71,7 +75,7 @@
     </RelativeLayout>
     <Button
         android:layout_marginTop="@dimen/big_margin_top"
-        android:id="@+id/button"
+        android:id="@+id/registerButton"
         android:layout_width="@dimen/wide_width"
         android:layout_height="@dimen/input_height"
         android:textSize="20sp"

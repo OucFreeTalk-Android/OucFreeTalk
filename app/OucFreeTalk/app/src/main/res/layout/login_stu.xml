@@ -5,84 +5,127 @@
     android:layout_height="match_parent"
     android:background="#d8f2fe"
     android:orientation="vertical">
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize">
+
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <android.support.v7.widget.Toolbar
+                android:background="#d8f2fe"
+                android:id="@+id/detail_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:contentInsetStart="0dp">
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:id="@+id/back"
+                    android:layout_marginLeft="@dimen/margin_edit"
+                    android:src="@drawable/back"/>
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:id="@+id/register"
+                    android:textSize="16sp"
+                    android:text="@string/register"
+                    android:layout_gravity="right"
+                    />
+            </android.support.v7.widget.Toolbar>
+        </android.support.design.widget.AppBarLayout>
+    </android.support.design.widget.CoordinatorLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:paddingTop="50dp">
+        android:paddingTop="30dp">
+
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/circleImageView"
             android:layout_width="160dp"
             android:layout_height="160dp"
             android:layout_gravity="center_horizontal"
             android:src="@drawable/nav_icon" />
+
         <RelativeLayout
-            android:layout_marginTop="@dimen/margin_edit"
             android:layout_width="@dimen/login_wide_width"
             android:layout_height="@dimen/input_height"
-            android:layout_gravity="center">
+            android:layout_gravity="center"
+
+            android:layout_marginTop="20dp">
+
             <EditText
+                android:id="@+id/input_username"
                 android:layout_width="@dimen/login_wide_width"
                 android:layout_height="match_parent"
-                android:hint="@string/username"
-                />
+                android:hint="@string/username" />
         </RelativeLayout>
+
         <RelativeLayout
             android:layout_width="@dimen/login_wide_width"
             android:layout_height="@dimen/input_height"
             android:layout_gravity="center">
+
             <EditText
+                android:id="@+id/input_password"
                 android:layout_width="@dimen/login_wide_width"
                 android:layout_height="match_parent"
-                android:hint="@string/password"
-                android:inputType="textPassword"
                 android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true" />
+                android:layout_centerHorizontal="true"
+                android:hint="@string/password"
+                android:inputType="textPassword" />
+
             <ImageView
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:layout_marginTop="@dimen/margin_edit"
                 android:layout_alignParentRight="true"
-                android:src="@drawable/lock"
-                />
+                android:layout_marginTop="@dimen/margin_edit"
+                android:src="@drawable/lock" />
 
         </RelativeLayout>
+
         <RelativeLayout
             android:layout_width="@dimen/login_wide_width"
-            android:layout_gravity="center"
-            android:layout_height="@dimen/input_height">
+            android:layout_height="@dimen/input_height"
+            android:layout_gravity="center">
+
             <CheckBox
                 android:layout_width="30dp"
                 android:layout_height="30dp" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:text="@string/remember_password"
-                android:layout_marginTop="5dp"
                 android:layout_marginLeft="30dp"
-                android:background="null"/>
+                android:layout_marginTop="5dp"
+                android:background="@null"
+                android:text="@string/remember_password"
+                android:textSize="16sp" />
+
             <TextView
+                android:id="@+id/forget"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
                 android:layout_alignParentRight="true"
-                android:text="@string/forget_password"
                 android:layout_marginTop="5dp"
-                android:background="null"/>
+                android:background="@null"
+                android:text="@string/forget_password"
+                android:textSize="16sp" />
 
         </RelativeLayout>
 
         <Button
-            android:layout_marginTop="@dimen/big_margin_top"
-            android:id="@+id/button"
+            android:id="@+id/login_button"
             android:layout_width="@dimen/login_wide_width"
             android:layout_height="@dimen/mid_margin_top"
-            android:textSize="20sp"
-            android:text="@string/login"
             android:layout_gravity="center"
+            android:layout_marginTop="@dimen/big_margin_top"
             android:background="#79b4ff"
-            />
+            android:text="@string/login"
+            android:textSize="20sp" />
     </LinearLayout>
 
 </LinearLayout>

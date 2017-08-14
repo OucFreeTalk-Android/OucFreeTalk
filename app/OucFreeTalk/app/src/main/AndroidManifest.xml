@@ -9,22 +9,25 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
-            android:label="FreeTalk">
+            android:name=".LoginHomeActivity"
+            android:label="">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-
-                <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-                <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".TalkDetail"
-            android:label="">
-
+            android:name=".MainActivity"
+            android:label="FreeTalk">
+            <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+            <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
         </activity>
+        <activity
+            android:name=".TalkDetail"
+            android:label="" />
+        <activity android:name=".Login" />
+        <activity android:name=".Register"></activity>
     </application>
 
 </manifest>
