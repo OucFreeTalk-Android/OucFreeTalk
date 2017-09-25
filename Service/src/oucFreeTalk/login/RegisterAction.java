@@ -2,24 +2,23 @@ package oucFreeTalk.login;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import org.json.*;  
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/login")
-public class LoginAction extends HttpServlet {
+import org.json.JSONObject;
+import org.omg.CORBA.StringHolder;
+@WebServlet("/register")
+public class RegisterAction extends HttpServlet{
 	String truePassword;
 	ResultSet rs;
 	String returnJSon;
-
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// TODO Auto-generated method stub
@@ -30,28 +29,33 @@ public class LoginAction extends HttpServlet {
 		int user = jsonObject.getInt("username");
 		String pass = jsonObject.getString("password");
 		Untils untils = new Untils();
-		String sql = "select PASSWORD FROM students WHERE id = " + user ;
+		String selectSQL = "select PASSWORD FROM students WHERE id = " + user ;
+		String insertSQL = "INSERT INTO stuents(id, password) VALUES("+ user +","+ pass +") " ;
 		try {
-			rs = untils.select(sql);
+			rs = untils.select(selectSQL);
 			truePassword = rs.getString("password");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		if (truePassword == null) {
+		if (truePassword != null) {
 			returnJSon = "{'result':" + 0 + "}";
-		}else if (truePassword == pass) {
-			returnJSon = "{'result':" + 1 + "}";
 		}else {
-			returnJSon = "{'result':" + 2 + "}";
+			try {
+				untils.insert(insertSQL);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				returnJSon = "{'result':" + 2 + "}";
+			}
 		}
 		resp.setCharacterEncoding("UTF-8");	
 		PrintWriter out = resp.getWriter();
 		JSONObject outjson = new JSONObject(returnJSon);
 		out.println(outjson);
+		untils.close();
 		
 		out.flush();
 		out.close();
 	}
-	
 }

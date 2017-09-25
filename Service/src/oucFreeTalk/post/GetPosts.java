@@ -1,4 +1,4 @@
-package oucFreeTalk.login;
+package oucFreeTalk.post;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -7,18 +7,19 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONObject;
-import org.omg.CORBA.StringHolder;
-@WebServlet("/register")
-public class RegisterAction extends HttpServlet{
-	String truePassword;
+
+import net.sf.json.JSONArray;
+import oucFreeTalk.login.Untils;
+
+public class GetPosts extends HttpServlet {
 	ResultSet rs;
-	String returnJSon;
+	JSONArray returnJSon = new JSONArray();
+	String getPost;
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// TODO Auto-generated method stub
@@ -26,34 +27,25 @@ public class RegisterAction extends HttpServlet{
 		BufferedReader reader = req.getReader();
 		String json= reader.readLine();
 		JSONObject jsonObject = new JSONObject(json);
-		int user = jsonObject.getInt("username");
-		String pass = jsonObject.getString("password");
+		int perpage = jsonObject.getInt("perpage");
+		int pclass = jsonObject.getInt("pclass");
+		String selectSQL = "Select * from posts order by updatetime desc";
 		Untils untils = new Untils();
-		String selectSQL = "select PASSWORD FROM students WHERE id = " + user ;
-		String insertSQL = "INSERT INTO stuents(id, password) VALUES("+ user +","+ pass +") " ;
-		try {
-			rs = untils.select(selectSQL);
-			truePassword = rs.getString("password");
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		if (truePassword != null) {
-			returnJSon = "{'result':" + 0 + "}";
-		}else {
+		for(int i=0;i<perpage;i++)
+		{
 			try {
-				untils.insert(insertSQL);
+				rs = untils.select(selectSQL);
+				getPost = untils.resultSetToJson(rs); 
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-				returnJSon = "{'result':" + 2 + "}";
 			}
+			returnJSon.add((new JSONObject(getPost)));
 		}
 		resp.setCharacterEncoding("UTF-8");	
 		PrintWriter out = resp.getWriter();
-		JSONObject outjson = new JSONObject(returnJSon);
-		out.println(outjson);
-		
+		out.println(returnJSon);
+		untils.close();
 		out.flush();
 		out.close();
 	}
