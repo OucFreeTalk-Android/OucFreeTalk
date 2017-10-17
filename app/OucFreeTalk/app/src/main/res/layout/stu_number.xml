@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize">
+
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/detail_toolbar"
+                app:contentInsetStart="0dp"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="#fff">
+
+                <ImageView
+                    android:id="@+id/return_btn"
+                    android:layout_width="20dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_height="?attr/actionBarSize"
+                    android:src="@drawable/return" />
+
+                <TextView
+                    android:id="@+id/airtcle_detail_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center_horizontal"
+                    android:maxLines="1"
+                    android:text="@string/stu_number"
+                    android:textColor="#222"
+                    android:textSize="20sp" />
+            </android.support.v7.widget.Toolbar>
+        </android.support.design.widget.AppBarLayout>
+    </android.support.design.widget.CoordinatorLayout>
+
+    <EditText
+        android:layout_width="@dimen/wide_width"
+        android:hint="@string/input_id"
+        android:layout_gravity="center"
+        android:id="@+id/input_id"
+        android:layout_height="@dimen/input_height" />
+    <EditText
+        android:layout_width="@dimen/wide_width"
+        android:hint="@string/input_pass"
+        android:layout_gravity="center"
+        android:layout_height="@dimen/input_height"
+        android:id="@+id/input_pass"/>
+    <Button
+        android:layout_marginTop="@dimen/big_margin_top"
+        android:id="@+id/proof"
+        android:layout_width="@dimen/wide_width"
+        android:layout_height="@dimen/input_height"
+        android:textSize="20sp"
+        android:text="@string/proof"
+        android:layout_gravity="center"
+        android:background="#79b4ff"
+        />
+
+</LinearLayout>

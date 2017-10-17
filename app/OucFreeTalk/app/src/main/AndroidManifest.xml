@@ -27,7 +27,9 @@
             android:name=".TalkDetail"
             android:label="" />
         <activity android:name=".Login" />
-        <activity android:name=".Register"></activity>
+        <activity android:name=".Register" />
+        <activity android:name=".Person_edit" />
+        <activity android:name=".stu_number"></activity>
     </application>
 
 </manifest>

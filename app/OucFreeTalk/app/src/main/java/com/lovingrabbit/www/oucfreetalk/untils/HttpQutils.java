@@ -39,10 +39,7 @@ public class HttpQutils {
         String result = response.body().string();
 
         return result;
-
-
     }
-
 
     public String bolwingJson(String username, String password) {
         return "{'username':" + username + "," + "'password':" + password + "}";

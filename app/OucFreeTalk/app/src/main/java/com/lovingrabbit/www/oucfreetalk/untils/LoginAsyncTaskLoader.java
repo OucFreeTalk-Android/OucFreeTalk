@@ -9,9 +9,9 @@ import java.io.IOException;
  * Created by Zzzzzzzjk on 2017/8/13.
  */
 
-public class FreeTalkAsyncTaskLoader extends AsyncTaskLoader<String> {
+public class LoginAsyncTaskLoader extends AsyncTaskLoader<String> {
     String username,password,mUrl,result;
-    public FreeTalkAsyncTaskLoader(Context context,String name,String passwd,String url) {
+    public LoginAsyncTaskLoader(Context context,String name,String passwd,String url) {
         super(context);
         username = name;
         password = passwd;

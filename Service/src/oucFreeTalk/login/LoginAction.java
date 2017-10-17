@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/login")
 public class LoginAction extends HttpServlet {
 	String truePassword;
 	ResultSet rs;
@@ -38,7 +37,7 @@ public class LoginAction extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		if (truePassword == null) 
+		if (truePassword == null) {
 			returnJSon = "{'result':" + 0 + "}";
 		}else if (truePassword == pass) {
 			returnJSon = "{'result':" + 1 + "}";
