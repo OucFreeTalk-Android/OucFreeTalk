@@ -8,14 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
-import com.lovingrabbit.www.oucfreetalk.untils.FreeTalkAsyncTaskLoader;
-import com.lovingrabbit.www.oucfreetalk.untils.HttpQutils;
-
+import com.lovingrabbit.www.oucfreetalk.untils.LoginAsyncTaskLoader;
 import org.json.JSONObject;
-
-import java.sql.ResultSet;
-
 import butterknife.BindView;
 
 public class Register extends AppCompatActivity implements LoaderManager.LoaderCallbacks<String>{
@@ -63,7 +57,7 @@ public class Register extends AppCompatActivity implements LoaderManager.LoaderC
 
     @Override
     public Loader<String> onCreateLoader(int id, Bundle args) {
-        return new FreeTalkAsyncTaskLoader(Register.this,username,password,url);
+        return new LoginAsyncTaskLoader(Register.this,username,password,url);
     }
 
     @Override
