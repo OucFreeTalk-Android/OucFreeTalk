@@ -23,7 +23,7 @@
                     android:layout_width="20dp"
                     android:layout_marginLeft="10dp"
                     android:layout_height="?attr/actionBarSize"
-                    android:src="@drawable/return" />
+                    android:src="@drawable/returnimg" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:id="@+id/airtcle_detail_title"
@@ -64,7 +64,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="270dp"
-                android:src="@drawable/return1" />
+                android:src="@drawable/return1img" />
         </LinearLayout>
         <ImageView
             android:layout_width="match_parent"
@@ -90,7 +90,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="270dp"
-                android:src="@drawable/return1" />
+                android:src="@drawable/return1img" />
         </LinearLayout>
         <ImageView
             android:layout_width="match_parent"
@@ -116,7 +116,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="270dp"
-                android:src="@drawable/return1" />
+                android:src="@drawable/return1img" />
         </LinearLayout>
         <ImageView
             android:layout_width="match_parent"
@@ -142,7 +142,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="270dp"
-                android:src="@drawable/return1" />
+                android:src="@drawable/return1img" />
 
         </LinearLayout>
         <ImageView
@@ -169,7 +169,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="270dp"
-                android:src="@drawable/return1" />
+                android:src="@drawable/return1img" />
 
         </LinearLayout>
     </LinearLayout>
