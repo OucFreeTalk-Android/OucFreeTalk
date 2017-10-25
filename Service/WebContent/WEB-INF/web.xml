@@ -16,6 +16,14 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>loginServlet</servlet-name>
-    <url-pattern>/login.do</url-pattern>
+    <url-pattern>/login</url-pattern>
+  </servlet-mapping>
+    <servlet>
+    <servlet-name>registServlet</servlet-name>
+    <servlet-class>oucFreeTalk.login.RegisterAction</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>registServlet</servlet-name>
+    <url-pattern>/regist</url-pattern>
   </servlet-mapping>
 </web-app>

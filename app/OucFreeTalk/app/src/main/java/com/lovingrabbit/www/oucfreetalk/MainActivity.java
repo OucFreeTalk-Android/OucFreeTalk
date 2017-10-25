@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
         rl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!isLogin){
+                if (isLogin == false){
                     Intent intent = new Intent(MainActivity.this,Login.class);
                     startActivity(intent);
                 }

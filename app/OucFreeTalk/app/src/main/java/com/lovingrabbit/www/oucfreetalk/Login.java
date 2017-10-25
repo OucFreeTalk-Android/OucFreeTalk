@@ -3,7 +3,7 @@ package com.lovingrabbit.www.oucfreetalk;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
+import android.view.*;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -15,39 +15,34 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
-import butterknife.BindView;
-import butterknife.BindViews;
-
 public class Login extends AppCompatActivity implements Runnable {
-    @BindViews({R.id.input_username,R.id.input_password})
-    EditText username,password;
-    @BindViews({R.id.login_button,R.id.register})
-    Button login,register;
+
     String result,name,passwd;
-    @BindView(R.id.back)
-    ImageView back;
-    private String url ="http://47.93.222.179/oucFreeTalk/login";
+
+    private String url ="http://47.93.222.179/oucfreetalk/login";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_stu);
-
+        Button login = (Button) findViewById(R.id.login_button);
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                EditText username = (EditText) findViewById(R.id.input_username);
                 name = username.getText().toString();
+                EditText password = (EditText) findViewById(R.id.input_password);
                 passwd = password.getText().toString();
                 new Thread(new Login()).start();
             }
         });
-
+        ImageView back = (ImageView) findViewById(R.id.back);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
-
+        Button register = (Button) findViewById(R.id.register);
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

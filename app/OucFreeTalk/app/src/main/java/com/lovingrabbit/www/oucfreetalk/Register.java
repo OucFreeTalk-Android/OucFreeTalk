@@ -25,7 +25,7 @@ public class Register extends AppCompatActivity implements LoaderManager.LoaderC
     EditText passwdAgain;
     @BindView(R.id.registerButton)
     Button register;
-    private String url ="http://localhost:8080/oucFreeTalk/register";
+    private String url ="http://47.93.222.179/oucfreetalk/regist.do";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

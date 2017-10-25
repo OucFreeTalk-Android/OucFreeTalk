@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONObject;
 import org.omg.CORBA.StringHolder;
-@WebServlet("/register")
+@WebServlet("/regist")
 public class RegisterAction extends HttpServlet{
 	String truePassword;
 	ResultSet rs;
@@ -29,11 +31,21 @@ public class RegisterAction extends HttpServlet{
 		int user = jsonObject.getInt("username");
 		String pass = jsonObject.getString("password");
 		Untils untils = new Untils();
+		String username = user +"";
+		String intro =  "海大学生";
+		Calendar c = Calendar.getInstance();
+		String birth ="1996-01-01" ;
+		String year = c.get(Calendar.YEAR) + "";
 		String selectSQL = "select PASSWORD FROM students WHERE id = " + user ;
-		String insertSQL = "INSERT INTO stuents(id, password) VALUES("+ user +","+ pass +") " ;
+		String insertSQL = "INSERT INTO students(id, password,nikename,name,sex,birth,year,pic,ifname,ifemail,ifbirth,ifmobile,ifsex,introduction)"
+				+ " VALUES("+ user +","+ pass +"," + username +","+ username +","+ false +", '"+ birth +"' ,"+ year +
+				"," + "pic" + "," + false + "," + false + "," + false + "," + false + "," + false + ", '" + intro + "' )" ;
 		try {
 			rs = untils.select(selectSQL);
-			truePassword = rs.getString("password");
+			while (rs.next()) {  
+				truePassword = rs.getString("password");
+				System.out.println(truePassword);
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -43,6 +55,7 @@ public class RegisterAction extends HttpServlet{
 		}else {
 			try {
 				untils.insert(insertSQL);
+				returnJSon = "{'result':" + 1+ "}";
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

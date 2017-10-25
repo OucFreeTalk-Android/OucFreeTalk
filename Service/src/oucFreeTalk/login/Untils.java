@@ -2,6 +2,7 @@ package oucFreeTalk.login;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
@@ -11,15 +12,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+
 public class Untils {
 	Connection connection;
 	String driver = "com.mysql.jdbc.Driver";
 	String url = "jdbc:mysql://localhost:3306/oucfreetalk";
 	String user = "root";
 	String passwd = "zjkzjk1996";
-	ResultSet rs;
-	Statement stmt;
-	public Untils () {
+	public Untils() {
 		try {
 			Class.forName(driver);
 			connection = DriverManager.getConnection(url, user, passwd);
@@ -34,16 +34,13 @@ public class Untils {
 		
 	}
 	public ResultSet select(String sql) throws SQLException {
-		stmt = connection.createStatement();
-		rs = stmt.executeQuery(sql);
+		Statement st = connection.createStatement();
+		ResultSet rs = st.executeQuery(sql);
         return rs;
 	}
 	public void insert(String sql) throws SQLException {
-		stmt = connection.createStatement();
-		rs = stmt.executeQuery(sql);
-	}
-	public Connection getConnection() {
-		return connection;
+		Statement stmt = connection.createStatement();
+		stmt.executeUpdate(sql);
 	}
 	
 	public String resultSetToJson(ResultSet rs) throws SQLException,JSONException  
@@ -71,10 +68,12 @@ public class Untils {
 	   return array.toString();  
 	}  
 	public void close() {  
-        try {  
+        try {
+        	ResultSet rs = null;
+        	Statement st = null;
             connection.close();  
             rs.close();
-            stmt.close();
+            st.close();
         } catch (SQLException e) {  
             e.printStackTrace();  
         }  
