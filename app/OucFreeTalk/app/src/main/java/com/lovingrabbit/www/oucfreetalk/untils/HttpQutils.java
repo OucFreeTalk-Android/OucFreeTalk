@@ -1,5 +1,7 @@
 package com.lovingrabbit.www.oucfreetalk.untils;
 
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -35,14 +37,12 @@ public class HttpQutils {
                 .build();
 
         Response response = okHttpClient.newCall(request).execute();
-
         String result = response.body().string();
-
         return result;
     }
-
     public String bolwingJson(String username, String password) {
-        return "{'username':" + username + "," + "'password':" + password + "}";
+        Log.d("json:","{\"account\": \"" + username + " \"," + "\"password\": \"" + password + " \"}");
+        return "{\"account\": \"" + username + " \"," + "\"password\": \"" + password + " \"}";
     }
 
     //OKHttp 连接网络

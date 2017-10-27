@@ -14,11 +14,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-@WebServlet("/login")
+@WebServlet("/login.do")
 public class LoginAction extends HttpServlet {
 	String truePassword = null;
 	ResultSet rs;
-	String returnJSon;
+	JSONObject returnJSon;
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -26,6 +26,7 @@ public class LoginAction extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");  
 		BufferedReader reader = req.getReader();
 		String json= reader.readLine();
+		json = JSONTokener(json);
 		JSONObject jsonObject = new JSONObject(json);
 		int user = jsonObject.getInt("username");
 		String pass = jsonObject.getString("password");
@@ -42,11 +43,11 @@ public class LoginAction extends HttpServlet {
 			e.printStackTrace();
 		}
 		if (truePassword == null) {
-			returnJSon = "{'result':" + 0 + "}";
+			returnJSon.put("result", 0);
 		}else if (truePassword.equals(pass)) {
-			returnJSon = "{'result':" + 1 + "}";
+			returnJSon.put("result", 1);
 		}else {
-			returnJSon = "{'result':" + 2 + "}";
+			returnJSon.put("result", 2);
 		}
 		resp.setCharacterEncoding("UTF-8");	
 		PrintWriter out = resp.getWriter();
@@ -56,5 +57,11 @@ public class LoginAction extends HttpServlet {
 		out.flush();
 		out.close();
 	}
-	
+	public static String JSONTokener(String in) {  
+        // consume an optional byte order mark (BOM) if it exists  
+        if (in != null && in.startsWith("\ufeff")) {  
+        in = in.substring(1);  
+        }  
+        return in;  
+   }  
 }
