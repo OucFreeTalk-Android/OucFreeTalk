@@ -1,14 +1,12 @@
-package oucFreeTalk.login;
 
-import java.io.BufferedReader;
+package oucFreeTalk.login;
 import java.io.IOException;
-import java.io.InputStreamReader;
+
 import java.io.PrintWriter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import net.sf.json.JSONObject;
 
-import org.apache.commons.lang.ObjectUtils.Null;
-import org.json.*;  
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,22 +14,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 @WebServlet("/login.do")
 public class LoginAction extends HttpServlet {
+
 	String truePassword = null;
 	ResultSet rs;
-	JSONObject returnJSon;
-
+	String returnJSon;
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		req.setCharacterEncoding("UTF-8");  
-		BufferedReader reader = req.getReader();
-		String json= reader.readLine();
-		json = JSONTokener(json);
-		JSONObject jsonObject = new JSONObject(json);
-		int user = jsonObject.getInt("username");
-		String pass = jsonObject.getString("password");
+		String id = req.getParameter("id");
+		String pass = req.getParameter("password");
+		System.out.print("user:"+id);
+		System.out.println("pass:"+pass);
 		Untils untils = new Untils();
-		String sql = "select PASSWORD FROM students WHERE id = " + user ;
+		String sql = "select PASSWORD FROM students WHERE id = " + id ;
 		try {
 			rs = untils.select(sql);
 			while (rs.next()) {  
@@ -43,25 +37,22 @@ public class LoginAction extends HttpServlet {
 			e.printStackTrace();
 		}
 		if (truePassword == null) {
-			returnJSon.put("result", 0);
+			returnJSon = "{\"result\": \"" + 0 + "\" }";
 		}else if (truePassword.equals(pass)) {
-			returnJSon.put("result", 1);
+			returnJSon = "{\"result\": \"" + 1 + "\" }";
 		}else {
-			returnJSon.put("result", 2);
+			returnJSon = "{\"result\": \"" + 2 + "\" }";
 		}
-		resp.setCharacterEncoding("UTF-8");	
+		
+		resp.setContentType("application/json;charset=utf-8");   
 		PrintWriter out = resp.getWriter();
-		JSONObject outjson = new JSONObject(returnJSon);
+		JSONObject outjson =JSONObject.fromObject(returnJSon);
 		out.println(outjson);
-		untils.close();
 		out.flush();
 		out.close();
+		
 	}
-	public static String JSONTokener(String in) {  
-        // consume an optional byte order mark (BOM) if it exists  
-        if (in != null && in.startsWith("\ufeff")) {  
-        in = in.substring(1);  
-        }  
-        return in;  
-   }  
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	}
 }

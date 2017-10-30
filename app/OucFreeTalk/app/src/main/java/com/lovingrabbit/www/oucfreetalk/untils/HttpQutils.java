@@ -41,8 +41,8 @@ public class HttpQutils {
         return result;
     }
     public String bolwingJson(String username, String password) {
-        Log.d("json:","{\"account\": \"" + username + " \"," + "\"password\": \"" + password + " \"}");
-        return "{\"account\": \"" + username + " \"," + "\"password\": \"" + password + " \"}";
+        Log.d("json:","{\"username\": \"" + username + " \"," + "\"password\": \"" + password + " \"}");
+        return "{\"username\": \"" + username + " \"," + "\"password\": \"" + password + " \"}";
     }
 
     //OKHttp 连接网络

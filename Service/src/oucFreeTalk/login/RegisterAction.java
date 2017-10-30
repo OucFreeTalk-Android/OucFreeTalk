@@ -24,12 +24,13 @@ public class RegisterAction extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+	}
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		// TODO Auto-generated method stub
 		req.setCharacterEncoding("UTF-8");  
-		BufferedReader reader = req.getReader();
-		String json= reader.readLine();
-		JSONObject jsonObject = new JSONObject(json);
-		int user = jsonObject.getInt("username");
-		String pass = jsonObject.getString("password");
+		String user = req.getParameter("username");
+		String pass = req.getParameter("password");
 		Untils untils = new Untils();
 		String username = user +"";
 		String intro =  "海大学生";

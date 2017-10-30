@@ -67,16 +67,6 @@ public class Untils {
 	    
 	   return array.toString();  
 	}  
-	public void close() {  
-        try {
-        	ResultSet rs = null;
-        	Statement st = null;
-            connection.close();  
-            rs.close();
-            st.close();
-        } catch (SQLException e) {  
-            e.printStackTrace();  
-        }  
-    }  
+
 	
 }

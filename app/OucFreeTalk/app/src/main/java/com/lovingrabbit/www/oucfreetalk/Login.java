@@ -23,8 +23,8 @@ public class Login extends AppCompatActivity implements LoaderManager.LoaderCall
     LoaderManager loaderManager;
     String result,name,passwd;
 
-//    private String url = "http://47.93.222.179/oucfreetalk/login.do";
-    private String url = "http://222.195.145.152:8811/api/Log/Login";
+    private String url = "http://47.93.222.179/oucFreeTalk/login.do";
+//    private String url = "http://222.195.145.152:8811/api/Log/Login";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
