@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONObject;
 import org.omg.CORBA.StringHolder;
-@WebServlet("/register.do")
+
 public class RegisterAction extends HttpServlet{
 	String truePassword;
 	ResultSet rs;

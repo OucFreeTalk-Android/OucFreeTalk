@@ -26,7 +26,7 @@ public class HttpQutils {
     public static final MediaType JSON
             = MediaType.parse("application/json; charset=utf-8");
 
-    public String login(String url, String json) throws IOException {
+    public String connect(String url, String json) throws IOException {
         //把请求的内容字符串转换为json
         RequestBody body = RequestBody.create(JSON, json);
         //RequestBody formBody = new FormEncodingBuilder()
@@ -40,38 +40,15 @@ public class HttpQutils {
         String result = response.body().string();
         return result;
     }
-    public String bolwingJson(String username, String password) {
-        Log.d("json:","{\"username\": \"" + username + " \"," + "\"password\": \"" + password + " \"}");
-        return "{\"username\": \"" + username + " \"," + "\"password\": \"" + password + " \"}";
+    public String loginJson(String username, String password) {
+        return "{\"account\": \"" + username + "\"," + "\"password\": \"" + password + "\"}";
+    }
+    public String register(String username,String password,String nikename){
+        boolean sex = false;
+        String introduce = "个人介绍";
+        return "{\"id\": \"" + username + "\"," + "\"password\": \"" + password + "\","  + "\"nikename\": \"" + nikename + "\","
+                + "\"introduce\": \"" + introduce + "\","+ "\"sex\": " + sex +"}";
+
     }
 
-    //OKHttp 连接网络
-
-
-    private void parseJson(String JSONData) {
-
-        try {
-            JSONObject jsonObject = new JSONObject(JSONData);
-            JSONArray results = jsonObject.getJSONArray("result");
-            for (int i = 0; i < results.length(); i++) {
-                JSONObject jsonResult = results.getJSONObject(i);
-                int id = jsonResult.getInt("id");
-//                    Log.d("MainActivity","id="+id);
-                String name = jsonResult.getString("title");
-//                    Log.d("MainActivity","name="+name);
-                String img = "https://image.tmdb.org/t/p/w185" + jsonResult.getString("backdrop_path");
-//                    Log.d("MainActivity","img="+img);
-                String title = jsonResult.getString("original_title");
-                //  Log.d("MainActivity","original_title="+title);
-                String airticl = jsonResult.getString("overview");
-
-                String date = jsonResult.getString("release_date");
-                String vote = jsonResult.getString("vote_average");
-
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 }

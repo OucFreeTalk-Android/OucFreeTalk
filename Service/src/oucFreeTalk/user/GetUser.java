@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONObject;
 
 import oucFreeTalk.login.Untils;
-@WebServlet("/getuser.do")
+
 public class GetUser extends HttpServlet{
 	ResultSet rs;
 	String returnJSon;

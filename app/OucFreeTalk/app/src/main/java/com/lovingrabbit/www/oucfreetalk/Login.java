@@ -23,8 +23,8 @@ public class Login extends AppCompatActivity implements LoaderManager.LoaderCall
     LoaderManager loaderManager;
     String result,name,passwd;
 
-    private String url = "http://47.93.222.179/oucFreeTalk/login.do";
-//    private String url = "http://222.195.145.152:8811/api/Log/Login";
+//    private String url = "http://47.93.222.179/oucFreeTalk/login.do";
+    private String url = "http://222.195.145.152:8811/api/Log/Login";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,23 +67,17 @@ public class Login extends AppCompatActivity implements LoaderManager.LoaderCall
     private int parseJson(String JSONData) {
         int results = 3;
         try {
-            JSONData = JSONTokener(JSONData);
             Log.e("zjkzjk:",JSONData);
-            Log.e("result:",results+"");
+
             JSONObject jsonObject = new JSONObject(JSONData);
             results = jsonObject.getInt("result");
+            Log.e("result:",results+"");
         } catch (Exception e) {
             e.printStackTrace();
         }
         return results;
     }
-    public static String JSONTokener(String in) {
-        // consume an optional byte order mark (BOM) if it exists
-        if (in != null && in.startsWith("\ufeff")) {
-            in = in.substring(1);
-        }
-        return in;
-    }
+
     @Override
     public Loader<String> onCreateLoader(int id, Bundle args) {
         return new LoginAsyncTaskLoader(Login.this,name,passwd,url);

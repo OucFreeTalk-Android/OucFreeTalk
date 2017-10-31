@@ -10,29 +10,32 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import com.lovingrabbit.www.oucfreetalk.untils.LoginAsyncTaskLoader;
+import com.lovingrabbit.www.oucfreetalk.untils.RegisterAsyncTaskLoader;
+
 import org.json.JSONObject;
 import butterknife.BindView;
 
 public class Register extends AppCompatActivity implements LoaderManager.LoaderCallbacks<String>{
 
     LoaderManager loaderManager;
-    String username,password,passwordAgain;
-    EditText name,passwd,passwdAgain;
+    String userID,username,password,passwordAgain;
+    EditText id,passwd,passwdAgain,name;
 
-    private String url ="http://47.93.222.179/oucfreetalk/register.do";
+    private String url ="http://222.195.145.152:8811/api/Users/Register";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register);
 
-        name = (EditText) findViewById(R.id.setName);
+        id = (EditText) findViewById(R.id.setID);
+        name = (EditText) findViewById(R.id.setUserName);
         passwd = (EditText) findViewById(R.id.setPasswd);
         passwdAgain = (EditText) findViewById(R.id.setPasswdAgain);
         Button register = (Button) findViewById(R.id.registerButton);
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                userID = id.getText().toString();
                 username = name.getText().toString();
                 password = passwd.getText().toString();
                 passwordAgain = passwdAgain.getText().toString();
@@ -54,7 +57,7 @@ public class Register extends AppCompatActivity implements LoaderManager.LoaderC
 
     @Override
     public Loader<String> onCreateLoader(int id, Bundle args) {
-        return new LoginAsyncTaskLoader(Register.this,username,password,url);
+        return new RegisterAsyncTaskLoader(Register.this,userID,password,username,url);
     }
 
     @Override
@@ -69,13 +72,7 @@ public class Register extends AppCompatActivity implements LoaderManager.LoaderC
         }
 
     }
-    public static String JSONTokener(String in) {
-        // consume an optional byte order mark (BOM) if it exists
-        if (in != null && in.startsWith("\ufeff")) {
-            in = in.substring(1);
-        }
-        return in;
-    }
+
     @Override
     public void onLoaderReset(Loader<String> loader) {
 
@@ -84,10 +81,8 @@ public class Register extends AppCompatActivity implements LoaderManager.LoaderC
         int results = 3;
         try {
             Log.e("zjkzjk:",JSONData);
-            JSONData = JSONTokener(JSONData);
             JSONObject jsonObject = new JSONObject(JSONData);
             results = jsonObject.getInt("result");
-
         } catch (Exception e) {
             e.printStackTrace();
         }

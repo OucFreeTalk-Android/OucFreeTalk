@@ -1,20 +1,21 @@
 package com.lovingrabbit.www.oucfreetalk.untils;
 
-import android.content.Context;
 import android.content.AsyncTaskLoader;
+import android.content.Context;
 
 import java.io.IOException;
 
 /**
- * Created by Zzzzzzzjk on 2017/8/13.
+ * Created by zjk on 2017/10/31.
  */
 
-public class LoginAsyncTaskLoader extends AsyncTaskLoader<String> {
-    String username,password,mUrl,result;
-    public LoginAsyncTaskLoader(Context context,String name,String passwd,String url) {
+public class RegisterAsyncTaskLoader extends AsyncTaskLoader<String> {
+    String username,password,mUrl,result,userId;
+    public RegisterAsyncTaskLoader(Context context,String id,String passwd,String name,String url) {
         super(context);
-        username = name;
+        userId = id;
         password = passwd;
+        username = name;
         mUrl = url;
     }
     @Override
@@ -24,7 +25,7 @@ public class LoginAsyncTaskLoader extends AsyncTaskLoader<String> {
     @Override
     public String loadInBackground() {
         HttpQutils httpQutils = new HttpQutils();
-        String user = httpQutils.loginJson(username,password);
+        String user = httpQutils.register(userId,password,username);
         try {
             result = httpQutils.connect(mUrl,user);
         } catch (IOException e) {

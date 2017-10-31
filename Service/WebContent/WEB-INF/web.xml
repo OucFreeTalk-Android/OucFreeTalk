@@ -15,6 +15,14 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>registServlet</servlet-name>
-    <url-pattern>/register.do</url-pattern>
+    <url-pattern>/register</url-pattern>
+  </servlet-mapping>
+    <servlet>
+    <servlet-name>getUserServlet</servlet-name>
+    <servlet-class>oucFreeTalk.user.GetUser</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>getUserServlet</servlet-name>
+    <url-pattern>/getUser</url-pattern>
   </servlet-mapping>
 </web-app>
