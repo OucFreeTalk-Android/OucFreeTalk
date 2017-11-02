@@ -1,13 +1,16 @@
 package com.lovingrabbit.www.oucfreetalk;
 
 import android.app.LoaderManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.*;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -21,15 +24,15 @@ import java.io.IOException;
 
 public class Login extends AppCompatActivity implements LoaderManager.LoaderCallbacks<String> {
     LoaderManager loaderManager;
-    String result,name,passwd;
-
-//    private String url = "http://47.93.222.179/oucFreeTalk/login.do";
+    String name,passwd;
+    CheckBox ifSava;
     private String url = "http://222.195.145.152:8811/api/Log/Login";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_stu);
         Button login = (Button) findViewById(R.id.login_button);
+        ifSava = (CheckBox) findViewById(R.id.ifSave);
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -91,6 +94,20 @@ public class Login extends AppCompatActivity implements LoaderManager.LoaderCall
             Toast.makeText(Login.this,"用户不存在",Toast.LENGTH_SHORT).show();
         }else if (log_results == 1 ){
             Toast.makeText(Login.this,"登陆成功",Toast.LENGTH_SHORT).show();
+            if (ifSava.isChecked()){
+                SharedPreferences sharedPreferences = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("id",name);
+                editor.putString("password",passwd);
+                editor.commit();
+            }
+            else {
+                SharedPreferences sharedPreferences = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("id",name);
+                editor.commit();
+            }
+            finish();
         }else if (log_results == 2 ){
             Toast.makeText(Login.this,"密码错误",Toast.LENGTH_SHORT).show();
         }

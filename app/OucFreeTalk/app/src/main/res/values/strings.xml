@@ -23,4 +23,5 @@
     <string name="proof">认证</string>
     <string name="input_id">请输入学工号或教工号</string>
     <string name="input_pass">请输入教务处密码</string>
+    <string name="addPost">发表</string>
 </resources>

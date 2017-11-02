@@ -50,9 +50,6 @@ public class AFragment extends Fragment
         switch (content){
             case "0":
                 view = inflater.from(getContext()).inflate(R.layout.talk_main, container, false);
-                /*
-                 * recyclerView 填充'
-                 */
                 initTalk();
                 RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.main_recyview);
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
@@ -73,6 +70,8 @@ public class AFragment extends Fragment
                 return view;
             case "2":
                 view = inflater.from(getContext()).inflate(R.layout.test, container, false);
+
+
                 return view;
             default:
                 view = inflater.from(getContext()).inflate(R.layout.test, container, false);
