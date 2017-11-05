@@ -1,5 +1,8 @@
 package com.lovingrabbit.www.oucfreetalk.other;
 
+import android.app.LoaderManager;
+import android.content.AsyncTaskLoader;
+import android.content.Loader;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -15,6 +18,7 @@ import com.lovingrabbit.www.oucfreetalk.notice.Notice;
 import com.lovingrabbit.www.oucfreetalk.notice.NoticeAdapter;
 import com.lovingrabbit.www.oucfreetalk.talkadapter.Talk;
 import com.lovingrabbit.www.oucfreetalk.talkadapter.TalkAdapter;
+import com.lovingrabbit.www.oucfreetalk.untils.AddPostAysncTaskLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,9 +27,11 @@ import java.util.List;
  * Created by 17922 on 2017/4/25.
  */
 
-public class AFragment extends Fragment
+public class AFragment extends Fragment implements LoaderManager.LoaderCallbacks<String>
 {
     private static final String ARG_C = "content";
+    private String content,context,title;
+    private String ADD_POST_URL = "http://222.195.145.152:8811/api/Posts/addPost";
     private List<Talk> talkList = new ArrayList<Talk>();
     private List<Notice> noticeList = new ArrayList<Notice>();
     private String article_title ="这是一个简洁好用的标题";
@@ -45,7 +51,7 @@ public class AFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view;
-        String content = getArguments().getString(ARG_C);
+        content = getArguments().getString(ARG_C);
         Log.v("content:",content);
         switch (content){
             case "0":
@@ -69,7 +75,7 @@ public class AFragment extends Fragment
 
                 return view;
             case "2":
-                view = inflater.from(getContext()).inflate(R.layout.test, container, false);
+                view = inflater.from(getContext()).inflate(R.layout.addpost, container, false);
 
 
                 return view;
@@ -94,5 +100,24 @@ public class AFragment extends Fragment
             Notice notice = new Notice("Zzzzzzzjk"+i);
             noticeList.add(notice);
         }
+    }
+
+    @Override
+    public Loader<String> onCreateLoader(int id, Bundle args) {
+        switch (content){
+            case "2":
+                return new AddPostAysncTaskLoader(getContext(),title,context,ADD_POST_URL);
+        }
+        return null;
+    }
+
+    @Override
+    public void onLoadFinished(Loader<String> loader, String data) {
+
+    }
+
+    @Override
+    public void onLoaderReset(Loader<String> loader) {
+
     }
 }

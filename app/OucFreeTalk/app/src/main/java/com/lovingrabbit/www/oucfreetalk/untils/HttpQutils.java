@@ -48,7 +48,10 @@ public class HttpQutils {
         String introduce = "个人介绍";
         return "{\"id\": \"" + username + "\"," + "\"password\": \"" + password + "\","  + "\"nikename\": \"" + nikename + "\","
                 + "\"introduce\": \"" + introduce + "\","+ "\"sex\": " + sex +"}";
-
+    }
+    public String addPostJson(String title, String context) {
+        int pclass = 1;
+        return "{\"title\": \"" + title + "\"," + "\"context\": \"" + context + "\","+ "\"pclass\": " + pclass +"}";
     }
 
 }
