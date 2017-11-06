@@ -156,7 +156,8 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         AFragment aFragment = new AFragment();
-                        aFragment.initTalk();
+                        Thread thread = new Thread(aFragment);
+                        thread.start();
                         swipeRefreshLayout.setRefreshing(false);
                     }
                 });

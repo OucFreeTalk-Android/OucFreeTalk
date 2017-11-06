@@ -53,5 +53,11 @@ public class HttpQutils {
         int pclass = 1;
         return "{\"title\": \"" + title + "\"," + "\"context\": \"" + context + "\","+ "\"pclass\": " + pclass +"}";
     }
+    public String getPostJson() {
+        int pclass = 1;
+        int index = 1;
+        Log.e("getPostJson:","{\"pclass\": " + pclass + "," + "\"index\": " + index + "}");
+        return "{\"pclass\": " + pclass + "," + "\"index\": " + index + "}";
+    }
 
 }
