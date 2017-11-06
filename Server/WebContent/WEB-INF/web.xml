@@ -41,4 +41,20 @@
 		<servlet-name>getPost</servlet-name>
 		<url-pattern>/getPost</url-pattern>
   </servlet-mapping>
+  <servlet>
+	  <servlet-name>addComments</servlet-name>
+	  <servlet-class>post.AddComments</servlet-class>
+  </servlet>
+  <servlet-mapping>
+		<servlet-name>addComments</servlet-name>
+		<url-pattern>/addComments</url-pattern>
+  </servlet-mapping>
+  <servlet>
+	  <servlet-name>addReply</servlet-name>
+	  <servlet-class>post.Addreply</servlet-class>
+  </servlet>
+  <servlet-mapping>
+		<servlet-name>addReply</servlet-name>
+		<url-pattern>/addReply</url-pattern>
+  </servlet-mapping>
 </web-app>
