@@ -2,6 +2,7 @@ package user;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -67,7 +68,9 @@ public class Editor extends HttpServlet{
 			returnJSon = "{'result':" + 2 + "}";
 		}
         returnJSon = "{'result':" + 1+ "}";
- 
+        JSONObject rjson = new JSONObject(returnJSon);
+        PrintStream out = new PrintStream(resp.getOutputStream());
+        out.println(rjson);
 	}
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)

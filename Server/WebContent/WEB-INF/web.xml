@@ -30,6 +30,15 @@
   </servlet-mapping>  
   
   <servlet> 
+    <servlet-name>getUser</servlet-name>  
+    <servlet-class>user.GetUser</servlet-class> 
+  </servlet>  
+  <servlet-mapping> 
+    <servlet-name>getUser</servlet-name>  
+    <url-pattern>/getUser</url-pattern> 
+  </servlet-mapping> 
+    
+  <servlet> 
     <servlet-name>register</servlet-name>  
     <servlet-class>user.Register</servlet-class> 
   </servlet>  

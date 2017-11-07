@@ -1,0 +1,271 @@
+{
+	"info": {
+		"name": "oucfreetalk",
+		"_postman_id": "5546f193-9e88-915b-4098-68bc7f03f556",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://47.93.222.179/oucFreeTalk/login",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"id\":\"123123\",\"password\":\"123123\"}"
+				},
+				"url": {
+					"raw": "http://47.93.222.179/oucfreetalk/getUser?id=14020031127",
+					"protocol": "http",
+					"host": [
+						"47",
+						"93",
+						"222",
+						"179"
+					],
+					"path": [
+						"oucfreetalk",
+						"getUser"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "14020031127",
+							"equals": true
+						}
+					]
+				},
+				"description": "登录接口"
+			},
+			"response": []
+		},
+		{
+			"name": "http://47.93.222.179/oucfreetalk/addReply",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"id\":\"14020031127\",\n  \"commentId\":1,\n  \"replyid\":\"123123123\",\n  \"context\":\"hahahaha\"\n}"
+				},
+				"url": {
+					"raw": "http://l47.93.222.179/oucfreetalk/addReply",
+					"protocol": "http",
+					"host": [
+						"l47",
+						"93",
+						"222",
+						"179"
+					],
+					"path": [
+						"oucfreetalk",
+						"addReply"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://47.93.222.179/oucfreetalk/login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"account\":\"14020031127\",\n  \"password\":\"123456\"\n}"
+				},
+				"url": {
+					"raw": "http://47.93.222.179/oucfreetalk/login",
+					"protocol": "http",
+					"host": [
+						"47",
+						"93",
+						"222",
+						"179"
+					],
+					"path": [
+						"oucfreetalk",
+						"login"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://47.93.222.179/oucfreetalk/addPost",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"id\":\"13020031001\",\n  \"title\":\"nbhaha\",\n  \"content\":\"分手大师\",\n  \"pclass\":1\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8888/oucfreetalk/addPost",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8888",
+					"path": [
+						"oucfreetalk",
+						"addPost"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://47.93.222.179/oucfreetalk/getPost?pclass=1&index=1",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8888/oucfreetalk/getPost?pclass=1&index=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8888",
+					"path": [
+						"oucfreetalk",
+						"getPost"
+					],
+					"query": [
+						{
+							"key": "pclass",
+							"value": "1",
+							"equals": true
+						},
+						{
+							"key": "index",
+							"value": "1",
+							"equals": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://47.93.222.179/oucfreetalk/getPost?postid=1&index=1",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:8888/oucfreetalk/getPost?postid=1&index=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8888",
+					"path": [
+						"oucfreetalk",
+						"getPost"
+					],
+					"query": [
+						{
+							"key": "postid",
+							"value": "1",
+							"equals": true
+						},
+						{
+							"key": "index",
+							"value": "1",
+							"equals": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://47.93.222.179/oucfreetalk/addComments",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"id\":\"13020031001\",\r\n   \"postid\":1,\r\n   \"context\":\"fdfghfghfghgdfgd\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8888/oucfreetalk/addComments",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8888",
+					"path": [
+						"oucfreetalk",
+						"addComments"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://47.93.222.179/oucfreetalk/editor",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"id\":\"14020031127\",\n  \"nikename\":\"Zzzzzzzjk\",\n  \"sex\":false,\n  \"birth\":\"1996-06-30\",\n  \"year\":\"2014\",\n  \"family\":\"test\",\n  \"ifname\":true,\n  \"ifsex\":true,\n  \"ifmobile\":true,\n  \"ifbirth\":true,\n  \"ifemail\":true,\n  \"intro\":\"test\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8888/oucfreetalk/editor",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8888",
+					"path": [
+						"oucfreetalk",
+						"editor"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
