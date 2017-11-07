@@ -3,6 +3,7 @@ package user;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -11,10 +12,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONObject;
 
+import com.sun.swing.internal.plaf.basic.resources.basic;
+
+import Until.Untils;
+
 public class Editor extends HttpServlet{
-	String truePassword = null;
 	ResultSet rs;
-	String returnJSon,id,pass,nikename;
+	String returnJSon,id,nikename,family,intro,birth,year,mobile,email;
+	boolean sex,ifname,ifsex,ifmobile,ifemail;
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
@@ -22,9 +27,6 @@ public class Editor extends HttpServlet{
 		StringBuffer jb = new StringBuffer();
         String line = null;
         String result = "";
-        String intro = "海大学生";
-        String birth ="1996-01-01" ;
-		 String year = "1996";
         try {
             //读取输入流到StringBuffer中
             BufferedReader reader = req.getReader();
@@ -37,13 +39,35 @@ public class Editor extends HttpServlet{
             //使用JSONObject的parseObject方法解析JSON字符串
             JSONObject jsonObject = new JSONObject(jb.toString());
             id = jsonObject.getString("id");
-            pass = jsonObject.getString("password");
             nikename = jsonObject.getString("nikename");
+            sex = jsonObject.getBoolean("sex");
+            birth = jsonObject.getString("birth");
+            year = jsonObject.getString("year");
+            family = jsonObject.getString("family");
+            ifname = jsonObject.getBoolean("ifname");
+            ifsex = jsonObject.getBoolean("ifsex");
+            ifmobile = jsonObject.getBoolean("ifmobile");
+            ifemail = jsonObject.getBoolean("ifemail");
+            intro = jsonObject.getString("intro");
                
         } catch (Exception e) {
           // crash and burn
           throw new IOException("Error parsing JSON request string");
         }
+        String sql = "update students set nikename = \"" + nikename + "\",sex = " + sex +",birth = \""+ birth +"\",year = \""
+        		+ year +"\",family = \"" + family + "\",ifname = " + ifname +",ifsex =" +ifsex + ",ifmobile ="+ifmobile+",ifemail = "
+        		+ifemail + ",introduction = \"" + intro +"\" where id = \"" + id +"\"";
+        System.out.println(sql);
+        Untils untils = new Untils();
+        try {
+			untils.update(sql);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			returnJSon = "{'result':" + 2 + "}";
+		}
+        returnJSon = "{'result':" + 1+ "}";
+ 
 	}
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)

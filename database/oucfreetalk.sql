@@ -2,7 +2,7 @@
 --
 -- Host: localhost    Database: oucfreetalk
 -- ------------------------------------------------------
--- Server version	5.7.20-log
+-- Server version	5.7.18-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -349,7 +349,7 @@ CREATE TABLE `postc` (
   KEY `owner` (`owner`),
   CONSTRAINT `FK_postc_posts` FOREIGN KEY (`ownpost`) REFERENCES `posts` (`id`),
   CONSTRAINT `FK_postc_students` FOREIGN KEY (`owner`) REFERENCES `students` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -358,6 +358,7 @@ CREATE TABLE `postc` (
 
 LOCK TABLES `postc` WRITE;
 /*!40000 ALTER TABLE `postc` DISABLE KEYS */;
+INSERT INTO `postc` VALUES (1,2,'123123123','2017-11-07 15:59:16','suibianhuifu',1,''),(3,3,'13020031001','2017-11-07 16:04:05','fdgdfgd',1,''),(5,4,'13020031001','2017-11-07 16:06:11','fdfghfghfghgdfgd',1,'');
 /*!40000 ALTER TABLE `postc` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -408,7 +409,7 @@ CREATE TABLE `postreply` (
   CONSTRAINT `FK_postreply_postc` FOREIGN KEY (`ownlocation`) REFERENCES `postc` (`id`),
   CONSTRAINT `FK_postreply_students` FOREIGN KEY (`owner`) REFERENCES `students` (`id`),
   CONSTRAINT `FK_postreply_students1` FOREIGN KEY (`replyto`) REFERENCES `students` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -417,6 +418,7 @@ CREATE TABLE `postreply` (
 
 LOCK TABLES `postreply` WRITE;
 /*!40000 ALTER TABLE `postreply` DISABLE KEYS */;
+INSERT INTO `postreply` VALUES (8,'2017-11-07 16:15:55','14020031127','123123123',1,'hahahaha',''),(9,'2017-11-07 16:25:07','14020031127','123123123',1,'hahahaha','');
 /*!40000 ALTER TABLE `postreply` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -437,13 +439,13 @@ CREATE TABLE `posts` (
   `owner` varchar(11) NOT NULL,
   `contenttext` longtext NOT NULL,
   `ownclass` int(11) NOT NULL,
-  `state` bit(1) NOT NULL,
+  `state` bit(1) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `ownclass` (`ownclass`),
   KEY `owner` (`owner`),
   CONSTRAINT `FK_posts_students` FOREIGN KEY (`ownclass`) REFERENCES `postclass` (`id`),
   CONSTRAINT `FK_posts_students1` FOREIGN KEY (`owner`) REFERENCES `students` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -452,6 +454,7 @@ CREATE TABLE `posts` (
 
 LOCK TABLES `posts` WRITE;
 /*!40000 ALTER TABLE `posts` DISABLE KEYS */;
+INSERT INTO `posts` VALUES (1,'test','2017-11-06 20:54:42','2017-11-07 16:25:07',4,4,'14020031127','123456',1,NULL),(2,'test','2017-11-06 21:01:33','2017-11-06 21:01:33',1,1,'14020031127','test',1,NULL),(3,'test','2017-11-06 21:13:15','2017-11-06 21:13:15',1,1,'123123123','test',1,NULL),(4,'nbhaha','2017-11-06 21:55:33','2017-11-06 21:55:33',1,1,'13020031001','åæå¤§å¸',1,NULL);
 /*!40000 ALTER TABLE `posts` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -491,7 +494,7 @@ CREATE TABLE `students` (
 
 LOCK TABLES `students` WRITE;
 /*!40000 ALTER TABLE `students` DISABLE KEYS */;
-INSERT INTO `students` VALUES ('13020031001',' ','\0','刘天峰','/img/1.png','1000:U9tpWHsjFN0zW77upD4mAlppTiMNTndi:GF6svRpTUIwNcfyLs81b4ytzIYqxq152','','\0','2017-05-18','\0','2017',NULL,'\0',NULL,'\0',0,NULL,'海大学生'),('13020031002',' ','\0','刘天峰','/img/1.png','1000:mUN6+Ekox7yTb9Qrgf73/XFkRixQ7LhF:CRiyDk7eUwoWyIefZmlMxLG3rtTs86PS','','\0','2017-05-18','\0','2017',NULL,'\0',NULL,'\0',0,NULL,'海大学生'),('13020031066',' ','\0','kk','/img/1.png','1000:wMbpskhnDNWQnkZiT06UDqQL4T1jMD62:scp6mWF7td/ahTb3NJY1U73y7y4Ehj2v','\0','\0','2017-05-17','\0','2017',NULL,'\0',NULL,'\0',0,NULL,'hello'),('13020031067',' ','\0','呜呜呜','/img/1.png','1000:fuIdYX3z1mvSs+bg3H5Eo6ORBiKBOS04:K2txJZru9DDsXiCa9HOE9ZzRh8dr6dkW','','\0','2017-05-18','\0','2017',NULL,'\0',NULL,'\0',0,NULL,'全球全球'),('13020031069',' ','\0','刘天峰','/img/1.png','1000:u0un2T/7NNXjkGUclLuwFY9cOAV8ocjo:q+jEcF/phUaTx3sv9rRFuzwnaaVkAAh/','','\0','2017-05-18','\0','2017',NULL,'\0',NULL,'\0',0,NULL,'海大学生\n\n'),('13020031070',' ','\0','刘天峰','/img/1.png','1000:0dshqAD0o0UAWCca3fuPdWOY0YDz5Usy:X+z8eh14WNfLMOkvdNvuP32pimJFpL/W','','\0','2017-05-17','\0','2017',NULL,'\0',NULL,'\0',0,NULL,'一个大四学生'),('13020031099',' ','\0','刘天峰','/img/1.png','1000:BUH1PYefIJaErUm3L4ryUW333wXwToa5:E/wakGKyqV3+pQfqu8puj4D1KN0+QD5R','','\0','2017-05-17','\0','2017',NULL,'\0',NULL,'\0',0,NULL,'一名大四学生'),('14020031090',' ','\0','黑猫回收者','/img/1.png','1000:Tm64cCrTMmuaAhzolYcQpTsAsm7OgXSc:qC56B7S10/IsFF1TlC5JUAvJR2GlQjev','\0','\0','2017-05-17','\0','2017',NULL,'\0',NULL,'\0',0,NULL,'啊三大三大洒洒打啊'),('14020031091',' ','\0','黑貓','/img/1.png','1000:Jg3cz76WWNJx+LQd4Pe+yWLYPCOw9wE+:jhELsJoccioS87GHlUKCx8uapF4CMPei','\0','\0','2017-05-17','\0','2017',NULL,'\0',NULL,'\0',0,NULL,'啊三大洒洒的'),('14020031094',' ','\0','黑猫回收者','/img/1.png','1000:Dv6Oemq5FG5MuquvMS711lHA8Ly15RdZ:vwVToO2JhxWxLahuGzjDe7xmgfXBecMo','\0','\0','2017-05-17','\0','2017',NULL,'\0',NULL,'\0',0,NULL,'2000-2-3T11:57:59');
+INSERT INTO `students` VALUES ('123123123','','\0','zjk','pic','123456','\0','\0','1996-01-01','\0','1996',NULL,'\0',NULL,'\0',0,NULL,'海大学生'),('123321123','','\0','zjk','pic','123456','\0','\0','1996-01-01','\0','1996',NULL,'\0',NULL,'\0',0,NULL,'海大学生'),('123456','123456','\0','123456','pic','123456','\0','\0','1977-7-7','\0','2014',NULL,'\0',NULL,'\0',0,NULL,'暂无介绍'),('123456789','123456789','\0','123456789','','123456','\0','\0','1996-6-30','\0','2014',NULL,'\0',NULL,'\0',0,NULL,'海大学生'),('13020031001',' ','\0','刘天峰','/img/1.png','123456','','\0','2017-05-18','\0','2017',NULL,'\0',NULL,'\0',0,NULL,'海大学生'),('13020031002',' ','\0','刘天峰','/img/1.png','1000:mUN6+Ekox7yTb9Qrgf73/XFkRixQ7LhF:CRiyDk7eUwoWyIefZmlMxLG3rtTs86PS','','\0','2017-05-18','\0','2017',NULL,'\0',NULL,'\0',0,NULL,'海大学生'),('13020031066',' ','\0','kk','/img/1.png','1000:wMbpskhnDNWQnkZiT06UDqQL4T1jMD62:scp6mWF7td/ahTb3NJY1U73y7y4Ehj2v','\0','\0','2017-05-17','\0','2017',NULL,'\0',NULL,'\0',0,NULL,'hello'),('13020031067',' ','\0','呜呜呜','/img/1.png','1000:fuIdYX3z1mvSs+bg3H5Eo6ORBiKBOS04:K2txJZru9DDsXiCa9HOE9ZzRh8dr6dkW','','\0','2017-05-18','\0','2017',NULL,'\0',NULL,'\0',0,NULL,'全球全球'),('13020031069',' ','\0','刘天峰','/img/1.png','1000:u0un2T/7NNXjkGUclLuwFY9cOAV8ocjo:q+jEcF/phUaTx3sv9rRFuzwnaaVkAAh/','','\0','2017-05-18','\0','2017',NULL,'\0',NULL,'\0',0,NULL,'海大学生\n\n'),('13020031070',' ','\0','刘天峰','/img/1.png','1000:0dshqAD0o0UAWCca3fuPdWOY0YDz5Usy:X+z8eh14WNfLMOkvdNvuP32pimJFpL/W','','\0','2017-05-17','\0','2017',NULL,'\0',NULL,'\0',0,NULL,'一个大四学生'),('13020031099',' ','\0','刘天峰','/img/1.png','1000:BUH1PYefIJaErUm3L4ryUW333wXwToa5:E/wakGKyqV3+pQfqu8puj4D1KN0+QD5R','','\0','2017-05-17','\0','2017',NULL,'\0',NULL,'\0',0,NULL,'一名大四学生'),('14020031090',' ','\0','黑猫回收者','/img/1.png','1000:Tm64cCrTMmuaAhzolYcQpTsAsm7OgXSc:qC56B7S10/IsFF1TlC5JUAvJR2GlQjev','\0','\0','2017-05-17','\0','2017',NULL,'\0',NULL,'\0',0,NULL,'啊三大三大洒洒打啊'),('14020031091',' ','\0','黑貓','/img/1.png','1000:Jg3cz76WWNJx+LQd4Pe+yWLYPCOw9wE+:jhELsJoccioS87GHlUKCx8uapF4CMPei','\0','\0','2017-05-17','\0','2017',NULL,'\0',NULL,'\0',0,NULL,'啊三大洒洒的'),('14020031094',' ','\0','黑猫回收者','/img/1.png','1000:Dv6Oemq5FG5MuquvMS711lHA8Ly15RdZ:vwVToO2JhxWxLahuGzjDe7xmgfXBecMo','\0','\0','2017-05-17','\0','2017',NULL,'\0',NULL,'\0',0,NULL,'2000-2-3T11:57:59'),('14020031127','zjk','','Zzzzzzzjk','pic','123456','\0','','1996-06-30','\0','2014',NULL,'',NULL,'',0,'test','test');
 /*!40000 ALTER TABLE `students` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -547,14 +550,6 @@ LOCK TABLES `sysdiagrams` WRITE;
 /*!40000 ALTER TABLE `sysdiagrams` DISABLE KEYS */;
 /*!40000 ALTER TABLE `sysdiagrams` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Dumping events for database 'oucfreetalk'
---
-
---
--- Dumping routines for database 'oucfreetalk'
---
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -565,4 +560,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-10-16 20:17:54
+-- Dump completed on 2017-11-07 22:59:32

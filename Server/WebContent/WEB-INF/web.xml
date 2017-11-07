@@ -10,6 +10,7 @@
     <welcome-file>default.htm</welcome-file>  
     <welcome-file>default.jsp</welcome-file> 
   </welcome-file-list>  
+  
   <servlet> 
     <servlet-name>login</servlet-name>  
     <servlet-class>user.Login</servlet-class> 
@@ -18,6 +19,16 @@
     <servlet-name>login</servlet-name>  
     <url-pattern>/login</url-pattern> 
   </servlet-mapping>  
+  
+  <servlet> 
+    <servlet-name>editor</servlet-name>  
+    <servlet-class>user.Editor</servlet-class> 
+  </servlet>  
+  <servlet-mapping> 
+    <servlet-name>editor</servlet-name>  
+    <url-pattern>/editor</url-pattern> 
+  </servlet-mapping>  
+  
   <servlet> 
     <servlet-name>register</servlet-name>  
     <servlet-class>user.Register</servlet-class> 
@@ -26,6 +37,7 @@
     <servlet-name>register</servlet-name>  
     <url-pattern>/register</url-pattern> 
   </servlet-mapping>  
+  
   <servlet> 
     <servlet-name>addPost</servlet-name>  
     <servlet-class>post.AddPost</servlet-class> 
@@ -33,7 +45,8 @@
   <servlet-mapping> 
     <servlet-name>addPost</servlet-name>  
     <url-pattern>/addPost</url-pattern> 
-  </servlet-mapping>  
+  </servlet-mapping> 
+   
   <servlet> 
     <servlet-name>getPosts</servlet-name>  
     <servlet-class>post.GetPosts</servlet-class> 
@@ -42,6 +55,7 @@
     <servlet-name>getPosts</servlet-name>  
     <url-pattern>/getPosts</url-pattern> 
   </servlet-mapping>  
+  
   <servlet> 
     <servlet-name>addComments</servlet-name>  
     <servlet-class>post.AddComments</servlet-class> 
@@ -50,6 +64,7 @@
     <servlet-name>addComments</servlet-name>  
     <url-pattern>/addComments</url-pattern> 
   </servlet-mapping>  
+  
   <servlet> 
     <servlet-name>addReply</servlet-name>  
     <servlet-class>post.Addreply</servlet-class> 
@@ -58,6 +73,7 @@
     <servlet-name>addReply</servlet-name>  
     <url-pattern>/addReply</url-pattern> 
   </servlet-mapping>  
+  
   <servlet> 
     <servlet-name>getPost</servlet-name>  
     <servlet-class>post.GetPost</servlet-class> 
@@ -66,6 +82,7 @@
     <servlet-name>getPost</servlet-name>  
     <url-pattern>/getPost</url-pattern> 
   </servlet-mapping>  
+  
   <servlet> 
     <servlet-name>getComment</servlet-name>  
     <servlet-class>post.GetComment</servlet-class> 
