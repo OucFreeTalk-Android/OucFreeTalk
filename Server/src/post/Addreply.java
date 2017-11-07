@@ -52,7 +52,7 @@ public class Addreply extends HttpServlet{
          }
          Untils untils = new Untils();
          String select_sql ="select postlocation,ownpost from postc where id = "+commentId;
-//         String get_username = "select nikename form students where id = \""+replyid +"\"";
+         System.out.println(select_sql);
          try {
 			rs = untils.select(select_sql);
 			while(rs.next()) {
@@ -66,8 +66,9 @@ public class Addreply extends HttpServlet{
 		}
          Date date = new Date();
          createTime = dateToString(date);
- 		 String sql = "insert into postreply(owner,createtime,contenttext,replyto,ownlocation)" 
- 				 + "values(\"" +id +"\",\"" +createTime +"\",\"" + context+"\",\"" + replyid +"\"," +ownlocation + ")";
+ 		 String sql = "insert into postreply(owner,createtime,contenttext,replyto,ownlocation,state)" 
+ 				 + "values(\"" +id +"\",\"" +createTime +"\",\"" + context+"\",\"" + replyid +"\"," +commentId +","+true + ")";
+ 		 System.out.println(sql);
  		 try {
 		 	 untils.insert(sql);
 		
@@ -76,7 +77,7 @@ public class Addreply extends HttpServlet{
 			e.printStackTrace();
 			returnJSon = "{\"result\": \"" + 2 + "\" }";
 		 }
- 	    String update_Sql = "update posts set updatetime = "+ createTime+",where id = "+postId;
+ 	    String update_Sql = "update posts set updatetime = \""+ createTime+"\" where id = "+postId;
   		try {
  			untils.update(update_Sql);
  		} catch (SQLException e) {
