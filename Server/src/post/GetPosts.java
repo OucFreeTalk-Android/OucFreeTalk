@@ -29,7 +29,7 @@ public class GetPosts extends HttpServlet {
     int id;
     int realbody;
     int body;
-    int page = 0;
+    int page;
     JSONObject jsonObject;
     JSONArray jsonArray;
     @Override
@@ -43,6 +43,7 @@ public class GetPosts extends HttpServlet {
         String selectPost = "SELECT * FROM posts where ownclass = "+ pclass;
         System.out.println(selectPost);
         Untils untils = new Untils();
+        page = 0;
         try {
             rs = untils.select(selectPost);
             while (rs.next()) {

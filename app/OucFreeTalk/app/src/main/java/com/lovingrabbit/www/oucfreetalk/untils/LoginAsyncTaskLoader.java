@@ -26,7 +26,7 @@ public class LoginAsyncTaskLoader extends AsyncTaskLoader<String> {
         HttpQutils httpQutils = new HttpQutils();
         String user = httpQutils.loginJson(username,password);
         try {
-            result = httpQutils.connect(mUrl,user);
+            result = httpQutils.connect_post(mUrl,user);
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -27,7 +27,7 @@ public class RegisterAsyncTaskLoader extends AsyncTaskLoader<String> {
         HttpQutils httpQutils = new HttpQutils();
         String user = httpQutils.register(userId,password,username);
         try {
-            result = httpQutils.connect(mUrl,user);
+            result = httpQutils.connect_post(mUrl,user);
         } catch (IOException e) {
             e.printStackTrace();
         }

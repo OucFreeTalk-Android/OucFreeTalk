@@ -26,7 +26,7 @@ public class AddPostAysncTaskLoader extends AsyncTaskLoader<String> {
         HttpQutils httpQutils = new HttpQutils();
         String user = httpQutils.addPostJson(mTitle,mCont);
         try {
-            result = httpQutils.connect(mUrl,user);
+            result = httpQutils.connect_post(mUrl,user);
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -26,7 +26,7 @@ public class HttpQutils {
     public static final MediaType JSON
             = MediaType.parse("application/json; charset=utf-8");
 
-    public String connect(String url, String json) throws IOException {
+    public String connect_post(String url, String json) throws IOException {
         //把请求的内容字符串转换为json
         RequestBody body = RequestBody.create(JSON, json);
         //RequestBody formBody = new FormEncodingBuilder()
@@ -36,6 +36,14 @@ public class HttpQutils {
                 .post(body)
                 .build();
 
+        Response response = okHttpClient.newCall(request).execute();
+        String result = response.body().string();
+        return result;
+    }
+    public String connect_get(String url) throws IOException {
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
         Response response = okHttpClient.newCall(request).execute();
         String result = response.body().string();
         return result;
@@ -52,12 +60,6 @@ public class HttpQutils {
     public String addPostJson(String title, String context) {
         int pclass = 1;
         return "{\"title\": \"" + title + "\"," + "\"context\": \"" + context + "\","+ "\"pclass\": " + pclass +"}";
-    }
-    public String getPostJson() {
-        int pclass = 1;
-        int index = 1;
-        Log.e("getPostJson:","{\"pclass\": " + pclass + "," + "\"index\": " + index + "}");
-        return "{\"pclass\": " + pclass + "," + "\"index\": " + index + "}";
     }
 
 }

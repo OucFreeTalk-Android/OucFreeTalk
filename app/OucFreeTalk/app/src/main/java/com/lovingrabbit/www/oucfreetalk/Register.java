@@ -21,7 +21,7 @@ public class Register extends AppCompatActivity implements LoaderManager.LoaderC
     String userID,username,password,passwordAgain;
     EditText id,passwd,passwdAgain,name;
 
-    private String url ="http://222.195.145.152:8811/api/Users/Register";
+    private String url ="http://47.93.222.179/oucfreetalk/register";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +67,7 @@ public class Register extends AppCompatActivity implements LoaderManager.LoaderC
             Toast.makeText(Register.this,"用户已存在",Toast.LENGTH_SHORT).show();
         }else if (log_results == 1 ){
             Toast.makeText(Register.this,"注册成功",Toast.LENGTH_SHORT).show();
+            finish();
         }else if (log_results == 2 ){
             Toast.makeText(Register.this,"注册失败",Toast.LENGTH_SHORT).show();
         }

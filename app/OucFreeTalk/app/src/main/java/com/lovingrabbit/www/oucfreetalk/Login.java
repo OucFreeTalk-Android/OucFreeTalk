@@ -26,7 +26,7 @@ public class Login extends AppCompatActivity implements LoaderManager.LoaderCall
     LoaderManager loaderManager;
     String name,passwd;
     CheckBox ifSava;
-    private String url = "http://222.195.145.152:8811/api/Log/Login";
+    private String url = "http://47.93.222.179/oucfreetalk/login";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
