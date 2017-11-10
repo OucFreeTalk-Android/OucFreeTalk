@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
@@ -8,6 +8,7 @@
     android:layout_height="match_parent">
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
+        android:id="@+id/addpost_toolbar"
         android:layout_height="?attr/actionBarSize">
 
         <android.support.design.widget.AppBarLayout
@@ -40,42 +41,53 @@
     </android.support.design.widget.CoordinatorLayout>
     <ScrollView
         android:layout_width="match_parent"
+        android:layout_below="@id/addpost_toolbar"
+        android:layout_above="@id/add_btn"
         android:id="@+id/scoll_input"
         android:fillViewport="true"
         android:windowSoftInputMode="adjustResize"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
         <LinearLayout
             android:layout_width="match_parent"
             android:orientation="vertical"
             android:layout_height="match_parent">
             <EditText
+                android:id="@+id/addpost_title"
                 android:layout_width="match_parent"
                 android:background="@null"
+                android:layout_margin="20dp"
+                android:textSize="30dp"
+                android:hint="标题"
                 android:layout_height="wrap_content" />
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="#c7ced4"/>
             <EditText
+                android:id="@+id/addpost_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textMultiLine"
                 android:layout_margin="20dp"
-                android:maxLines="10"
+                android:minLines="3"
+                android:maxLength="400"
+                android:hint="说点什么吧"
                 android:background="@null"
-                android:minLines="7"/>
+                />
         </LinearLayout>
     </ScrollView>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
+        android:id="@+id/add_btn"
+        android:layout_above="@id/addpost_tab"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="70dp"
         android:windowSoftInputMode="adjustResize">
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:id="@+id/add"
             android:layout_alignParentBottom="true"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
@@ -84,7 +96,127 @@
             android:text="发表"
             android:textColor="#fff"
             android:textSize="25sp" />
-    </RelativeLayout>
+    </LinearLayout>
 
 
-</LinearLayout>
+    <LinearLayout
+        android:id="@+id/addpost_tab"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:background="#fff"
+        android:orientation="horizontal">
+
+
+        <LinearLayout
+            android:id="@+id/addpost_post"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="6dp"
+                android:src="@drawable/news2" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text=" 帖子"
+                android:textColor="#bebebe" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/addpost_find"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="6dp"
+                android:src="@drawable/globe2" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text=" 发现"
+                android:textColor="#bebebe" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/addpost_add_post"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="6dp"
+                android:src="@drawable/pen" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text=" 发表"
+                android:textColor="#333" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/addpost_notice"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="6dp"
+                android:src="@drawable/twitterbird2" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text=" 通知"
+                android:textColor="#bebebe" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/addpost_set"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="6dp"
+                android:src="@drawable/user2" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text=" 设置"
+                android:textColor="#bebebe" />
+        </LinearLayout>
+
+    </LinearLayout>
+</RelativeLayout>

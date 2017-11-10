@@ -6,28 +6,27 @@ import android.content.Context;
 import java.io.IOException;
 
 /**
- * Created by Zzzzzzzjk on 2017/11/2.
+ * Created by zjk on 2017/11/10.
  */
 
-public class AddPostAysncTaskLoader extends AsyncTaskLoader<String> {
-    String mTitle,mCont,mUrl,result,mId;
-    public AddPostAysncTaskLoader(Context context,String id,String title,String cont,String url) {
+public class GetPostAysncTaskLoader extends AsyncTaskLoader<String> {
+    String mUrl,result;
+
+    public GetPostAysncTaskLoader(Context context, String url) {
         super(context);
-        mId = id;
-        mTitle = title;
-        mCont = cont;
         mUrl = url;
     }
+
     @Override
     protected void onStartLoading() {
         forceLoad();
     }
+
     @Override
     public String loadInBackground() {
         HttpQutils httpQutils = new HttpQutils();
-        String user = httpQutils.addPostJson(mId,mTitle,mCont);
         try {
-            result = httpQutils.connect_post(mUrl,user);
+            result = httpQutils.connect_get(mUrl);
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -24,6 +24,7 @@ import java.io.IOException;
 
 public class Login extends AppCompatActivity implements LoaderManager.LoaderCallbacks<String> {
     LoaderManager loaderManager;
+    EditText username,password;
     String name,passwd;
     CheckBox ifSava;
     private String url = "http://47.93.222.179/oucfreetalk/login";
@@ -36,16 +37,21 @@ public class Login extends AppCompatActivity implements LoaderManager.LoaderCall
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditText username = (EditText) findViewById(R.id.input_username);
+                username = (EditText) findViewById(R.id.input_username);
                 name = username.getText().toString();
-                EditText password = (EditText) findViewById(R.id.input_password);
+                password = (EditText) findViewById(R.id.input_password);
                 passwd = password.getText().toString();
-                loaderManager = getLoaderManager();
+                if(username.equals("")){
+                    loaderManager = getLoaderManager();
 
-                // Initialize the loader. Pass in the int ID constant defined above and pass in null for
-                // the bundle. Pass in this activity for the LoaderCallbacks parameter (which is valid
-                // because this activity implements the LoaderCallbacks interface).
-                loaderManager.initLoader(0, null, Login.this);
+                    // Initialize the loader. Pass in the int ID constant defined above and pass in null for
+                    // the bundle. Pass in this activity for the LoaderCallbacks parameter (which is valid
+                    // because this activity implements the LoaderCallbacks interface).
+                    loaderManager.initLoader(0, null, Login.this);
+                }else {
+                    loaderManager = getLoaderManager();
+                    loaderManager.restartLoader(0, null, Login.this);
+                }
 
             }
         });

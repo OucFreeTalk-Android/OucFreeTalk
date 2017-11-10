@@ -57,9 +57,10 @@ public class HttpQutils {
         return "{\"id\": \"" + username + "\"," + "\"password\": \"" + password + "\","  + "\"nikename\": \"" + nikename + "\","
                 + "\"introduce\": \"" + introduce + "\","+ "\"sex\": " + sex +"}";
     }
-    public String addPostJson(String title, String context) {
+    public String addPostJson(String id,String title, String context) {
         int pclass = 1;
-        return "{\"title\": \"" + title + "\"," + "\"context\": \"" + context + "\","+ "\"pclass\": " + pclass +"}";
+        Log.d("addPostJson:", "{\"id\":\"" + id + "\",\"title\": \"" + title + "\"," + "\"context\": \"" + context + "\","+ "\"pclass\": " + pclass +"}");
+        return "{\"id\":\"" + id + "\",\"title\": \"" + title + "\"," + "\"content\": \"" + context + "\","+ "\"pclass\": " + pclass +"}";
     }
 
 }

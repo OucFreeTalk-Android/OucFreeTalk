@@ -1,6 +1,11 @@
 package com.lovingrabbit.www.oucfreetalk;
 
+import android.app.Activity;
+import android.app.LoaderManager;
+import android.content.Context;
 import android.content.Intent;
+import android.content.Loader;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -10,35 +15,43 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
-import com.lovingrabbit.www.oucfreetalk.other.AFragment;
-import com.lovingrabbit.www.oucfreetalk.other.MyViewPagerAdapter;
+import com.lovingrabbit.www.oucfreetalk.talkadapter.Talk;
+import com.lovingrabbit.www.oucfreetalk.talkadapter.TalkAdapter;
+import com.lovingrabbit.www.oucfreetalk.untils.GetPostAysncTaskLoader;
 
-import me.majiajie.pagerbottomtabstrip.MaterialMode;
-import me.majiajie.pagerbottomtabstrip.NavigationController;
-import me.majiajie.pagerbottomtabstrip.PageBottomTabLayout;
-import me.majiajie.pagerbottomtabstrip.listener.OnTabItemSelectedListener;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 
-public class MainActivity extends AppCompatActivity {
+
+public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<String> {
     DrawerLayout drawerLayout;
     SwipeRefreshLayout swipeRefreshLayout;
     boolean isLogin = false;
     NavigationView navigationView;
-    //
-    int[] testColors = {0xFF455A64, 0xFF00796B, 0xFF795548, 0xFF5B4947, 0xFFF57C00};
-//    int[] testColors = {0xFF009688, 0xFF009688, 0xFF009688, 0xFF009688, 0xFF009688};
+    TalkAdapter adapter;
+    LoaderManager loaderManager;
+    private List<Talk> talkList = new ArrayList<Talk>();
+    private String GET_POST_URL = "http://47.93.222.179/oucfreetalk/getPosts?pclass=1&index=1";
 
-    NavigationController mNavigationController;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
         //设置自定义标题栏
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -75,24 +88,6 @@ public class MainActivity extends AppCompatActivity {
                 refresh();
             }
         });
-        //底部标签栏
-        PageBottomTabLayout pageBottomTabLayout = (PageBottomTabLayout) findViewById(R.id.tab);
-
-        mNavigationController = pageBottomTabLayout.material()
-                .addItem(R.drawable.ic_ondemand_video_black_24dp,"Movies & TV",testColors[0])
-                .addItem(R.drawable.ic_audiotrack_black_24dp, "Music",testColors[1])
-                .addItem(R.drawable.ic_book_black_24dp, "Books",testColors[2])
-                .addItem(R.drawable.ic_news_black_24dp, "Newsstand",testColors[3])
-                .setDefaultColor(0x89FFFFFF)//未选中状态的颜色
-                .setMode(MaterialMode.CHANGE_BACKGROUND_COLOR | MaterialMode.HIDE_TEXT)//这里可以设置样式模式，总共可以组合出4种效果
-                .build();
-
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
-        viewPager.setAdapter(new MyViewPagerAdapter(getSupportFragmentManager(),mNavigationController.getItemCount()));
-
-        //自动适配ViewPager页面切换
-        mNavigationController.setupWithViewPager(viewPager);
-
 
         RelativeLayout rl = (RelativeLayout) draw.findViewById(R.id.header);
         rl.setOnClickListener(new View.OnClickListener() {
@@ -104,64 +99,88 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+        loaderManager = getLoaderManager();
 
-        //也可以设置Item选中事件的监听
-        mNavigationController.addTabItemSelectedListener(new OnTabItemSelectedListener() {
+        // Initialize the loader. Pass in the int ID constant defined above and pass in null for
+        // the bundle. Pass in this activity for the LoaderCallbacks parameter (which is valid
+        // because this activity implements the LoaderCallbacks interface).
+        loaderManager.initLoader(0, null, MainActivity.this);
+        final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.main_recyview);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        adapter = new TalkAdapter(talkList);
+        recyclerView.setAdapter(adapter);
+        SharedPreferences sharedPreferences = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+        String username = sharedPreferences.getString("id","");
+        Log.e("username:",username);
+        LinearLayout post = (LinearLayout) findViewById(R.id.post);
+        LinearLayout find = (LinearLayout) findViewById(R.id.find);
+        LinearLayout addPost = (LinearLayout) findViewById(R.id.add_post);
+        LinearLayout notice = (LinearLayout) findViewById(R.id.notice);
+        LinearLayout set = (LinearLayout) findViewById(R.id.set);
+        post.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onSelected(int index, int old) {
-                Log.i("asd","selected: " + index + " old: " + old);
+            public void onClick(View v) {
+                recyclerView.scrollToPosition(0);
+                loaderManager.restartLoader(0,null, MainActivity.this);
             }
-
+        });
+        addPost.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onRepeat(int index) {
-                Log.i("asd","onRepeat selected: " + index);
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this,AddPost.class);
+                startActivity(intent);
             }
         });
 
-
-
-        //设置消息圆点
-//        mNavigationController.setMessageNumber(1,12);
-//        mNavigationController.setHasMessage(1,true);
-
-
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.toolbar,menu);
-//        return true;
-//    }
-
+    public void update(String get_result) throws JSONException {
+        JSONObject jsonObject = new JSONObject(get_result);
+        int allpage = jsonObject.getInt("allpage");
+        JSONArray searchJson = jsonObject.getJSONArray("search");
+        for (int i = allpage-1;i>0; i--) {
+            JSONObject talk = searchJson.getJSONObject(i);
+            String title = talk.getString("title");
+            String context = talk.getString("content");
+            String user = talk.getString("nikename");
+            Talk talk1 = new Talk(R.drawable.nav_icon,R.drawable.apple,title,user,context);
+            talkList.add(talk1);
+        }
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case android.R.id.home:
                 drawerLayout.openDrawer(GravityCompat.START);
                 break;
-
         }
         return true;
     }
+
     public void refresh(){
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(2000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        AFragment aFragment = new AFragment();
-                        Thread thread = new Thread(aFragment);
-                        thread.start();
-                        swipeRefreshLayout.setRefreshing(false);
-                    }
-                });
-            }
-        }).start();
+        loaderManager.restartLoader(0, null, MainActivity.this);
+    }
+
+    @Override
+    public Loader<String> onCreateLoader(int id, Bundle args) {
+        return new GetPostAysncTaskLoader(this,GET_POST_URL);
+    }
+
+    @Override
+    public void onLoadFinished(Loader<String> loader, String data) {
+        talkList.clear();
+        try {
+            update(data);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        adapter.notifyDataSetChanged();
+        swipeRefreshLayout.setRefreshing(false);
+    }
+
+    @Override
+    public void onLoaderReset(Loader<String> loader) {
+        talkList.clear();
     }
 }
