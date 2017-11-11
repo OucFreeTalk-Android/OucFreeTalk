@@ -179,12 +179,12 @@
 
         </RelativeLayout>
         <Button
-            android:id="@+id/login_button"
+            android:id="@+id/logout_button"
             android:layout_width="@dimen/login_wide_width"
             android:layout_height="@dimen/mid_margin_top"
             android:layout_gravity="center"
-            android:layout_marginTop="@dimen/big_margin_top"
-            android:background="#ff3232"
+            android:layout_marginTop="120dp"
+            android:background="#e12f2f"
             android:textColor="#fff"
             android:text="注 销"
             android:textSize="20sp" />

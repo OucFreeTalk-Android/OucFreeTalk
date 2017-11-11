@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.lovingrabbit.www.oucfreetalk.personAdapter.Person;
 import com.lovingrabbit.www.oucfreetalk.untils.HttpQutils;
 import com.lovingrabbit.www.oucfreetalk.untils.LoginAsyncTaskLoader;
 
@@ -113,7 +114,8 @@ public class Login extends AppCompatActivity implements LoaderManager.LoaderCall
                 editor.putString("id",name);
                 editor.commit();
             }
-            finish();
+            Intent intent = new Intent(Login.this, PersonSet.class);
+            startActivity(intent);
         }else if (log_results == 2 ){
             Toast.makeText(Login.this,"密码错误",Toast.LENGTH_SHORT).show();
         }

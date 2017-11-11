@@ -10,10 +10,12 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.lovingrabbit.www.oucfreetalk.personAdapter.Person;
 import com.lovingrabbit.www.oucfreetalk.personAdapter.PersonAdapter;
@@ -36,6 +38,7 @@ public class PersonSet extends AppCompatActivity implements LoaderManager.Loader
     PersonAdapter adapter;
     TextView person_user,introd;
     String intro,nikename;
+    String username;
     List<Person> personList = new ArrayList<Person>();
     LoaderManager loaderManager;
     private String GET_PERSON_POST_URL = "http://47.93.222.179/oucfreetalk/getPostPerson?id=";
@@ -50,7 +53,7 @@ public class PersonSet extends AppCompatActivity implements LoaderManager.Loader
         adapter = new PersonAdapter(personList);
         recyclerView.setAdapter(adapter);
         SharedPreferences sharedPreferences = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
-        String username = sharedPreferences.getString("id","");
+        username = sharedPreferences.getString("id","");
         GET_PERSON_POST_URL = GET_PERSON_POST_URL +username;
         person_user = (TextView) findViewById(R.id.person_username);
         introd = (TextView) findViewById(R.id.person_description);
@@ -64,6 +67,7 @@ public class PersonSet extends AppCompatActivity implements LoaderManager.Loader
             public void onClick(View v) {
                 Intent intent = new Intent(PersonSet.this,MainActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
         addPost.setOnClickListener(new View.OnClickListener() {
@@ -71,14 +75,33 @@ public class PersonSet extends AppCompatActivity implements LoaderManager.Loader
             public void onClick(View v) {
                 Intent intent = new Intent(PersonSet.this,AddPost.class);
                 startActivity(intent);
+                finish();
             }
         });
-        Button edit = (Button) findViewById(R.id.person_edit_btn);
+        final Button edit = (Button) findViewById(R.id.person_edit_btn);
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(PersonSet.this,Person_edit.class);
-                startActivity(intent);
+                SharedPreferences sharedPreferences = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+                username = sharedPreferences.getString("id","");
+                if (username.equals("")){
+                    Toast.makeText(PersonSet.this,"请登录！",Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(PersonSet.this,Login.class);
+                    startActivity(intent);
+                    finish();
+                }
+                else {
+                    Intent intent = new Intent(PersonSet.this, Person_edit.class);
+                    startActivity(intent);
+                    finish();
+                }
+            }
+        });
+        set.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loaderManager = getLoaderManager();
+                loaderManager.restartLoader(0,null,PersonSet.this);
             }
         });
 
@@ -123,6 +146,6 @@ public class PersonSet extends AppCompatActivity implements LoaderManager.Loader
 
     @Override
     public void onLoaderReset(Loader<String> loader) {
-
+        personList.clear();
     }
 }

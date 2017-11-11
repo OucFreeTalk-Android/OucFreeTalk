@@ -130,6 +130,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this,AddPost.class);
                 startActivity(intent);
+                finish();
             }
         });
         set.setOnClickListener(new View.OnClickListener() {
@@ -137,6 +138,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this,PersonSet.class);
                 startActivity(intent);
+                finish();
             }
         });
 

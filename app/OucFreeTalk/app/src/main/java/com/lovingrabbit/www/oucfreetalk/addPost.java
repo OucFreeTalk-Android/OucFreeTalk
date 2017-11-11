@@ -39,6 +39,7 @@ public class AddPost extends AppCompatActivity implements LoaderManager.LoaderCa
 //                loaderManager.restartLoader(0,null, MainActivity.this);
                 Intent intent = new Intent(AddPost.this,MainActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
         addPost.setOnClickListener(new View.OnClickListener() {
@@ -52,6 +53,7 @@ public class AddPost extends AppCompatActivity implements LoaderManager.LoaderCa
             public void onClick(View v) {
                 Intent intent = new Intent(AddPost.this,PersonSet.class);
                 startActivity(intent);
+                finish();
             }
         });
         Button addpostBtn = (Button) findViewById(R.id.add);
