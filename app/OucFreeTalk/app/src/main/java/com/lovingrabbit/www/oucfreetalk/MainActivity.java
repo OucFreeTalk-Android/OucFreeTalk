@@ -132,6 +132,13 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 startActivity(intent);
             }
         });
+        set.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this,PersonSet.class);
+                startActivity(intent);
+            }
+        });
 
     }
 
@@ -144,7 +151,10 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             String title = talk.getString("title");
             String context = talk.getString("content");
             String user = talk.getString("nikename");
-            Talk talk1 = new Talk(R.drawable.nav_icon,R.drawable.apple,title,user,context);
+            int id = talk.getInt("id");
+            String owner = talk.getString("owner");
+            String time =talk.getString("createtime");
+            Talk talk1 = new Talk(R.drawable.nav_icon,R.drawable.apple,title,user,context,id,owner,time);
             talkList.add(talk1);
         }
     }
@@ -169,6 +179,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public void onLoadFinished(Loader<String> loader, String data) {
+//        Log.d("result:", data);
         talkList.clear();
         try {
             update(data);

@@ -24,7 +24,7 @@ public class HttpQutils {
     }
 
     public static final MediaType JSON
-            = MediaType.parse("application/json; charset=utf-8");
+            = MediaType.parse("application/json;charset=utf-8");
 
     public String connect_post(String url, String json) throws IOException {
         //把请求的内容字符串转换为json
@@ -59,8 +59,11 @@ public class HttpQutils {
     }
     public String addPostJson(String id,String title, String context) {
         int pclass = 1;
-        Log.d("addPostJson:", "{\"id\":\"" + id + "\",\"title\": \"" + title + "\"," + "\"context\": \"" + context + "\","+ "\"pclass\": " + pclass +"}");
         return "{\"id\":\"" + id + "\",\"title\": \"" + title + "\"," + "\"content\": \"" + context + "\","+ "\"pclass\": " + pclass +"}";
+    }
+    public String addCommentJson(String id,int postid,String context) {
+        Log.e("json:", "{\"id\":\"" + id + "\",\"context\": \"" + context + "\","+ "\"postid\": " + postid +"}");
+        return "{\"id\":\"" + id + "\",\"context\": \"" + context + "\","+ "\"postid\": " + postid +"}";
     }
 
 }

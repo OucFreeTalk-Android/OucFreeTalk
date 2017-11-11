@@ -49,7 +49,7 @@
 |2|失败，服务器未保存|
 |3|失败，服务器错误|
 
-### /addcomments
+### /addComments
 
 方法:Post
 

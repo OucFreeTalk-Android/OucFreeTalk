@@ -18,11 +18,11 @@ public class LoginHomeActivity extends AppCompatActivity {
             public void run() {
                 Intent intent = new Intent(LoginHomeActivity.this,MainActivity.class);
                 startActivity(intent);
+                finish();
             }
         };
         Timer timer = new Timer();
         timer.schedule(task,2000);
-        finish();
     }
 
 

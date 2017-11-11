@@ -47,6 +47,13 @@ public class AddPost extends AppCompatActivity implements LoaderManager.LoaderCa
 
             }
         });
+        set.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AddPost.this,PersonSet.class);
+                startActivity(intent);
+            }
+        });
         Button addpostBtn = (Button) findViewById(R.id.add);
         addpostBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,6 +86,7 @@ public class AddPost extends AppCompatActivity implements LoaderManager.LoaderCa
         if (username == ""){
             Toast.makeText(this,"请登录！",Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(AddPost.this,Login.class);
+            startActivity(intent);
         }else {
             return new AddPostAysncTaskLoader(this,username,title,content,ADD_POST_URL);
         }

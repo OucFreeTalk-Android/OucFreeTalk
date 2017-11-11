@@ -2,6 +2,7 @@ package user;
 
 import java.io.IOException;
 import java.io.PrintStream;
+import java.io.PrintWriter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -22,6 +23,7 @@ public class GetUser extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		req.setCharacterEncoding("utf8");
 		String id = req.getParameter("id");
 		String sql = "select * from students where id = \""+id +"\"";
 		Untils untils = new Untils();
@@ -36,6 +38,7 @@ public class GetUser extends HttpServlet{
 				year = rs.getString("year");
 				mobile =rs.getString("mobile");
 				email = rs.getString("email");
+				System.out.println("intro:"+intro+";nikename:"+nikename);
 				jsonobj.put("nikename", nikename);
 				jsonobj.put("family", family);
 				jsonobj.put("intro", intro);
@@ -49,7 +52,10 @@ public class GetUser extends HttpServlet{
 			e.printStackTrace();
 			jsonobj.put("result", 0);
 		}
-		PrintStream out = new PrintStream(resp.getOutputStream());
+		System.out.println(jsonobj.toString());   
+		resp.setHeader("content-type","application/json;charset=utf-8");
+		resp.setCharacterEncoding("utf8");
+		PrintWriter out = resp.getWriter(); 
         out.println(jsonobj);
 		
 	}

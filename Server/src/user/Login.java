@@ -3,6 +3,7 @@ package user;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.io.PrintWriter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -25,6 +26,7 @@ public class Login extends HttpServlet{
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		req.setCharacterEncoding("utf8");
 		 StringBuffer jb = new StringBuffer();
          String line = null;
          String result = "";
@@ -66,7 +68,9 @@ public class Login extends HttpServlet{
 			returnJSon = "{\"result\": \"" + 2 + "\" }";
 		}
  		JSONObject rjson = new JSONObject(returnJSon);
-         PrintStream out = new PrintStream(resp.getOutputStream());
+ 		resp.setHeader("content-type","application/json;charset=utf-8");
+		resp.setCharacterEncoding("utf8");
+		PrintWriter out = resp.getWriter(); 
          out.println(rjson);
 	}
 	@Override

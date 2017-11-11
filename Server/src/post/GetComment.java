@@ -2,6 +2,7 @@ package post;
 
 import java.io.IOException;
 import java.io.PrintStream;
+import java.io.PrintWriter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -29,7 +30,7 @@ public class GetComment extends HttpServlet{
      int id;
 	 int realbody;
 	 int body;
-	 int page = 0;
+	 int page;
 	 JSONObject jsonObject;
 	 JSONArray jsonArray;	
 	
@@ -37,12 +38,14 @@ public class GetComment extends HttpServlet{
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		req.setCharacterEncoding("utf8");
 		int commentid = Integer.parseInt(req.getParameter("commentid"));
         int index = Integer.parseInt(req.getParameter("index"));
         jsonArray = new JSONArray();
         String selectPost = "SELECT * FROM postreply where ownlocation = "+ commentid;
         System.out.println(selectPost);
         Untils untils = new Untils();
+        page = 0;
         try {
 			rs = untils.select(selectPost);
 			while (rs.next()) {
@@ -76,7 +79,9 @@ public class GetComment extends HttpServlet{
         JSONObject returnJSon = new JSONObject();
         returnJSon.put("search", jsonArray);
         returnJSon.put("allpage",page);
-        PrintStream out = new PrintStream(resp.getOutputStream());
+        resp.setHeader("content-type","application/json;charset=utf-8");
+		resp.setCharacterEncoding("utf8");
+		PrintWriter out = resp.getWriter(); 
         out.println(returnJSon);
 		
 	}

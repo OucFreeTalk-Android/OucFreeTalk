@@ -1,7 +1,6 @@
 package post;
 
 import java.io.IOException;
-import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,67 +14,69 @@ import Until.Untils;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
-public class GetPost extends HttpServlet{
-	ResultSet rs;
-    ResultSet rl;
-    String returnJSon;
-    int commentid;
-    String createtime;
-    String updatetime;
-    String owner;
-    String content;
-    String nikename;
-    String pic;
-    int postlocation;
-    int realbody;
-    int body;
-    int page;
-    JSONObject jsonObject;
-    JSONArray jsonArray;
+public class GetPersonPosts extends HttpServlet{
+	 ResultSet rs;
+	    ResultSet rl;
+	    String returnJSon;
+	    String title,intro;
+	    String createtime;
+	    String updatetime;
+	    String owner;
+	    String content;
+	    String nikename;
+	    String pic;
+	    int id;
+	    int realbody;
+	    int body;
+	    int page;
+	    JSONObject jsonObject;
+	    JSONArray jsonArray;
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		req.setCharacterEncoding("utf8");
-		int postid = Integer.parseInt(req.getParameter("postid"));
-        int index = Integer.parseInt(req.getParameter("index"));
+		req.setCharacterEncoding("utf-8");
+        String username = req.getParameter("id");
         jsonArray = new JSONArray();
-        String selectPost = "SELECT * FROM postc where ownpost = "+ postid;
+        String selectPost = "SELECT * FROM posts where owner = "+ username;
         System.out.println(selectPost);
         Untils untils = new Untils();
         page = 0;
         try {
-			rs = untils.select(selectPost);
-			while (rs.next()) {
-                commentid = rs.getInt("id");
+            rs = untils.select(selectPost);
+            while (rs.next()) {
+                id = rs.getInt("id");
+                title = rs.getString("title");
                 owner = rs.getString("owner");
-                content = rs.getString("body");
+                content = rs.getString("contenttext");
                 createtime = rs.getString("createtime");
-                postlocation = rs.getInt("postlocation");
-                String selectUser = "select nikename,pic from students where id = \""+ owner + "\"";
+                String selectUser = "select nikename,pic,introduction from students where id = \""+ owner + "\"";
                 System.out.println(selectUser);
                 rl = untils.select(selectUser);
                 while (rl.next()) {
                     nikename = rl.getString("nikename");
                     pic = rl.getString("pic");
+                    intro = rl.getString("introduction");
                 }
                 jsonObject = new JSONObject();
-                jsonObject.put("commentid", commentid);
-                jsonObject.put("id", owner);
-                jsonObject.put("postlocation", postlocation);
-                jsonObject.put("commentcontext", content);
+                jsonObject.put("id", id);
+                jsonObject.put("title", title);
+                jsonObject.put("owner", owner);
+                jsonObject.put("content", content);
                 jsonObject.put("createtime", createtime);
                 jsonObject.put("nikename", nikename);
                 jsonObject.put("pic", pic);
+                jsonObject.put("intro", intro);
                 System.out.println(jsonObject);
                 System.out.println(page);
                 jsonArray.add(page,jsonObject);
                 page = page +1;
             }
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+            
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         JSONObject returnJSon = new JSONObject();
         returnJSon.put("search", jsonArray);
         returnJSon.put("allpage",page);
@@ -90,5 +91,4 @@ public class GetPost extends HttpServlet{
 		// TODO Auto-generated method stub
 		super.doPost(req, resp);
 	}
-
 }

@@ -3,6 +3,8 @@ package user;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.io.PrintWriter;
+import java.net.URLDecoder;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -25,6 +27,7 @@ public class Editor extends HttpServlet{
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		req.setCharacterEncoding("utf8");
 		StringBuffer jb = new StringBuffer();
         String line = null;
         String result = "";
@@ -35,7 +38,7 @@ public class Editor extends HttpServlet{
                 jb.append(line);
                
         } catch (Exception e) { /*report an error*/ }
-
+        
         try {
             //使用JSONObject的parseObject方法解析JSON字符串
             JSONObject jsonObject = new JSONObject(jb.toString());
@@ -69,7 +72,9 @@ public class Editor extends HttpServlet{
 		}
         returnJSon = "{'result':" + 1+ "}";
         JSONObject rjson = new JSONObject(returnJSon);
-        PrintStream out = new PrintStream(resp.getOutputStream());
+        resp.setHeader("content-type","application/json;charset=utf-8");
+		resp.setCharacterEncoding("utf8");
+		PrintWriter out = resp.getWriter(); 
         out.println(rjson);
 	}
 	@Override

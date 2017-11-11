@@ -66,6 +66,15 @@
   </servlet-mapping>  
   
   <servlet> 
+    <servlet-name>getPostPerson</servlet-name>  
+    <servlet-class>post.GetPersonPosts</servlet-class> 
+  </servlet>  
+  <servlet-mapping> 
+    <servlet-name>getPostPerson</servlet-name>  
+    <url-pattern>/getPostPerson</url-pattern> 
+  </servlet-mapping>
+  
+  <servlet> 
     <servlet-name>addComments</servlet-name>  
     <servlet-class>post.AddComments</servlet-class> 
   </servlet>  

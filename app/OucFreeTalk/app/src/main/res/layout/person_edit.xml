@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
+        android:id="@+id/person_edit_toolbar"
         android:layout_height="?attr/actionBarSize">
 
         <android.support.design.widget.AppBarLayout
@@ -19,7 +20,7 @@
                 android:background="#fff"
                 app:contentInsetStart="0dp">
                 <ImageView
-                    android:id="@+id/return_btn"
+                    android:id="@+id/person_edit_return_btn"
                     android:layout_width="20dp"
                     android:layout_marginLeft="10dp"
                     android:layout_height="?attr/actionBarSize"
@@ -39,12 +40,14 @@
     </android.support.design.widget.CoordinatorLayout>
 
     <LinearLayout
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#f3f8fb"
+        android:layout_below="@id/person_edit_toolbar"
         android:orientation="vertical">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:id="@+id/information"
@@ -52,25 +55,28 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="20dp"
+                android:gravity="center_vertical"
                 android:text="@string/information"
                 android:textSize="16dp" />
 
             <ImageView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:layout_marginLeft="270dp"
-                android:src="@drawable/return1img" />
-        </LinearLayout>
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="20dp"
+                android:src="@drawable/return1img"
+                android:id="@+id/imageView" />
+        </RelativeLayout>
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="#c7ced4"/>
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:id="@+id/jwc"
@@ -78,25 +84,25 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="20dp"
                 android:text="@string/jwc"
                 android:textSize="16dp" />
 
             <ImageView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="270dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="20dp"
                 android:src="@drawable/return1img" />
-        </LinearLayout>
+        </RelativeLayout>
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="#c7ced4"/>
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:id="@+id/score"
@@ -104,25 +110,25 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="20dp"
                 android:text="@string/score"
                 android:textSize="16dp" />
 
             <ImageView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="270dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="20dp"
                 android:src="@drawable/return1img" />
-        </LinearLayout>
+        </RelativeLayout>
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="#c7ced4"/>
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="#fff"
@@ -130,26 +136,26 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="20dp"
                 android:text="@string/power"
                 android:textSize="16dp" />
 
             <ImageView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="270dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="20dp"
                 android:src="@drawable/return1img" />
 
-        </LinearLayout>
+        </RelativeLayout>
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="#c7ced4"/>
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:id="@+id/stu_number"
@@ -157,21 +163,31 @@
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="20dp"
                 android:text="学号认证"
                 android:textSize="16dp" />
 
             <ImageView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="270dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="20dp"
                 android:src="@drawable/return1img" />
 
-        </LinearLayout>
+        </RelativeLayout>
+        <Button
+            android:id="@+id/login_button"
+            android:layout_width="@dimen/login_wide_width"
+            android:layout_height="@dimen/mid_margin_top"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/big_margin_top"
+            android:background="#ff3232"
+            android:textColor="#fff"
+            android:text="注 销"
+            android:textSize="20sp" />
     </LinearLayout>
 
-</LinearLayout>
+</RelativeLayout>

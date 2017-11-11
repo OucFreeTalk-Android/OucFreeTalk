@@ -6,6 +6,7 @@ import net.sf.json.JSONObject;
 
 import java.io.IOException;
 import java.io.PrintStream;
+import java.io.PrintWriter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -36,6 +37,7 @@ public class GetPosts extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
         throws ServletException, IOException {
         // TODO Auto-generated method stub
+    	req.setCharacterEncoding("utf-8");
         int pclass = Integer.parseInt(req.getParameter("pclass"));
         int index = Integer.parseInt(req.getParameter("index"));
         int perpage = 20;
@@ -80,7 +82,9 @@ public class GetPosts extends HttpServlet {
         JSONObject returnJSon = new JSONObject();
         returnJSon.put("search", jsonArray);
         returnJSon.put("allpage",page);
-        PrintStream out = new PrintStream(resp.getOutputStream());
+        resp.setHeader("content-type","application/json;charset=utf-8");
+		resp.setCharacterEncoding("utf8");
+		PrintWriter out = resp.getWriter(); 
         out.println(returnJSon);
     }
 

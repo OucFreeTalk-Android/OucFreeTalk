@@ -1,24 +1,25 @@
-package com.lovingrabbit.www.oucfreetalk.talkadapter;
+package com.lovingrabbit.www.oucfreetalk.personAdapter;
 
 /**
- * Created by Zzzzzzzjk on 2017/4/26.
+ * Created by zjk on 2017/11/11.
  */
 
-public class Talk {
+public class Person {
     int people_icon,isimg,id;
 
-    String article_tile,article_tag,article_content,owner,time;
+    String article_tile,nikename,article_content,owner,time,intro;
 
-    public Talk(int People_icon,int Isimg,String Article_title,
-                String Article_tag,String Article_content,int mId,String mOwner,String mTime){
+    public Person(int People_icon,int Isimg,String Article_title,
+                String name,String Article_content,int mId,String mOwner,String mTime,String introd){
         people_icon = People_icon;
         isimg = Isimg;
         article_tile = Article_title;
-        article_tag = Article_tag;
+        nikename = name;
         article_content = Article_content;
         id = mId;
         owner = mOwner;
         time = mTime;
+        intro = introd;
     }
 
     public int getId() {
@@ -27,6 +28,10 @@ public class Talk {
 
     public String getOwner() {
         return owner;
+    }
+
+    public String getIntro() {
+        return intro;
     }
 
     public String getTime() {
@@ -45,8 +50,8 @@ public class Talk {
         return article_content;
     }
 
-    public String getArticle_tag() {
-        return article_tag;
+    public String getNikename() {
+        return nikename;
     }
 
     public String getArticle_tile() {

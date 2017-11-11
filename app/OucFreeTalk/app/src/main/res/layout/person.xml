@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/header"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:id="@+id/person_head"
+        android:background="@drawable/person_bg"
+        android:padding="10dp"
+        android:layout_height="210dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/icon_img"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/nav_icon" />
+        <Button
+            android:id="@+id/person_edit_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:background="@null"
+            android:textSize="18sp"
+            android:text="编辑"/>
+
+        <TextView
+            android:id="@+id/person_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:text="简单介绍下自己把"
+            android:textColor="#929191"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/attention"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/person_description"
+            android:layout_centerHorizontal="true"
+            android:text="关注:300,粉丝:100"
+            android:textColor="#929191"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/person_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/attention"
+            android:layout_centerHorizontal="true"
+            android:text="用户名"
+            android:textColor="#333"
+            android:textSize="14sp" />
+
+        <LinearLayout
+            android:id="@+id/person_set"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/description"
+            android:layout_marginTop="307dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="6dp"
+                android:src="@drawable/user" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text=" 设置"
+                android:textColor="#333" />
+        </LinearLayout>
+
+
+    </RelativeLayout>
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:id="@+id/person_rcy"
+        android:layout_above="@id/person_tab"
+        android:layout_below="@id/person_head"
+        android:layout_marginBottom="10dp"
+        android:layout_height="match_parent">
+
+    </android.support.v7.widget.RecyclerView>
+
+    <LinearLayout
+        android:id="@+id/person_tab"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:background="#fff"
+        android:orientation="horizontal">
+
+
+        <LinearLayout
+            android:id="@+id/person_post"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="6dp"
+                android:src="@drawable/news2" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text=" 帖子"
+                android:textColor="#bebebe" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/person_find"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="6dp"
+                android:src="@drawable/globe2" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text=" 发现"
+                android:textColor="#bebebe" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/person_add_post"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="6dp"
+                android:src="@drawable/pen2" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text=" 发表"
+                android:textColor="#bebebe" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/person_notice"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="6dp"
+                android:src="@drawable/twitterbird2" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text=" 通知"
+                android:textColor="#bebebe" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/addpost_set"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="6dp"
+                android:src="@drawable/user" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text=" 设置"
+                android:textColor="#333" />
+        </LinearLayout>
+
+    </LinearLayout>
+</RelativeLayout>
