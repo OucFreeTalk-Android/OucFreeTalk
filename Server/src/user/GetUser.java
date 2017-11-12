@@ -37,6 +37,7 @@ public class GetUser extends HttpServlet{
 				birth = rs.getString("birth");
 				year = rs.getString("year");
 				mobile =rs.getString("mobile");
+				sex = rs.getBoolean("sex");
 				email = rs.getString("email");
 				System.out.println("intro:"+intro+";nikename:"+nikename);
 				jsonobj.put("nikename", nikename);
@@ -44,6 +45,7 @@ public class GetUser extends HttpServlet{
 				jsonobj.put("intro", intro);
 				jsonobj.put("birth", birth);
 				jsonobj.put("year", year);
+				jsonobj.put("sex", sex);
 				jsonobj.put("mobile", mobile);
 				jsonobj.put("email", email);
 			}

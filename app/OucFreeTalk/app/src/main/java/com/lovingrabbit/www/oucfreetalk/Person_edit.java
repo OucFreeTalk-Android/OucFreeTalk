@@ -31,6 +31,8 @@ public class Person_edit extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                Intent intent  = new Intent(Person_edit.this,PersonSet.class);
+//                startActivity(intent);
                 finish();
             }
         });
@@ -54,6 +56,8 @@ public class Person_edit extends AppCompatActivity {
         mInformation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(Person_edit.this,User_infromation.class);
+                startActivity(intent);
 
             }
         });

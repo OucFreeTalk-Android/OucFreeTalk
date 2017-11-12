@@ -21,6 +21,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
@@ -46,6 +48,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     TalkAdapter adapter;
     LoaderManager loaderManager;
     private List<Talk> talkList = new ArrayList<Talk>();
+    private List<Talk> talks = new ArrayList<Talk>();
+    private List<Talk> talks_cache = new ArrayList<Talk>();
     private String GET_POST_URL = "http://47.93.222.179/oucfreetalk/getPosts?pclass=1&index=1";
 
     @Override
@@ -56,6 +60,29 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         //设置自定义标题栏
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        final EditText main_search = (EditText) findViewById(R.id.main_search);
+        ImageView search_btn = (ImageView) findViewById(R.id.search_btn);
+        search_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String search = main_search.getText().toString();
+//                talks_cache = talkList;
+//                if(search.equals("")) {
+//                    talkList = talks_cache;
+//                    adapter.notifyDataSetChanged();
+//                }else {
+//                    for (int i = 0; i < talkList.size(); i++) {
+//                        boolean res = talkList.get(i).getArticle_tile().contains(search) || talkList.get(i).getArticle_content().contains(search);
+//                        if (res == true) {
+//                            talks.add(talkList.get(i));
+//                        }
+//                    }
+//                    talkList = talks;
+//                    adapter.notifyDataSetChanged();
+//                }
+
+            }
+        });
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         View draw = navigationView.inflateHeaderView(R.layout.nav_header);
@@ -143,12 +170,14 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         });
 
     }
-
+    public static String filterChinese(String chin){
+        return chin.replaceAll("[\\u4e00-\\u9fa5]", "");
+    }
     public void update(String get_result) throws JSONException {
         JSONObject jsonObject = new JSONObject(get_result);
         int allpage = jsonObject.getInt("allpage");
         JSONArray searchJson = jsonObject.getJSONArray("search");
-        for (int i = allpage-1;i>0; i--) {
+        for (int i = allpage-1;i>=0; i--) {
             JSONObject talk = searchJson.getJSONObject(i);
             String title = talk.getString("title");
             String context = talk.getString("content");

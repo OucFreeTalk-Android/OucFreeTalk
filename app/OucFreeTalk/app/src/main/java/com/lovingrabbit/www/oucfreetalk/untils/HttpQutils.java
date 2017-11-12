@@ -3,6 +3,7 @@ package com.lovingrabbit.www.oucfreetalk.untils;
 import android.util.Log;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -65,5 +66,29 @@ public class HttpQutils {
         Log.e("json:", "{\"id\":\"" + id + "\",\"context\": \"" + context + "\","+ "\"postid\": " + postid +"}");
         return "{\"id\":\"" + id + "\",\"context\": \"" + context + "\","+ "\"postid\": " + postid +"}";
     }
+    public String addReplyJson(String id,String replyId,int position,String content) throws JSONException {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("id",id);
+        jsonObject.put("commentId",position);
+        jsonObject.put("replyid",replyId);
+        jsonObject.put("context",content);
 
+        return jsonObject.toString();
+    }
+    public String EditorJson(String id,String name ,String birth ,String year,String intro ,boolean sex) throws JSONException {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("id",id);
+        jsonObject.put("nikename",name);
+        jsonObject.put("sex",sex);
+        jsonObject.put("birth",birth);
+        jsonObject.put("year",year);
+        jsonObject.put("intro",intro);
+        jsonObject.put("family","");
+        jsonObject.put("ifname",true);
+        jsonObject.put("ifsex",true);
+        jsonObject.put("ifmobile",true);
+        jsonObject.put("ifemail",true);
+        Log.e("Json",jsonObject.toString() );
+        return jsonObject.toString();
+    }
 }

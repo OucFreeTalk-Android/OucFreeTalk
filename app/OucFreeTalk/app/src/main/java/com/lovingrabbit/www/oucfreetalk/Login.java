@@ -60,6 +60,8 @@ public class Login extends AppCompatActivity implements LoaderManager.LoaderCall
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(Login.this, PersonSet.class);
+                startActivity(intent);
                 finish();
             }
         });
@@ -116,6 +118,7 @@ public class Login extends AppCompatActivity implements LoaderManager.LoaderCall
             }
             Intent intent = new Intent(Login.this, PersonSet.class);
             startActivity(intent);
+            finish();
         }else if (log_results == 2 ){
             Toast.makeText(Login.this,"密码错误",Toast.LENGTH_SHORT).show();
         }

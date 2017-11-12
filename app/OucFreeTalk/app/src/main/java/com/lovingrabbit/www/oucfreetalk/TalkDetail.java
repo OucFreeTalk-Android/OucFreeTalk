@@ -37,7 +37,7 @@ public class TalkDetail extends AppCompatActivity implements LoaderManager.Loade
     private String article_title ;
     private String article_tag,result ="";
     private String article_content,owner,time;
-    int postid;
+    int postid,postion;
     String addreply;
     LoaderManager loaderManager;
     private int people_icon;
@@ -117,7 +117,7 @@ public class TalkDetail extends AppCompatActivity implements LoaderManager.Loade
         return true;
     }
     public void initDetail(){
-        Detail detail = new Detail(article_tag,time,article_content,people_icon);
+        Detail detail = new Detail(article_tag,time,owner,article_content,people_icon,1,0);
         detailList.clear();
         detailList.add(detail);
     }
@@ -134,10 +134,11 @@ public class TalkDetail extends AppCompatActivity implements LoaderManager.Loade
 //            String title = talk.getString("title");
                 String context = talk.getString("commentcontext");
                 String user = talk.getString("nikename");
-                int postion =talk.getInt("postlocation");
+                postion = talk.getInt("postlocation");
                 String stuid = talk.getString("id");
                 String time = talk.getString("createtime");
-                Detail detail = new Detail(user, time, context, people_icon);
+                int commentid = talk.getInt("commentid");
+                Detail detail = new Detail(user, time,stuid, context, people_icon,postion,commentid);
                 detailList.add(detail);
             }
         }
@@ -177,9 +178,10 @@ public class TalkDetail extends AppCompatActivity implements LoaderManager.Loade
                     Toast.makeText(this,"发表成功",Toast.LENGTH_SHORT).show();
                     SharedPreferences sharedPreferences = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
                     String username = sharedPreferences.getString("id","");
+                    String nikename = sharedPreferences.getString("nikename","");
                     Date date =new Date();
                     String createTime = dateToString(date);
-                    Detail detail = new Detail(username,createTime,addreply,people_icon);
+                    Detail detail = new Detail(nikename,createTime,username,addreply,people_icon,postion+1,0);
                     detailList.add(detail);
                     adapter.notifyDataSetChanged();
                     break;

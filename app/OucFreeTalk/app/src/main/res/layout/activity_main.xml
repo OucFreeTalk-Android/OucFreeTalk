@@ -39,11 +39,11 @@
                         android:layout_height="match_parent">
 
                         <EditText
-                            android:id="@+id/edit"
+                            android:id="@+id/main_search"
                             android:layout_width="match_parent"
                             android:layout_height="36dp"
+                            android:textColor="#000"
                             android:layout_centerVertical="true"
-
                             android:layout_marginRight="20dp"
                             android:background="@drawable/edittext_bg"
                             android:paddingLeft="15dp">
@@ -54,7 +54,7 @@
                             android:id="@+id/search_btn"
                             android:layout_width="20dp"
                             android:layout_height="20dp"
-                            android:layout_alignRight="@id/edit"
+                            android:layout_alignRight="@id/main_search"
                             android:layout_centerVertical="true"
                             android:layout_marginRight="10dp"
                             android:background="@drawable/magnify" />

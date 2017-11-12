@@ -5,14 +5,30 @@ package com.lovingrabbit.www.oucfreetalk.detailAdapter;
  */
 
 public class Detail {
-    String username,time,content;
-    int people_icon;
+    String username,time,content,id;
+    int people_icon,postlocation,postcID;
+    public Detail(String nikename,String createtime,String mid,String contenttext,int icon,int position,int postcid){
+        username = nikename;
+        time = createtime;
+        id = mid;
+        content =contenttext;
+        people_icon = icon;
+        postlocation = position;
+        postcID = postcid;
+    }
     public Detail(String nikename,String createtime,String contenttext,int icon){
         username = nikename;
         time = createtime;
         content =contenttext;
         people_icon = icon;
+    }
 
+    public int getPostcID() {
+        return postcID;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getUsername() {
@@ -31,4 +47,7 @@ public class Detail {
         return people_icon;
     }
 
+    public int getPostlocation() {
+        return postlocation;
+    }
 }

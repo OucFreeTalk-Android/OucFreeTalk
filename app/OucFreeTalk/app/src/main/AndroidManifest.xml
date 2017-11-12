@@ -13,8 +13,8 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
-            android:launchMode="singleTask"
-            android:name=".LoginHomeActivity">
+            android:name=".LoginHomeActivity"
+            android:launchMode="standard">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,42 +22,34 @@
             </intent-filter>
         </activity>
         <activity
-            android:launchMode="singleTask"
-            android:name=".MainActivity">
-        </activity>
+            android:name=".MainActivity"
+            android:launchMode="standard"></activity>
         <activity
-            android:launchMode="singleTask"
             android:name=".TalkDetail"
-            android:label="" />
+            android:label=""
+            android:launchMode="standard" />
         <activity
-            android:launchMode="singleTask"
-            android:name=".Login">
-
-        </activity>
+            android:name=".Login"
+            android:launchMode="standard"></activity>
         <activity
-            android:launchMode="singleTask"
-            android:name=".Register" >
-        </activity>
+            android:name=".Register"
+            android:launchMode="standard"></activity>
         <activity
-            android:launchMode="singleTask"
-            android:name=".Person_edit" >
-
-        </activity>
+            android:name=".Person_edit"
+            android:launchMode="standard"></activity>
         <activity
-            android:launchMode="singleTask"
-            android:name=".stu_number" >
-
-        </activity>
+            android:name=".stu_number"
+            android:launchMode="standard"></activity>
         <activity
-            android:launchMode="singleTask"
-            android:name=".AddPost">
-
-        </activity>
+            android:name=".AddPost"
+            android:launchMode="standard"></activity>
         <activity
-            android:launchMode="singleTask"
-            android:name=".PersonSet">
-
-        </activity>
+            android:name=".PersonSet"
+            android:launchMode="standard"></activity>
+        <activity
+            android:name=".TalkDetailReply"
+            android:launchMode="standard"></activity>
+        <activity android:name=".User_infromation"></activity>
     </application>
 
 </manifest>

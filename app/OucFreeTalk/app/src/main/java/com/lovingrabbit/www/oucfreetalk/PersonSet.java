@@ -57,6 +57,7 @@ public class PersonSet extends AppCompatActivity implements LoaderManager.Loader
         GET_PERSON_POST_URL = GET_PERSON_POST_URL +username;
         person_user = (TextView) findViewById(R.id.person_username);
         introd = (TextView) findViewById(R.id.person_description);
+
         LinearLayout post = (LinearLayout) findViewById(R.id.person_post);
         LinearLayout find = (LinearLayout) findViewById(R.id.person_find);
         LinearLayout addPost = (LinearLayout) findViewById(R.id.person_add_post);
@@ -93,7 +94,6 @@ public class PersonSet extends AppCompatActivity implements LoaderManager.Loader
                 else {
                     Intent intent = new Intent(PersonSet.this, Person_edit.class);
                     startActivity(intent);
-                    finish();
                 }
             }
         });
@@ -112,7 +112,7 @@ public class PersonSet extends AppCompatActivity implements LoaderManager.Loader
         JSONObject jsonObject = new JSONObject(get_result);
         int allpage = jsonObject.getInt("allpage");
         JSONArray searchJson = jsonObject.getJSONArray("search");
-        for (int i = allpage-1;i>0; i--) {
+        for (int i = allpage-1;i>=0; i--) {
             JSONObject talk = searchJson.getJSONObject(i);
             String title = talk.getString("title");
             String context = talk.getString("content");
@@ -126,6 +126,10 @@ public class PersonSet extends AppCompatActivity implements LoaderManager.Loader
         }
         person_user.setText(nikename);
         introd.setText(intro);
+        SharedPreferences sharedPreferences = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("nikename",nikename);
+        editor.commit();
     }
 
     @Override
