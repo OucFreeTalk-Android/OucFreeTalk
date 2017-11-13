@@ -50,7 +50,10 @@ public class TalkAdapter extends RecyclerView.Adapter<TalkAdapter.ViewHolder> {
         holder.people_icon_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                int position = holder.getAdapterPosition();
+                Talk talk = talkList.get(position);
                 Intent intent = new Intent(parent.getContext(), OtherPerson.class);
+                intent.putExtra("owner",talk.getOwner());
                 parent.getContext().startActivity(intent);
             }
         });

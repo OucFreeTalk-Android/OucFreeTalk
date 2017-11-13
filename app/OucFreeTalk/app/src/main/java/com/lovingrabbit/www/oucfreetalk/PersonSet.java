@@ -42,7 +42,8 @@ public class PersonSet extends AppCompatActivity implements LoaderManager.Loader
     String username;
     List<Person> personList = new ArrayList<Person>();
     LoaderManager loaderManager;
-    LinearLayout noNet;
+    LinearLayout noNet,noPerson_Post;
+    RecyclerView recyclerView;
     boolean isNet;
     private String GET_PERSON_POST_URL = "http://47.93.222.179/oucfreetalk/getPostPerson?id=";
 
@@ -50,7 +51,7 @@ public class PersonSet extends AppCompatActivity implements LoaderManager.Loader
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.person);
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.person_rcy);
+        recyclerView = (RecyclerView) findViewById(R.id.person_rcy);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
         adapter = new PersonAdapter(personList);
@@ -60,7 +61,7 @@ public class PersonSet extends AppCompatActivity implements LoaderManager.Loader
         GET_PERSON_POST_URL = GET_PERSON_POST_URL +username;
         person_user = (TextView) findViewById(R.id.person_username);
         introd = (TextView) findViewById(R.id.person_description);
-
+        noPerson_Post = (LinearLayout) findViewById(R.id.person_noPersonPost);
         LinearLayout post = (LinearLayout) findViewById(R.id.person_post);
         LinearLayout find = (LinearLayout) findViewById(R.id.person_find);
         LinearLayout addPost = (LinearLayout) findViewById(R.id.person_add_post);
@@ -117,18 +118,23 @@ public class PersonSet extends AppCompatActivity implements LoaderManager.Loader
         }
     }
     public void update(String get_result) throws JSONException {
+        Log.e("result", get_result );
         JSONObject jsonObject = new JSONObject(get_result);
         int allpage = jsonObject.getInt("allpage");
+        if (allpage == 0){
+            noPerson_Post.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.GONE);
+        }
+        nikename = jsonObject.getString("nikename");
+        intro = jsonObject.getString("intro");
         JSONArray searchJson = jsonObject.getJSONArray("search");
         for (int i = allpage-1;i>=0; i--) {
             JSONObject talk = searchJson.getJSONObject(i);
             String title = talk.getString("title");
             String context = talk.getString("content");
-            nikename = talk.getString("nikename");
             int id = talk.getInt("id");
             String owner = talk.getString("owner");
             String time =talk.getString("createtime");
-            intro = talk.getString("intro");
             Person person = new Person(R.drawable.nav_icon,R.drawable.apple,title,nikename,context,id,owner,time,intro);
             personList.add(person);
         }

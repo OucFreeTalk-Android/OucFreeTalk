@@ -102,7 +102,7 @@ public class Login extends AppCompatActivity implements LoaderManager.LoaderCall
         if (log_results == 0 ){
             Toast.makeText(Login.this,"用户不存在",Toast.LENGTH_SHORT).show();
         }else if (log_results == 1 ){
-            Toast.makeText(Login.this,"登陆成功",Toast.LENGTH_SHORT).show();
+            Toast.makeText(Login.this,"登录成功",Toast.LENGTH_SHORT).show();
             if (ifSava.isChecked()){
                 SharedPreferences sharedPreferences = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();

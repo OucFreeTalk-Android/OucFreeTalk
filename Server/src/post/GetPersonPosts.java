@@ -50,34 +50,36 @@ public class GetPersonPosts extends HttpServlet{
                 owner = rs.getString("owner");
                 content = rs.getString("contenttext");
                 createtime = rs.getString("createtime");
-                String selectUser = "select nikename,pic,introduction from students where id = \""+ owner + "\"";
-                System.out.println(selectUser);
-                rl = untils.select(selectUser);
-                while (rl.next()) {
-                    nikename = rl.getString("nikename");
-                    pic = rl.getString("pic");
-                    intro = rl.getString("introduction");
-                }
                 jsonObject = new JSONObject();
                 jsonObject.put("id", id);
                 jsonObject.put("title", title);
                 jsonObject.put("owner", owner);
                 jsonObject.put("content", content);
                 jsonObject.put("createtime", createtime);
-                jsonObject.put("nikename", nikename);
                 jsonObject.put("pic", pic);
-                jsonObject.put("intro", intro);
                 System.out.println(jsonObject);
                 System.out.println(page);
                 jsonArray.add(page,jsonObject);
                 page = page +1;
+            }
+            String selectUser = "select nikename,pic,introduction from students where id = "+ username;
+            System.out.println(selectUser);
+            rl = untils.select(selectUser);
+            while (rl.next()) {
+                nikename = rl.getString("nikename");
+                pic = rl.getString("pic");
+                intro = rl.getString("introduction");
             }
             
         } catch (SQLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+        System.out.println(nikename);
+        System.out.println(intro);
         JSONObject returnJSon = new JSONObject();
+        returnJSon.put("nikename", nikename);
+        returnJSon.put("intro", intro);
         returnJSon.put("search", jsonArray);
         returnJSon.put("allpage",page);
         resp.setHeader("content-type","application/json;charset=utf-8");

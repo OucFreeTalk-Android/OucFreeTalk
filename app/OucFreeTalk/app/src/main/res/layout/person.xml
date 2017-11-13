@@ -118,6 +118,26 @@
 
     </LinearLayout>
 
+    <LinearLayout
+
+        android:id="@+id/person_noPersonPost"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/dp_line"
+        android:layout_below="@id/person_head"
+        android:layout_marginBottom="10dp"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="你还什么都没发表呢(´･ω･`)"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
     <ImageView
         android:id="@+id/dp_line"
         android:layout_width="match_parent"
@@ -240,7 +260,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text=" 设置"
+                android:text="我"
                 android:textColor="#333" />
         </LinearLayout>
 

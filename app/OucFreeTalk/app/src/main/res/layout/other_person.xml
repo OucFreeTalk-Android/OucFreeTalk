@@ -8,7 +8,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:id="@+id/person_head"
+        android:id="@+id/other_person_head"
         android:background="@drawable/person_bg"
         android:padding="10dp"
         android:layout_height="250dp">
@@ -21,7 +21,7 @@
             android:layout_centerVertical="true"
             android:src="@drawable/nav_icon" />
         <ImageView
-            android:id="@+id/person_edit_btn"
+            android:id="@+id/other_person_edit_btn"
             android:layout_width="20dp"
             android:layout_height="60dp"
             android:layout_alignParentLeft="true"
@@ -39,7 +39,7 @@
             />
 
         <TextView
-            android:id="@+id/person_description"
+            android:id="@+id/other_person_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
@@ -51,16 +51,18 @@
         <TextView
             android:id="@+id/attention"
             android:layout_width="wrap_content"
+            android:layout_marginBottom="10dp"
             android:layout_height="wrap_content"
-            android:layout_above="@id/person_description"
+            android:layout_above="@id/other_person_description"
             android:layout_centerHorizontal="true"
             android:text="关注:300  粉丝:100"
             android:textColor="#929191"
             android:textSize="14sp" />
 
         <TextView
-            android:id="@+id/person_username"
+            android:id="@+id/other_person_username"
             android:layout_width="wrap_content"
+            android:layout_marginBottom="10dp"
             android:layout_height="wrap_content"
             android:layout_above="@+id/attention"
             android:layout_centerHorizontal="true"
@@ -69,7 +71,7 @@
             android:textSize="16sp" />
 
         <LinearLayout
-            android:id="@+id/person_set"
+            android:id="@+id/other_person_set"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_alignParentEnd="true"
@@ -97,17 +99,17 @@
 
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/person_rcy"
+        android:id="@+id/other_person_rcy"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/person_head">
+        android:layout_below="@id/other_person_head">
 
     </android.support.v7.widget.RecyclerView>
     <LinearLayout
 
-        android:id="@+id/person_noNet"
+        android:id="@+id/other_person_noNet"
         android:layout_above="@id/dp_line"
-        android:layout_below="@id/person_head"
+        android:layout_below="@id/other_person_head"
         android:layout_width="match_parent"
         android:visibility="gone"
         android:orientation="vertical"
@@ -117,6 +119,24 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="抱歉，网络走丢了"
+            android:gravity="center"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+    <LinearLayout
+
+        android:id="@+id/other_person_noPost"
+        android:layout_above="@id/dp_line"
+        android:layout_below="@id/other_person_head"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:orientation="vertical"
+        android:layout_marginBottom="10dp"
+        android:layout_height="match_parent">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="ta还什么都没发表呢(´･ω･`)"
             android:gravity="center"
             android:textSize="16sp" />
 

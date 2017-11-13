@@ -14,6 +14,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.lovingrabbit.www.oucfreetalk.OtherPerson;
 import com.lovingrabbit.www.oucfreetalk.R;
 import com.lovingrabbit.www.oucfreetalk.TalkDetail;
 import com.lovingrabbit.www.oucfreetalk.TalkDetailReply;
@@ -52,6 +54,16 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
                     intent.putExtra("content", detail.getContent());
                     parent.getContext().startActivity(intent);
                 }
+            }
+        });
+        viewHolder.icon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int position = viewHolder.getAdapterPosition();
+                Detail detail = detailList.get(position);
+                Intent intent = new Intent(parent.getContext(), OtherPerson.class);
+                intent.putExtra("owner", detail.getId());
+                parent.getContext().startActivity(intent);
             }
         });
         SharedPreferences sharedPreferences = parent.getContext().getSharedPreferences("userInfo", Context.MODE_PRIVATE);

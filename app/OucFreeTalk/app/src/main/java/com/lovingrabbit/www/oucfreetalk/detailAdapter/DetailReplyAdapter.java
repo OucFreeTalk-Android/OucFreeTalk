@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.lovingrabbit.www.oucfreetalk.OtherPerson;
 import com.lovingrabbit.www.oucfreetalk.R;
 import com.lovingrabbit.www.oucfreetalk.TalkDetailReply;
 
@@ -28,11 +29,21 @@ public class DetailReplyAdapter extends RecyclerView.Adapter<DetailReplyAdapter.
         detailList = details;
     }
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.detail_reply_list,parent,false);
         final DetailReplyAdapter.ViewHolder viewHolder = new DetailReplyAdapter.ViewHolder(view);
         SharedPreferences sharedPreferences = parent.getContext().getSharedPreferences("userInfo", Context.MODE_PRIVATE);
         userId =sharedPreferences.getString("id","");
+        viewHolder.icon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int position = viewHolder.getAdapterPosition();
+                Detail detail = detailList.get(position);
+                Intent intent = new Intent(parent.getContext(), OtherPerson.class);
+                intent.putExtra("owner", detail.getId());
+                parent.getContext().startActivity(intent);
+            }
+        });
         return viewHolder;
     }
     public void buttonSetOnclick(ButtonInterface buttonInterface){
