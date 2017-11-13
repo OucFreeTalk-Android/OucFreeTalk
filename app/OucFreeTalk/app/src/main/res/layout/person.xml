@@ -2,15 +2,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/header"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    android:layout_height="match_parent">
 
     <RelativeLayout
-        android:layout_width="match_parent"
         android:id="@+id/person_head"
+        android:layout_width="match_parent"
+        android:layout_height="210dp"
         android:background="@drawable/person_bg"
-        android:padding="10dp"
-        android:layout_height="210dp">
+        android:padding="10dp">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/icon_img"
@@ -19,14 +18,15 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:src="@drawable/nav_icon" />
+
         <Button
             android:id="@+id/person_edit_btn"
             android:layout_width="60dp"
             android:layout_height="40dp"
             android:layout_alignParentRight="true"
             android:background="@null"
-            android:textSize="16sp"
-            android:text="编辑"/>
+            android:text="编辑"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/person_description"
@@ -86,15 +86,44 @@
 
 
     </RelativeLayout>
+
     <android.support.v7.widget.RecyclerView
-        android:layout_width="match_parent"
         android:id="@+id/person_rcy"
-        android:layout_above="@id/person_tab"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/dp_line"
         android:layout_below="@id/person_head"
-        android:layout_marginBottom="10dp"
-        android:layout_height="match_parent">
+
+        android:layout_marginBottom="10dp">
 
     </android.support.v7.widget.RecyclerView>
+
+    <LinearLayout
+
+        android:id="@+id/person_noNet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/dp_line"
+        android:layout_below="@id/person_head"
+        android:layout_marginBottom="10dp"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="抱歉，网络走丢了"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/dp_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_above="@id/person_tab"
+        android:background="#c7ced4" />
 
     <LinearLayout
         android:id="@+id/person_tab"
@@ -192,6 +221,7 @@
                 android:text=" 通知"
                 android:textColor="#bebebe" />
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/addpost_set"
             android:layout_width="0dp"

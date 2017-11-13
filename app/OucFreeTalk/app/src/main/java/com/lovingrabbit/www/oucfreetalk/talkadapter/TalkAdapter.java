@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
+import com.lovingrabbit.www.oucfreetalk.MainActivity;
+import com.lovingrabbit.www.oucfreetalk.OtherPerson;
 import com.lovingrabbit.www.oucfreetalk.R;
 import com.lovingrabbit.www.oucfreetalk.TalkDetail;
 
@@ -45,6 +47,13 @@ public class TalkAdapter extends RecyclerView.Adapter<TalkAdapter.ViewHolder> {
                 parent.getContext().startActivity(intent);
             }
         });
+        holder.people_icon_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(parent.getContext(), OtherPerson.class);
+                parent.getContext().startActivity(intent);
+            }
+        });
         return holder;
     }
 
@@ -60,6 +69,8 @@ public class TalkAdapter extends RecyclerView.Adapter<TalkAdapter.ViewHolder> {
         holder.article_title_text.setText(talk.getArticle_tile());
         holder.article_tag_text.setText(talk.getArticle_tag());
         holder.article_content_text.setText(talk.getArticle_content());
+        holder.realbody.setText(String.valueOf(talk.getRealbody()-1));
+        holder.updateTime.setText(talk.getTime());
     }
 
     @Override
@@ -72,8 +83,8 @@ public class TalkAdapter extends RecyclerView.Adapter<TalkAdapter.ViewHolder> {
         ImageView people_icon_img;
         ImageView isImg;
         TextView article_title_text;
-        TextView article_tag_text;
-        TextView article_content_text;
+        TextView article_tag_text,realbody;
+        TextView article_content_text,updateTime;
         public ViewHolder(View itemView) {
             super(itemView);
             talkView = itemView;
@@ -82,6 +93,8 @@ public class TalkAdapter extends RecyclerView.Adapter<TalkAdapter.ViewHolder> {
             article_title_text = (TextView) itemView.findViewById(R.id.airtcle_title);
             article_tag_text = (TextView) itemView.findViewById(R.id.airticle_tag);
             article_content_text = (TextView) itemView.findViewById(R.id.airtcle_content);
+            realbody = (TextView) itemView.findViewById(R.id.post_num);
+            updateTime = (TextView) itemView.findViewById(R.id.updatetime);
         }
     }
 }

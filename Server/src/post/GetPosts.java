@@ -28,6 +28,7 @@ public class GetPosts extends HttpServlet {
     String nikename;
     String pic;
     int id;
+    int outbody;
     int realbody;
     int body;
     int page;
@@ -42,7 +43,7 @@ public class GetPosts extends HttpServlet {
         int index = Integer.parseInt(req.getParameter("index"));
         int perpage = 20;
         jsonArray = new JSONArray();
-        String selectPost = "SELECT * FROM posts where ownclass = "+ pclass;
+        String selectPost = "SELECT * FROM posts where ownclass = "+ pclass +" order by updatetime desc";
         System.out.println(selectPost);
         Untils untils = new Untils();
         page = 0;
@@ -52,8 +53,9 @@ public class GetPosts extends HttpServlet {
                 id = rs.getInt("id");
                 title = rs.getString("title");
                 owner = rs.getString("owner");
+                outbody = rs.getInt("realbody");
                 content = rs.getString("contenttext");
-                createtime = rs.getString("createtime");
+                updatetime = rs.getString("updatetime");
                 String selectUser = "select nikename,pic from students where id = \""+ owner + "\"";
                 System.out.println(selectUser);
                 rl = untils.select(selectUser);
@@ -65,8 +67,9 @@ public class GetPosts extends HttpServlet {
                 jsonObject.put("id", id);
                 jsonObject.put("title", title);
                 jsonObject.put("owner", owner);
+                jsonObject.put("realbody", outbody);
                 jsonObject.put("content", content);
-                jsonObject.put("createtime", createtime);
+                jsonObject.put("updatetime", updatetime);
                 jsonObject.put("nikename", nikename);
                 jsonObject.put("pic", pic);
                 System.out.println(jsonObject);

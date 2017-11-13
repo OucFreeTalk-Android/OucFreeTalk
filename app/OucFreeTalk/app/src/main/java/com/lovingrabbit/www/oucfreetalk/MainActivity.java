@@ -29,6 +29,7 @@ import android.widget.RelativeLayout;
 import com.lovingrabbit.www.oucfreetalk.talkadapter.Talk;
 import com.lovingrabbit.www.oucfreetalk.talkadapter.TalkAdapter;
 import com.lovingrabbit.www.oucfreetalk.untils.GetPostAysncTaskLoader;
+import com.lovingrabbit.www.oucfreetalk.untils.NetworkConnected;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -47,6 +48,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     NavigationView navigationView;
     TalkAdapter adapter;
     LoaderManager loaderManager;
+    boolean isNet;
+    RecyclerView recyclerView;
+    LinearLayout noNet;
     private List<Talk> talkList = new ArrayList<Talk>();
     private List<Talk> talks = new ArrayList<Talk>();
     private List<Talk> talks_cache = new ArrayList<Talk>();
@@ -65,21 +69,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         search_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String search = main_search.getText().toString();
-//                talks_cache = talkList;
-//                if(search.equals("")) {
-//                    talkList = talks_cache;
-//                    adapter.notifyDataSetChanged();
-//                }else {
-//                    for (int i = 0; i < talkList.size(); i++) {
-//                        boolean res = talkList.get(i).getArticle_tile().contains(search) || talkList.get(i).getArticle_content().contains(search);
-//                        if (res == true) {
-//                            talks.add(talkList.get(i));
-//                        }
-//                    }
-//                    talkList = talks;
-//                    adapter.notifyDataSetChanged();
-//                }
 
             }
         });
@@ -95,6 +84,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             actionBar.setHomeAsUpIndicator(R.drawable.logo);
         }
 
+
         //home键被点击滑出菜单栏,菜单栏默认选中第一个
         navigationView.setCheckedItem(R.id.nav_call);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -104,6 +94,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 return true;
             }
         });
+
         //下拉刷新
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
         swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
@@ -126,20 +117,28 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 }
             }
         });
-        loaderManager = getLoaderManager();
 
-        // Initialize the loader. Pass in the int ID constant defined above and pass in null for
-        // the bundle. Pass in this activity for the LoaderCallbacks parameter (which is valid
-        // because this activity implements the LoaderCallbacks interface).
-        loaderManager.initLoader(0, null, MainActivity.this);
-        final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.main_recyview);
+        recyclerView = (RecyclerView) findViewById(R.id.main_recyview);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
         adapter = new TalkAdapter(talkList);
         recyclerView.setAdapter(adapter);
-        SharedPreferences sharedPreferences = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
-        String username = sharedPreferences.getString("id","");
-        Log.e("username:",username);
+
+        noNet = (LinearLayout) findViewById(R.id.noNet);
+        isNet = new NetworkConnected().isNetworkConnected(this);
+        if (isNet) {
+            loaderManager = getLoaderManager();
+
+            // Initialize the loader. Pass in the int ID constant defined above and pass in null for
+            // the bundle. Pass in this activity for the LoaderCallbacks parameter (which is valid
+            // because this activity implements the LoaderCallbacks interface).
+            loaderManager.initLoader(0, null, MainActivity.this);
+            noNet.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
+        }else {
+            noNet.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.GONE);
+        }
         LinearLayout post = (LinearLayout) findViewById(R.id.post);
         LinearLayout find = (LinearLayout) findViewById(R.id.find);
         LinearLayout addPost = (LinearLayout) findViewById(R.id.add_post);
@@ -157,7 +156,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this,AddPost.class);
                 startActivity(intent);
-                finish();
             }
         });
         set.setOnClickListener(new View.OnClickListener() {
@@ -173,19 +171,21 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public static String filterChinese(String chin){
         return chin.replaceAll("[\\u4e00-\\u9fa5]", "");
     }
+
     public void update(String get_result) throws JSONException {
         JSONObject jsonObject = new JSONObject(get_result);
         int allpage = jsonObject.getInt("allpage");
         JSONArray searchJson = jsonObject.getJSONArray("search");
-        for (int i = allpage-1;i>=0; i--) {
+        for (int i =0;i<allpage; i++) {
             JSONObject talk = searchJson.getJSONObject(i);
             String title = talk.getString("title");
             String context = talk.getString("content");
             String user = talk.getString("nikename");
             int id = talk.getInt("id");
             String owner = talk.getString("owner");
-            String time =talk.getString("createtime");
-            Talk talk1 = new Talk(R.drawable.nav_icon,R.drawable.apple,title,user,context,id,owner,time);
+            String time =talk.getString("updatetime");
+            int realbody = talk.getInt("realbody");
+            Talk talk1 = new Talk(R.drawable.nav_icon,R.drawable.apple,title,user,context,id,owner,time,realbody);
             talkList.add(talk1);
         }
     }
@@ -200,7 +200,16 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     public void refresh(){
-        loaderManager.restartLoader(0, null, MainActivity.this);
+        isNet = new NetworkConnected().isNetworkConnected(this);
+        if (isNet) {
+            loaderManager.restartLoader(0, null, MainActivity.this);
+            noNet.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
+        }else {
+            noNet.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.GONE);
+            swipeRefreshLayout.setRefreshing(false);
+        }
     }
 
     @Override

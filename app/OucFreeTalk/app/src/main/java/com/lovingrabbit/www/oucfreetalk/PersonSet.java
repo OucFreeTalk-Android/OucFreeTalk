@@ -22,6 +22,7 @@ import com.lovingrabbit.www.oucfreetalk.personAdapter.PersonAdapter;
 import com.lovingrabbit.www.oucfreetalk.talkadapter.Talk;
 import com.lovingrabbit.www.oucfreetalk.talkadapter.TalkAdapter;
 import com.lovingrabbit.www.oucfreetalk.untils.GetPostAysncTaskLoader;
+import com.lovingrabbit.www.oucfreetalk.untils.NetworkConnected;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -41,6 +42,8 @@ public class PersonSet extends AppCompatActivity implements LoaderManager.Loader
     String username;
     List<Person> personList = new ArrayList<Person>();
     LoaderManager loaderManager;
+    LinearLayout noNet;
+    boolean isNet;
     private String GET_PERSON_POST_URL = "http://47.93.222.179/oucfreetalk/getPostPerson?id=";
 
     @Override
@@ -76,7 +79,6 @@ public class PersonSet extends AppCompatActivity implements LoaderManager.Loader
             public void onClick(View v) {
                 Intent intent = new Intent(PersonSet.this,AddPost.class);
                 startActivity(intent);
-                finish();
             }
         });
         final Button edit = (Button) findViewById(R.id.person_edit_btn);
@@ -104,9 +106,15 @@ public class PersonSet extends AppCompatActivity implements LoaderManager.Loader
                 loaderManager.restartLoader(0,null,PersonSet.this);
             }
         });
-
-        loaderManager = getLoaderManager();
-        loaderManager.initLoader(0,null,PersonSet.this);
+        noNet = (LinearLayout) findViewById(R.id.person_noNet);
+        isNet = new NetworkConnected().isNetworkConnected(this);
+        if (isNet) {
+            loaderManager = getLoaderManager();
+            loaderManager.initLoader(0, null, PersonSet.this);
+        }else {
+            recyclerView.setVisibility(View.GONE);
+            noNet.setVisibility(View.VISIBLE);
+        }
     }
     public void update(String get_result) throws JSONException {
         JSONObject jsonObject = new JSONObject(get_result);

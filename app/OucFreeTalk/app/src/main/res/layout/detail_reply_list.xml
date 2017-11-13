@@ -13,12 +13,12 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/detail_head"
+            android:id="@+id/detail_reply_head"
             android:orientation="horizontal">
             <de.hdodenhof.circleimageview.CircleImageView
                 android:layout_width="70dp"
                 android:layout_height="70dp"
-                android:id="@+id/detail_icon"
+                android:id="@+id/detail_reply_icon"
                 android:src="@drawable/nav_icon"/>
             <LinearLayout
                 android:layout_marginLeft="10dp"
@@ -31,7 +31,7 @@
                     android:layout_height="40dp">
                     <TextView
                         android:layout_width="wrap_content"
-                        android:id="@+id/detail_username"
+                        android:id="@+id/detail_reply_username"
                         android:gravity="center_vertical"
                         android:textSize="20sp"
                         android:text="这是一个名字"
@@ -39,7 +39,7 @@
                         android:layout_height="match_parent" />
                     <TextView
                         android:layout_marginLeft="15dp"
-                        android:id="@+id/detail_owner"
+                        android:id="@+id/detail_reply_owner"
                         android:gravity="center_vertical"
                         android:textColor="#354dea"
                         android:layout_width="wrap_content"
@@ -49,7 +49,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
                         <Button
-                            android:id="@+id/delete_comment"
+                            android:id="@+id/delete_reply"
                             android:layout_width="60dp"
                             android:layout_height="match_parent"
                             android:textColor="#7c7c7c"
@@ -58,27 +58,13 @@
                             android:text="删除"/>
                     </RelativeLayout>
                 </LinearLayout>
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:orientation="horizontal"
                     android:layout_height="match_parent">
+
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:text="楼主"
-                        android:id="@+id/detail_position_info"
-                        android:textColor="#383838"
-                        android:layout_marginTop="10dp"
-                        android:layout_height="match_parent" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:text="|"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_height="match_parent" />
-                    <TextView
-                        android:id="@+id/detail_time"
+                        android:id="@+id/detail_reply_time"
                         android:layout_marginTop="10dp"
                         android:text="#这是一个时间"
                         android:layout_width="match_parent"
@@ -93,47 +79,17 @@
             android:orientation="vertical"
             android:layout_marginTop="10dp"
             android:layout_height="wrap_content"
-            android:layout_below="@id/detail_head">
+            android:layout_below="@id/detail_reply_head">
 
             <TextView
                 android:layout_margin="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/detail_content"
+                android:id="@+id/detail_reply_content"
                 android:textSize="16sp"
                 android:text="这是一个回复"
                 android:maxLines="3"
                 />
-
-        </LinearLayout>
-        <LinearLayout
-            android:layout_marginTop="10dp"
-            android:layout_width="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="right"
-            android:id="@+id/post_reply_num_box"
-            android:layout_height="wrap_content">
-            <ImageView
-                android:id="@+id/post_reply_img"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/chat_bubble"
-                />
-            <TextView
-                android:id="@+id/post_reply_num"
-                android:layout_marginRight="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="1000"/>
-            <!--<ImageView-->
-            <!--android:layout_width="10dp"-->
-            <!--android:src="@drawable/thumbs_up"-->
-            <!--android:layout_height="10dp" />-->
-            <!--<TextView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:text="800"-->
-            <!--android:layout_height="wrap_content" />-->
 
         </LinearLayout>
 

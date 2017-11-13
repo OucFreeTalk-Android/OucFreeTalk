@@ -17,7 +17,7 @@ import net.sf.json.JSONObject;
 
 public class GetPost extends HttpServlet{
 	ResultSet rs;
-    ResultSet rl;
+    ResultSet rl,rp;
     String returnJSon;
     int commentid;
     String createtime;
@@ -28,7 +28,7 @@ public class GetPost extends HttpServlet{
     String pic;
     int postlocation;
     int realbody;
-    int body;
+    int body,replybody;
     int page;
     JSONObject jsonObject;
     JSONArray jsonArray;
@@ -53,15 +53,21 @@ public class GetPost extends HttpServlet{
                 createtime = rs.getString("createtime");
                 postlocation = rs.getInt("postlocation");
                 String selectUser = "select nikename,pic from students where id = \""+ owner + "\"";
+                String countReply = "select count(ownlocation) as replybody from postreply where ownlocation = "+ commentid;
                 System.out.println(selectUser);
                 rl = untils.select(selectUser);
                 while (rl.next()) {
                     nikename = rl.getString("nikename");
                     pic = rl.getString("pic");
                 }
+                rp = untils.select(countReply);
+                while (rp.next()) {
+                	replybody=rp.getInt("replybody");
+				}
                 jsonObject = new JSONObject();
                 jsonObject.put("commentid", commentid);
                 jsonObject.put("id", owner);
+                jsonObject.put("replybody", replybody);
                 jsonObject.put("postlocation", postlocation);
                 jsonObject.put("commentcontext", content);
                 jsonObject.put("createtime", createtime);

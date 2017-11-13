@@ -109,4 +109,32 @@
     <servlet-name>getComment</servlet-name>  
     <url-pattern>/getComment</url-pattern> 
   </servlet-mapping> 
+  
+  <servlet> 
+    <servlet-name>deletePost</servlet-name>  
+    <servlet-class>post.DeletePost</servlet-class> 
+  </servlet>  
+  <servlet-mapping> 
+    <servlet-name>deletePost</servlet-name>  
+    <url-pattern>/deletePost</url-pattern> 
+  </servlet-mapping> 
+  
+  <servlet> 
+    <servlet-name>deleteComment</servlet-name>  
+    <servlet-class>post.DeleteComment</servlet-class> 
+  </servlet>  
+  <servlet-mapping> 
+    <servlet-name>deleteComment</servlet-name>  
+    <url-pattern>/deleteComment</url-pattern> 
+  </servlet-mapping> 
+  
+  <servlet> 
+    <servlet-name>deleteReply</servlet-name>  
+    <servlet-class>post.DeleteReply</servlet-class> 
+  </servlet>  
+  <servlet-mapping> 
+    <servlet-name>deleteReply</servlet-name>  
+    <url-pattern>/deleteReply</url-pattern> 
+  </servlet-mapping> 
+  
 </web-app>

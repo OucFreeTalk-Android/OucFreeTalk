@@ -33,12 +33,25 @@
                     android:id="@+id/airtcle_detail_title"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginLeft="15dp"
                     android:text="这是一个标题"
                     android:gravity="center_vertical"
                     android:maxLines="1"
                     android:textColor="#222"
                     android:textSize="20sp" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <Button
+                        android:id="@+id/delete_post"
+                        android:layout_width="70dp"
+                        android:layout_height="match_parent"
+                        android:textColor="#7c7c7c"
+                        android:layout_alignParentRight="true"
+                        android:background="@null"
+                        android:text="删除"/>
+                </RelativeLayout>
+
             </android.support.v7.widget.Toolbar>
         </android.support.design.widget.AppBarLayout>
     </android.support.design.widget.CoordinatorLayout>

@@ -46,6 +46,10 @@ public class Untils {
 		Statement stmt = connection.createStatement();
 		stmt.executeUpdate(sql);
 	}
+	public void delete(String sql) throws SQLException {
+		Statement stmt = connection.createStatement();
+		stmt.executeUpdate(sql);
+	}
 	
 	
 }

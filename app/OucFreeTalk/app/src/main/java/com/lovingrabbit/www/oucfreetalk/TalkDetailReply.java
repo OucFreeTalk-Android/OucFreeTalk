@@ -3,12 +3,14 @@ package com.lovingrabbit.www.oucfreetalk;
 import android.annotation.SuppressLint;
 import android.app.LoaderManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,6 +22,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 
+import com.lovingrabbit.www.oucfreetalk.detailAdapter.ButtonInterface;
 import com.lovingrabbit.www.oucfreetalk.detailAdapter.Detail;
 
 import com.lovingrabbit.www.oucfreetalk.detailAdapter.DetailReplyAdapter;
@@ -48,8 +51,10 @@ public class TalkDetailReply extends AppCompatActivity implements LoaderManager.
     LoaderManager loaderManager;
     String ADD_REPLY_URL = "http://47.93.222.179/oucfreetalk/addReply";
     String GET_COMMENT_URL;
-    String addreply,replyId,result="";
+    String addreply,replyId,ownerId,result="",del_result="";
     int person_icon,postlocation,commentid;
+    String DELETE_REPLY_URL;
+    String replyid;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +66,8 @@ public class TalkDetailReply extends AppCompatActivity implements LoaderManager.
         postlocation = intent.getIntExtra("postlocation",0);
         person_icon = intent.getIntExtra("icon",0);
         replyId = intent.getStringExtra("id");
+        ownerId = intent.getStringExtra("ownerId");
+        Log.e("ownerID", ownerId );
         commentid = intent.getIntExtra("commentid",0);
         GET_COMMENT_URL ="http://47.93.222.179/oucfreetalk/getComment?commentid="+ commentid +"&index=1";
         loaderManager = getLoaderManager();
@@ -91,9 +98,37 @@ public class TalkDetailReply extends AppCompatActivity implements LoaderManager.
         recyclerView.setLayoutManager(linearLayoutManager);
         adapter = new DetailReplyAdapter(detailList);
         recyclerView.setAdapter(adapter);
+        adapter.buttonSetOnclick(new ButtonInterface() {
+            @Override
+            public void onclick(View view, int position) {
+                DELETE_REPLY_URL = "http://47.93.222.179/oucfreetalk/deleteReply?replyid="+detailList.get(position).getReplyId();
+                showReplyAlertDialog();
+            }
+        });
+    }
+    public void showReplyAlertDialog(){
+        AlertDialog.Builder alertDialogBuilder=new AlertDialog.Builder(this)
+                .setTitle("确定要删除该回复？")
+                .setMessage("删除后无法恢复");
+        alertDialogBuilder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                loaderManager = getLoaderManager();
+                loaderManager.initLoader(3,null,TalkDetailReply.this);
+            }
+        });
+        alertDialogBuilder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();//将dialog显示出来
     }
     public void initreply(){
-        Detail detail = new Detail(username,time,content,person_icon);
+        Detail detail = new Detail(username,time,ownerId,replyId,content,person_icon,"");
         detailList.clear();
         detailList.add(detail);
     }
@@ -101,7 +136,9 @@ public class TalkDetailReply extends AppCompatActivity implements LoaderManager.
         JSONObject jsonObject = new JSONObject(get_result);
         if(jsonObject.has("result")) {
             result = jsonObject.getString("result");
-        }else {
+        }else if(jsonObject.has("del_result")){
+            del_result = jsonObject.getString("del_result");
+        } else {
             initreply();
             int allpage = jsonObject.getInt("allpage");
             JSONArray searchJson = jsonObject.getJSONArray("search");
@@ -110,7 +147,9 @@ public class TalkDetailReply extends AppCompatActivity implements LoaderManager.
                 String context = talk.getString("commentcontext");
                 String user = talk.getString("nikename");
                 String time = talk.getString("createtime");
-                Detail detail = new Detail(user,time,context, person_icon);
+                String id = talk.getString("stuid");
+                replyid = talk.getString("id");
+                Detail detail = new Detail(user,time,ownerId,id,context, person_icon,replyid);
                 detailList.add(detail);
             }
         }
@@ -129,6 +168,8 @@ public class TalkDetailReply extends AppCompatActivity implements LoaderManager.
             }else {
                 return new AddReplyAsyncTaskLoader(this,Mid,replyId,commentid,addreply,ADD_REPLY_URL);
             }
+        }else if (id == 3){
+            return new GetReplyAysncTaskLoader(this,DELETE_REPLY_URL);
         }
         return null;
     }
@@ -141,27 +182,39 @@ public class TalkDetailReply extends AppCompatActivity implements LoaderManager.
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        if (result.equals("")){
-            adapter.notifyDataSetChanged();
-        }else {
+        if (!result.equals("")){
             switch (result){
                 case "1":
                     Toast.makeText(this,"回复成功",Toast.LENGTH_SHORT).show();
                     SharedPreferences sharedPreferences = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
                     String nikename = sharedPreferences.getString("nikename","");
+                    String userid = sharedPreferences.getString("id","");
                     Date date =new Date();
                     String createTime = dateToString(date);
-                    Detail detail = new Detail(nikename,createTime,addreply,person_icon);
+                    Detail detail = new Detail(nikename,createTime,ownerId,userid,addreply,person_icon,"");
                     detailList.add(detail);
                     adapter.notifyDataSetChanged();
+                    finish();
                     break;
                 default:
                     Toast.makeText(this,"发表失败",Toast.LENGTH_SHORT).show();
                     break;
             }
+        }else if (!del_result.equals("")){
+            switch (del_result) {
+                case "1":
+                    Toast.makeText(this, "删除成功", Toast.LENGTH_SHORT).show();
+//                    Intent intent = new Intent(TalkDetailReply.this, TalkDetail.class);
+//                    startActivity(intent);
+                    finish();
+                    break;
+                default:
+                    Toast.makeText(this, "删除失败", Toast.LENGTH_SHORT).show();
+                    break;
+            }
+        }else{
+                adapter.notifyDataSetChanged();
         }
-
-
     }
 
     @Override

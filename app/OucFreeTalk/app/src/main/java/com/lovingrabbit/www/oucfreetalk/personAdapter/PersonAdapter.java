@@ -39,7 +39,7 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.ViewHolder
                 intent.putExtra("owner",person.getOwner());
                 intent.putExtra("time",person.getTime());
                 intent.putExtra("title",person.getArticle_tile());
-                intent.putExtra("username",person.getNikename());
+                intent.putExtra("tag",person.getNikename());
                 intent.putExtra("icon",person.getPeople_icon());
                 intent.putExtra("content",person.getArticle_content());
                 parent.getContext().startActivity(intent);

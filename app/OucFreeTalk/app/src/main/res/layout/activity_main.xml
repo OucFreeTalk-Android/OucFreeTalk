@@ -202,7 +202,21 @@
                     android:layout_height="match_parent">
 
                 </android.support.v7.widget.RecyclerView>
+
             </android.support.v4.widget.SwipeRefreshLayout>
+            <LinearLayout
+                android:id="@+id/noNet"
+                android:visibility="gone"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="抱歉，网络走丢了"
+                    android:gravity="center"
+                    android:textSize="16sp" />
+            </LinearLayout>
 
         </RelativeLayout>
 

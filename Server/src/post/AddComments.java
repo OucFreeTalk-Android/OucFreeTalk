@@ -20,7 +20,7 @@ import Until.Untils;
 
 public class AddComments extends HttpServlet{
 	String id,context,createTime;
-	int postId,realbody;
+	int postId,body;
 	String truePassword = null;
 	ResultSet rs;
 	String returnJSon;
@@ -51,12 +51,12 @@ public class AddComments extends HttpServlet{
            throw new IOException("Error parsing JSON request string");
          }
          Untils untils = new Untils();
-         String select_sql = "select realbody from posts where id = "+postId;
+         String select_sql = "select body from posts where id = "+postId;
          System.out.println(select_sql);
          try {
 			rs = untils.select(select_sql);
 			while (rs.next()) {
-	             realbody = rs.getInt("realbody");
+	             body = rs.getInt("body");
 	         }
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
@@ -66,9 +66,9 @@ public class AddComments extends HttpServlet{
 		}
          Date date = new Date();
          createTime = dateToString(date);
-         realbody = realbody+1;
+         body = body+1;
  		 String sql = "insert into postc(postlocation,owner,createtime,body,ownpost,state) "
- 				 +"Values("+realbody+",\""+ id + "\",\"" + createTime +"\",\"" + context+"\","+ postId+ ","+true+")";
+ 				 +"Values("+body+",\""+ id + "\",\"" + createTime +"\",\"" + context+"\","+ postId+ ","+true+")";
  		 System.out.println(sql);
 		 try {
 			untils.insert(sql);
@@ -78,7 +78,7 @@ public class AddComments extends HttpServlet{
 			returnJSon = "{\"result\": \"" + 2 + "\" }";
 		}
 		 returnJSon = "{\"result\": \"" + 1 + "\" }";
-		 String update_Sql = "update posts set updatetime = \""+ createTime+"\",realbody = "+realbody+",body = " +realbody+" where id = "+postId;
+		 String update_Sql = "update posts set updatetime = \""+ createTime+"\",realbody = realbody+1,body = body+1 where id = "+postId;
  		System.out.println(update_Sql);
 		 try {
 			untils.update(update_Sql);
