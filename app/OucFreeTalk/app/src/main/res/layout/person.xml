@@ -37,16 +37,38 @@
             android:text="简单介绍下自己把"
             android:textColor="#929191"
             android:textSize="14sp" />
-
-        <TextView
+        <LinearLayout
             android:id="@+id/attention"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:orientation="horizontal"
             android:layout_above="@id/person_description"
             android:layout_centerHorizontal="true"
-            android:text="关注:300,粉丝:100"
-            android:textColor="#929191"
-            android:textSize="14sp" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="关注:"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_marginRight="10dp"
+                android:id="@+id/MeFocus"
+                android:layout_height="wrap_content"
+                android:text="300"
+                android:textColor="#929191"
+                android:textSize="14sp" />
+            <TextView
+                android:layout_marginLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="粉丝:"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="100"
+                android:id="@+id/FocusMe"
+                android:textColor="#929191"
+                android:textSize="14sp" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/person_username"
@@ -166,13 +188,13 @@
                 android:layout_height="30dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="6dp"
-                android:src="@drawable/news2" />
+                android:src="@drawable/globe2" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text=" 帖子"
+                android:text="发现"
                 android:textColor="#bebebe" />
         </LinearLayout>
 
@@ -188,13 +210,13 @@
                 android:layout_height="30dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="6dp"
-                android:src="@drawable/globe2" />
+                android:src="@drawable/news2" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text=" 发现"
+                android:text="关注"
                 android:textColor="#bebebe" />
         </LinearLayout>
 
@@ -216,7 +238,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text=" 发表"
+                android:text="发表"
                 android:textColor="#bebebe" />
         </LinearLayout>
 

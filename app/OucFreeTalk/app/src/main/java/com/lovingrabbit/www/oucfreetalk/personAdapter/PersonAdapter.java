@@ -60,6 +60,8 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.ViewHolder
         holder.article_title_text.setText(person.getArticle_tile());
         holder.article_tag_text.setText(person.getNikename());
         holder.article_content_text.setText(person.getArticle_content());
+        holder.realbody.setText(String.valueOf(person.getRealbody()-1));
+        holder.updateTime.setText(person.getTime());
     }
 
     @Override
@@ -72,8 +74,9 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.ViewHolder
         ImageView people_icon_img;
         ImageView isImg;
         TextView article_title_text;
-        TextView article_tag_text;
+        TextView article_tag_text,updateTime;
         TextView article_content_text;
+        TextView realbody;
         public ViewHolder(View itemView) {
             super(itemView);
             personView = itemView;
@@ -82,6 +85,8 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.ViewHolder
             article_title_text = (TextView) itemView.findViewById(R.id.airtcle_title);
             article_tag_text = (TextView) itemView.findViewById(R.id.airticle_tag);
             article_content_text = (TextView) itemView.findViewById(R.id.airtcle_content);
+            realbody = (TextView) itemView.findViewById(R.id.post_num);
+            updateTime = (TextView) itemView.findViewById(R.id.updatetime);
         }
     }
 }

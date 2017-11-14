@@ -31,6 +31,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -82,7 +84,6 @@ public class TalkDetail extends AppCompatActivity implements LoaderManager.Loade
         }
         titleView.setText(article_title);
         GET_POST_URL = "http://47.93.222.179/oucfreetalk/getPost?postid="+ postid +"&index=1";
-        article_content = article_content+"  "+postid +" "+owner;
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.detail_rcy);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -188,7 +189,8 @@ public class TalkDetail extends AppCompatActivity implements LoaderManager.Loade
         detailList.clear();
         detailList.add(detail);
     }
-    public void update(String get_result) throws JSONException {
+    public void update(String get_result) throws JSONException, ParseException {
+        Log.e("result_detail", get_result);
         JSONObject jsonObject = new JSONObject(get_result);
         if(jsonObject.has("result")) {
             result = jsonObject.getString("result");
@@ -206,6 +208,8 @@ public class TalkDetail extends AppCompatActivity implements LoaderManager.Loade
                 postion = talk.getInt("postlocation");
                 String stuid = talk.getString("id");
                 String time = talk.getString("createtime");
+                Date date = StringToDate(time);
+                time = dateToString(date);
                 int commentid = talk.getInt("commentid");
                 int replybody = talk.getInt("replybody");
                 Detail detail = new Detail(user, time,stuid, context, people_icon,postion,commentid,replybody);
@@ -243,6 +247,8 @@ public class TalkDetail extends AppCompatActivity implements LoaderManager.Loade
             update(data);
         } catch (JSONException e) {
             e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
         if (!result.equals("")){
             switch (result) {
@@ -279,9 +285,14 @@ public class TalkDetail extends AppCompatActivity implements LoaderManager.Loade
         }
 
     }
+    public static Date StringToDate(String time) throws ParseException {
+        DateFormat format =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = format.parse(time);
+        return date;
+    }
     public static String dateToString(Date time){
         SimpleDateFormat formatter;
-        formatter = new SimpleDateFormat ("yyyy-MM-dd HH:mm:ss");
+        formatter = new SimpleDateFormat ("yyyy-MM-dd HH:mm");
         String ctime = formatter.format(time);
         return ctime;
     }

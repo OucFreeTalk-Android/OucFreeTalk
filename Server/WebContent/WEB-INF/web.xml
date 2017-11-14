@@ -111,6 +111,15 @@
   </servlet-mapping> 
   
   <servlet> 
+    <servlet-name>getMeFocusPost</servlet-name>  
+    <servlet-class>post.GetMeFocusPost</servlet-class> 
+  </servlet>  
+  <servlet-mapping> 
+    <servlet-name>getMeFocusPost</servlet-name>  
+    <url-pattern>/getMeFocusPost</url-pattern> 
+  </servlet-mapping> 
+  
+  <servlet> 
     <servlet-name>deletePost</servlet-name>  
     <servlet-class>post.DeletePost</servlet-class> 
   </servlet>  
@@ -136,5 +145,42 @@
     <servlet-name>deleteReply</servlet-name>  
     <url-pattern>/deleteReply</url-pattern> 
   </servlet-mapping> 
+  
+  <servlet> 
+    <servlet-name>addFocus</servlet-name>  
+    <servlet-class>friend.AddFocus</servlet-class> 
+  </servlet>  
+  <servlet-mapping> 
+    <servlet-name>addFocus</servlet-name>  
+    <url-pattern>/addFocus</url-pattern> 
+  </servlet-mapping> 
+  
+  <servlet> 
+    <servlet-name>getFocusMe</servlet-name>  
+    <servlet-class>friend.GetFocusMe</servlet-class> 
+  </servlet>  
+  <servlet-mapping> 
+    <servlet-name>getFocusMe</servlet-name>  
+    <url-pattern>/getFocusMe</url-pattern> 
+  </servlet-mapping> 
+  
+  <servlet> 
+    <servlet-name>getMeFocus</servlet-name>  
+    <servlet-class>friend.GetMeFocus</servlet-class> 
+  </servlet>  
+  <servlet-mapping> 
+    <servlet-name>getMeFocus</servlet-name>  
+    <url-pattern>/getMeFocus</url-pattern> 
+  </servlet-mapping> 
+  
+  <servlet> 
+    <servlet-name>deleteMeFocus</servlet-name>  
+    <servlet-class>friend.DeleteMeFocus</servlet-class> 
+  </servlet>  
+  <servlet-mapping> 
+    <servlet-name>deleteMeFocus</servlet-name>  
+    <url-pattern>/deleteMeFocus</url-pattern> 
+  </servlet-mapping>
+ 
   
 </web-app>

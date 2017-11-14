@@ -37,7 +37,7 @@ import java.util.List;
 
 public class PersonSet extends AppCompatActivity implements LoaderManager.LoaderCallbacks<String>{
     PersonAdapter adapter;
-    TextView person_user,introd;
+    TextView person_user,introd,mfocus,mbefocus;
     String intro,nikename;
     String username;
     List<Person> personList = new ArrayList<Person>();
@@ -45,7 +45,7 @@ public class PersonSet extends AppCompatActivity implements LoaderManager.Loader
     LinearLayout noNet,noPerson_Post;
     RecyclerView recyclerView;
     boolean isNet;
-    private String GET_PERSON_POST_URL = "http://47.93.222.179/oucfreetalk/getPostPerson?id=";
+    private String GET_PERSON_POST_URL ;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,9 +56,12 @@ public class PersonSet extends AppCompatActivity implements LoaderManager.Loader
         recyclerView.setLayoutManager(linearLayoutManager);
         adapter = new PersonAdapter(personList);
         recyclerView.setAdapter(adapter);
+        mfocus = (TextView) findViewById(R.id.FocusMe);
+        mbefocus = (TextView) findViewById(R.id.MeFocus);
         SharedPreferences sharedPreferences = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
         username = sharedPreferences.getString("id","");
-        GET_PERSON_POST_URL = GET_PERSON_POST_URL +username;
+        Log.e("username:", username );
+        GET_PERSON_POST_URL = "http://47.93.222.179/oucfreetalk/getPostPerson?id="+username+"&target="+username;;
         person_user = (TextView) findViewById(R.id.person_username);
         introd = (TextView) findViewById(R.id.person_description);
         noPerson_Post = (LinearLayout) findViewById(R.id.person_noPersonPost);
@@ -80,6 +83,14 @@ public class PersonSet extends AppCompatActivity implements LoaderManager.Loader
             public void onClick(View v) {
                 Intent intent = new Intent(PersonSet.this,AddPost.class);
                 startActivity(intent);
+            }
+        });
+        find.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PersonSet.this,FocusPost.class);
+                startActivity(intent);
+                finish();
             }
         });
         final Button edit = (Button) findViewById(R.id.person_edit_btn);
@@ -125,6 +136,8 @@ public class PersonSet extends AppCompatActivity implements LoaderManager.Loader
             noPerson_Post.setVisibility(View.VISIBLE);
             recyclerView.setVisibility(View.GONE);
         }
+        int focus = jsonObject.getInt("focus");
+        int befocus = jsonObject.getInt("befocus");
         nikename = jsonObject.getString("nikename");
         intro = jsonObject.getString("intro");
         JSONArray searchJson = jsonObject.getJSONArray("search");
@@ -135,9 +148,13 @@ public class PersonSet extends AppCompatActivity implements LoaderManager.Loader
             int id = talk.getInt("id");
             String owner = talk.getString("owner");
             String time =talk.getString("createtime");
-            Person person = new Person(R.drawable.nav_icon,R.drawable.apple,title,nikename,context,id,owner,time,intro);
+            int realbody = talk.getInt("realbody");
+
+            Person person = new Person(R.drawable.nav_icon,R.drawable.apple,title,nikename,context,id,owner,time,intro,realbody,focus,befocus);
             personList.add(person);
         }
+        mbefocus.setText(String.valueOf(befocus));
+        mfocus.setText(String.valueOf(focus));
         person_user.setText(nikename);
         introd.setText(intro);
         SharedPreferences sharedPreferences = getSharedPreferences("userInfo", Context.MODE_PRIVATE);

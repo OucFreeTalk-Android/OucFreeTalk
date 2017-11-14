@@ -29,7 +29,7 @@ public class AddPost extends AppCompatActivity implements LoaderManager.LoaderCa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.addpost);
         LinearLayout post = (LinearLayout) findViewById(R.id.addpost_post);
-        final LinearLayout find = (LinearLayout) findViewById(R.id.addpost_find);
+        LinearLayout find = (LinearLayout) findViewById(R.id.addpost_find);
         LinearLayout addPost = (LinearLayout) findViewById(R.id.addpost_add_post);
         LinearLayout notice = (LinearLayout) findViewById(R.id.addpost_notice);
         LinearLayout set = (LinearLayout) findViewById(R.id.addpost_set);
@@ -46,6 +46,14 @@ public class AddPost extends AppCompatActivity implements LoaderManager.LoaderCa
             @Override
             public void onClick(View v) {
 
+            }
+        });
+        find.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AddPost.this,FocusPost.class);
+                startActivity(intent);
+                finish();
             }
         });
         set.setOnClickListener(new View.OnClickListener() {

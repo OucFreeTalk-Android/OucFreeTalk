@@ -138,13 +138,13 @@
                 android:layout_height="30dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="6dp"
-                android:src="@drawable/news2" />
+                android:src="@drawable/globe2" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text=" 帖子"
+                android:text="发现"
                 android:textColor="#bebebe" />
         </LinearLayout>
 
@@ -160,13 +160,13 @@
                 android:layout_height="30dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="6dp"
-                android:src="@drawable/globe2" />
+                android:src="@drawable/news2" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text=" 发现"
+                android:text="关注"
                 android:textColor="#bebebe" />
         </LinearLayout>
 
@@ -188,7 +188,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text=" 发表"
+                android:text="发表"
                 android:textColor="#333" />
         </LinearLayout>
 

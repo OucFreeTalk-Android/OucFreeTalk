@@ -15,61 +15,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-
-            <android.support.design.widget.AppBarLayout
-                android:id="@+id/main_toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_scrollFlags="scroll|enterAlways|snap">
-
-                <android.support.v7.widget.Toolbar
-                    android:id="@+id/toolbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    android:background="#fff"
-                    android:focusable="true"
-                    android:focusableInTouchMode="true"
-                    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-                    app:contentInsetStart="0dp"
-                    app:layout_scrollFlags="scroll|enterAlways|snap"
-                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <EditText
-                            android:id="@+id/main_search"
-                            android:layout_width="match_parent"
-                            android:layout_height="36dp"
-                            android:textColor="#000"
-                            android:layout_centerVertical="true"
-                            android:layout_marginRight="20dp"
-                            android:background="@drawable/edittext_bg"
-                            android:paddingLeft="15dp">
-
-                        </EditText>
-
-                        <ImageButton
-                            android:id="@+id/search_btn"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:layout_alignRight="@id/main_search"
-                            android:layout_centerVertical="true"
-                            android:layout_marginRight="10dp"
-                            android:background="@drawable/magnify" />
-                    </RelativeLayout>
-
-                </android.support.v7.widget.Toolbar>
-            </android.support.design.widget.AppBarLayout>
             <ImageView
                 android:id="@+id/dp_line"
-                android:layout_above="@id/tab"
+                android:layout_above="@id/focus_tab"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="#c7ced4"/>
             <LinearLayout
-                android:id="@+id/tab"
+                android:id="@+id/focus_tab"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_alignParentBottom="true"
@@ -78,7 +31,7 @@
 
 
                 <LinearLayout
-                    android:id="@+id/post"
+                    android:id="@+id/focus_post"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -89,18 +42,18 @@
                         android:layout_height="29dp"
                         android:layout_gravity="center"
                         android:layout_marginTop="6dp"
-                        android:src="@drawable/globe1" />
+                        android:src="@drawable/globe2" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:text="发现"
-                        android:textColor="#333333" />
+                        android:textColor="#bebebe" />
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/find"
+                    android:id="@+id/focus_find"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -111,18 +64,18 @@
                         android:layout_height="30dp"
                         android:layout_gravity="center"
                         android:layout_marginTop="6dp"
-                        android:src="@drawable/news2" />
+                        android:src="@drawable/news" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:text="关注"
-                        android:textColor="#bebebe" />
+                        android:textColor="#333" />
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/add_post"
+                    android:id="@+id/focus_add_post"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -144,7 +97,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/notice"
+                    android:id="@+id/focus_notice"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -166,7 +119,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/set"
+                    android:id="@+id/focus_set"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -190,14 +143,14 @@
             </LinearLayout>
 
             <android.support.v4.widget.SwipeRefreshLayout
-                android:id="@+id/swipe_refresh"
+                android:id="@+id/focus_swipe_refresh"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_above="@id/dp_line"
                 android:layout_below="@id/main_toolbar">
 
                 <android.support.v7.widget.RecyclerView
-                    android:id="@+id/main_recyview"
+                    android:id="@+id/focus_recyview"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
@@ -205,7 +158,7 @@
 
             </android.support.v4.widget.SwipeRefreshLayout>
             <LinearLayout
-                android:id="@+id/noNet"
+                android:id="@+id/focus_noNet"
                 android:visibility="gone"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
@@ -221,14 +174,6 @@
         </RelativeLayout>
 
     </android.support.design.widget.CoordinatorLayout>
-
-
-    <android.support.design.widget.NavigationView
-        android:id="@+id/nav_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        app:menu="@menu/nav_menu" />
 
 
 </android.support.v4.widget.DrawerLayout>

@@ -16,16 +16,17 @@ import net.sf.json.JSONObject;
 
 public class GetPersonPosts extends HttpServlet{
 	 ResultSet rs;
-	    ResultSet rl;
+	    ResultSet rl,rt,re,ru;
 	    String returnJSon;
-	    String title,intro;
+	    String title,intro="";
 	    String createtime;
 	    String updatetime;
 	    String owner;
 	    String content;
-	    String nikename;
-	    String pic;
-	    int id;
+	    boolean isFocus;
+	    String nikename="";
+	    String pic="";
+	    int id,focus=0,befocus=0;
 	    int realbody;
 	    int body;
 	    int page;
@@ -36,11 +37,14 @@ public class GetPersonPosts extends HttpServlet{
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		req.setCharacterEncoding("utf-8");
-        String username = req.getParameter("id");
+        String username = req.getParameter("target");
+        String userId = req.getParameter("id");
         jsonArray = new JSONArray();
         String selectPost = "SELECT * FROM posts where owner = "+ username;
+        String selectisFocus = "Select * from friends where focus = "+userId+" and befocus ="+username;
         System.out.println(selectPost);
         Untils untils = new Untils();
+        isFocus=false;
         page = 0;
         try {
             rs = untils.select(selectPost);
@@ -48,15 +52,16 @@ public class GetPersonPosts extends HttpServlet{
                 id = rs.getInt("id");
                 title = rs.getString("title");
                 owner = rs.getString("owner");
+                realbody = rs.getInt("realbody");
                 content = rs.getString("contenttext");
                 createtime = rs.getString("createtime");
                 jsonObject = new JSONObject();
                 jsonObject.put("id", id);
                 jsonObject.put("title", title);
                 jsonObject.put("owner", owner);
+                jsonObject.put("realbody", realbody);
                 jsonObject.put("content", content);
                 jsonObject.put("createtime", createtime);
-                jsonObject.put("pic", pic);
                 System.out.println(jsonObject);
                 System.out.println(page);
                 jsonArray.add(page,jsonObject);
@@ -70,7 +75,26 @@ public class GetPersonPosts extends HttpServlet{
                 pic = rl.getString("pic");
                 intro = rl.getString("introduction");
             }
-            
+            String selectFocus = "select count(focus) as focus from friends where befocus ="+ username ;
+            String selectBefocus = "select count(befocus) as befocus from friends where focus ="+ username ;
+            rt = untils.select(selectFocus);
+            while (rt.next()) {
+				focus = rt.getInt("focus");
+			}
+            re = untils.select(selectBefocus);
+            while (re.next()) {
+				befocus = re.getInt("befocus");
+			}
+            ru = untils.select(selectisFocus);
+            while (ru.next()) {
+				if(ru.getString("createtime").equals("")) {
+					isFocus = false;
+				}
+				else {
+					isFocus = true;
+				}
+				
+			}
         } catch (SQLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -78,6 +102,10 @@ public class GetPersonPosts extends HttpServlet{
         System.out.println(nikename);
         System.out.println(intro);
         JSONObject returnJSon = new JSONObject();
+        returnJSon.put("pic", pic);
+        returnJSon.put("focus", focus);
+        returnJSon.put("isfocus", isFocus);
+        returnJSon.put("befocus", befocus);
         returnJSon.put("nikename", nikename);
         returnJSon.put("intro", intro);
         returnJSon.put("search", jsonArray);

@@ -103,8 +103,9 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder
 
                     }
                 });
-                holder.realbody.setText(String.valueOf(detail.getRealbody()));
+
             }
+            holder.realbody.setText(String.valueOf(detail.getRealbody()));
         }
         if (!detail.getId().equals(userOwner)){
             holder.owner.setVisibility(View.GONE);

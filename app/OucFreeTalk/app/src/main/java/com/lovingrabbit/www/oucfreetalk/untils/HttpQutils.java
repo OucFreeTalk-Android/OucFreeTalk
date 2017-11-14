@@ -91,4 +91,11 @@ public class HttpQutils {
         Log.e("Json",jsonObject.toString() );
         return jsonObject.toString();
     }
+    public String AddFocusJson(String id,String target) throws JSONException {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("id",id);
+        jsonObject.put("target",target);
+        Log.e("Json",jsonObject.toString() );
+        return jsonObject.toString();
+    }
 }

@@ -25,6 +25,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.lovingrabbit.www.oucfreetalk.talkadapter.Talk;
 import com.lovingrabbit.www.oucfreetalk.talkadapter.TalkAdapter;
@@ -35,8 +36,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 
@@ -49,12 +54,14 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     TalkAdapter adapter;
     LoaderManager loaderManager;
     boolean isNet;
+    String username,nikename="";
     RecyclerView recyclerView;
     LinearLayout noNet;
+    TextView name,focus,befocus;
     private List<Talk> talkList = new ArrayList<Talk>();
     private List<Talk> talks = new ArrayList<Talk>();
     private List<Talk> talks_cache = new ArrayList<Talk>();
-    private String GET_POST_URL = "http://47.93.222.179/oucfreetalk/getPosts?pclass=1&index=1";
+    private String GET_POST_URL = "http://47.93.222.179/oucfreetalk/getPosts?pclass=1&index=1&id=";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,8 +90,15 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setHomeAsUpIndicator(R.drawable.logo);
         }
+        SharedPreferences sharedPreferences = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+        username = sharedPreferences.getString("id","");
+        nikename = sharedPreferences.getString("nikename","");
+        GET_POST_URL = GET_POST_URL + username;
 
-
+        name = (TextView) draw.findViewById(R.id.nvhead_username);
+        focus = (TextView) draw.findViewById(R.id.head_FocusMe);
+        befocus = (TextView) draw.findViewById(R.id.head_MeFocus);
+        name.setText(nikename);
         //home键被点击滑出菜单栏,菜单栏默认选中第一个
         navigationView.setCheckedItem(R.id.nav_call);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -151,6 +165,14 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 loaderManager.restartLoader(0,null, MainActivity.this);
             }
         });
+        find.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this,FocusPost.class);
+                startActivity(intent);
+                finish();
+            }
+        });
         addPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -172,10 +194,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         return chin.replaceAll("[\\u4e00-\\u9fa5]", "");
     }
 
-    public void update(String get_result) throws JSONException {
+    public void update(String get_result) throws JSONException, ParseException {
         JSONObject jsonObject = new JSONObject(get_result);
         int allpage = jsonObject.getInt("allpage");
         JSONArray searchJson = jsonObject.getJSONArray("search");
+        int mfocus = jsonObject.getInt("focus");
+        int mbefocus = jsonObject.getInt("befocus");
         for (int i =0;i<allpage; i++) {
             JSONObject talk = searchJson.getJSONObject(i);
             String title = talk.getString("title");
@@ -184,10 +208,14 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             int id = talk.getInt("id");
             String owner = talk.getString("owner");
             String time =talk.getString("updatetime");
+            Date date = StringToDate(time);
+            time = dateToString(date);
             int realbody = talk.getInt("realbody");
             Talk talk1 = new Talk(R.drawable.nav_icon,R.drawable.apple,title,user,context,id,owner,time,realbody);
             talkList.add(talk1);
         }
+        focus.setText(String.valueOf(mfocus));
+        befocus.setText(String.valueOf(mbefocus));
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -225,11 +253,23 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             update(data);
         } catch (JSONException e) {
             e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
         adapter.notifyDataSetChanged();
         swipeRefreshLayout.setRefreshing(false);
     }
-
+    public static Date StringToDate(String time) throws ParseException {
+        DateFormat format =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = format.parse(time);
+        return date;
+    }
+    public static String dateToString(Date time){
+        SimpleDateFormat formatter;
+        formatter = new SimpleDateFormat ("yyyy-MM-dd HH:mm");
+        String ctime = formatter.format(time);
+        return ctime;
+    }
     @Override
     public void onLoaderReset(Loader<String> loader) {
         talkList.clear();

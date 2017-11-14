@@ -11,7 +11,7 @@
         android:id="@+id/other_person_head"
         android:background="@drawable/person_bg"
         android:padding="10dp"
-        android:layout_height="250dp">
+        android:layout_height="210dp">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/icon_img"
@@ -29,14 +29,6 @@
             android:src="@drawable/back"
             android:textSize="16sp"
             />
-        <Button
-            android:layout_width="60dp"
-            android:layout_height="40dp"
-            android:text="关注"
-            android:textColor="#4b4b4b"
-            android:background="@null"
-            android:layout_alignParentRight="true"
-            />
 
         <TextView
             android:id="@+id/other_person_description"
@@ -48,21 +40,41 @@
             android:textColor="#929191"
             android:textSize="14sp" />
 
-        <TextView
+        <LinearLayout
             android:id="@+id/attention"
-            android:layout_width="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_height="wrap_content"
+            android:orientation="horizontal"
             android:layout_above="@id/other_person_description"
             android:layout_centerHorizontal="true"
-            android:text="关注:300  粉丝:100"
-            android:textColor="#929191"
-            android:textSize="14sp" />
-
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="关注:"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_marginRight="10dp"
+                android:id="@+id/other_person_MeFocus"
+                android:layout_height="wrap_content"
+                android:text="300"
+                android:textColor="#929191"
+                android:textSize="14sp" />
+            <TextView
+                android:layout_marginLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="粉丝:"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="100"
+                android:id="@+id/other_person_FocusMe"
+                android:textColor="#929191"
+                android:textSize="14sp" />
+        </LinearLayout>
         <TextView
             android:id="@+id/other_person_username"
             android:layout_width="wrap_content"
-            android:layout_marginBottom="10dp"
             android:layout_height="wrap_content"
             android:layout_above="@+id/attention"
             android:layout_centerHorizontal="true"
@@ -102,13 +114,13 @@
         android:id="@+id/other_person_rcy"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="50dp"
         android:layout_below="@id/other_person_head">
 
     </android.support.v7.widget.RecyclerView>
     <LinearLayout
 
         android:id="@+id/other_person_noNet"
-        android:layout_above="@id/dp_line"
         android:layout_below="@id/other_person_head"
         android:layout_width="match_parent"
         android:visibility="gone"
@@ -126,7 +138,6 @@
     <LinearLayout
 
         android:id="@+id/other_person_noPost"
-        android:layout_above="@id/dp_line"
         android:layout_below="@id/other_person_head"
         android:layout_width="match_parent"
         android:visibility="gone"
@@ -140,6 +151,23 @@
             android:gravity="center"
             android:textSize="16sp" />
 
+    </LinearLayout>
+    <LinearLayout
+
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_height="50dp">
+
+        <Button
+            android:id="@+id/addfocus"
+            android:layout_width="@dimen/login_wide_width"
+            android:layout_height="40dp"
+            android:background="#79b4ff"
+            android:text="关注"
+            android:textColor="#fff"
+            android:textSize="18sp" />
     </LinearLayout>
 
 

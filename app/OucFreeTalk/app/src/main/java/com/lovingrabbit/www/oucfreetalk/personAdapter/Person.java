@@ -5,21 +5,37 @@ package com.lovingrabbit.www.oucfreetalk.personAdapter;
  */
 
 public class Person {
-    int people_icon,isimg,id;
+    int people_icon,isimg,id,realbody,focus,befocus;
 
     String article_tile,nikename,article_content,owner,time,intro;
 
     public Person(int People_icon,int Isimg,String Article_title,
-                String name,String Article_content,int mId,String mOwner,String mTime,String introd){
+                String name,String Article_content,int mId,String mOwner,
+                  String mTime,String introd,int Realbody,int Focus,int Befocus){
         people_icon = People_icon;
         isimg = Isimg;
         article_tile = Article_title;
         nikename = name;
         article_content = Article_content;
         id = mId;
+        realbody =Realbody;
         owner = mOwner;
         time = mTime;
         intro = introd;
+        befocus = Befocus;
+        focus =Focus;
+    }
+
+    public int getFocus() {
+        return focus;
+    }
+
+    public int getBefocus() {
+        return befocus;
+    }
+
+    public int getRealbody() {
+        return realbody;
     }
 
     public int getId() {

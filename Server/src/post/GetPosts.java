@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 
 public class GetPosts extends HttpServlet {
     ResultSet rs;
-    ResultSet rl;
+    ResultSet rl,rt,re;
     String returnJSon;
     String title;
     String createtime;
@@ -27,7 +27,7 @@ public class GetPosts extends HttpServlet {
     String content;
     String nikename;
     String pic;
-    int id;
+    int id,focus,befocus;
     int outbody;
     int realbody;
     int body;
@@ -41,6 +41,7 @@ public class GetPosts extends HttpServlet {
     	req.setCharacterEncoding("utf-8");
         int pclass = Integer.parseInt(req.getParameter("pclass"));
         int index = Integer.parseInt(req.getParameter("index"));
+        String userid = req.getParameter("id");
         int perpage = 20;
         jsonArray = new JSONArray();
         String selectPost = "SELECT * FROM posts where ownclass = "+ pclass +" order by updatetime desc";
@@ -77,12 +78,24 @@ public class GetPosts extends HttpServlet {
                 jsonArray.add(page,jsonObject);
                 page = page +1;
             }
+            String selectFocus = "select count(focus) as focus from friends where befocus ="+ userid ;
+            String selectBefocus = "select count(befocus) as befocus from friends where focus ="+ userid ;
+            rt = untils.select(selectFocus);
+            while (rt.next()) {
+				focus = rt.getInt("focus");
+			}
+            re = untils.select(selectBefocus);
+            while (re.next()) {
+				befocus = re.getInt("befocus");
+			}
             
         } catch (SQLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
         JSONObject returnJSon = new JSONObject();
+        returnJSon.put("focus", focus);
+        returnJSon.put("befocus", befocus);
         returnJSon.put("search", jsonArray);
         returnJSon.put("allpage",page);
         resp.setHeader("content-type","application/json;charset=utf-8");
