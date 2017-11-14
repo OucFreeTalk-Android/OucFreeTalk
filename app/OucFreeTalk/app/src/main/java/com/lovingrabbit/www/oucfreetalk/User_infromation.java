@@ -132,7 +132,7 @@ public class User_infromation extends AppCompatActivity implements LoaderManager
     protected void showSexLog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(User_infromation.this);
         builder.setTitle("请选择性别");
-        final String[] sex = {"男", "女", "未知性别"};
+        final String[] sex = {"男", "女"};
         builder.setSingleChoiceItems(sex, 1, new DialogInterface.OnClickListener()
         {
             @Override

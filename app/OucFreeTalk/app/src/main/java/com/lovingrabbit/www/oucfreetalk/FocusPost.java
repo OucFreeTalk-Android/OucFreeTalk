@@ -39,6 +39,7 @@ public class FocusPost extends AppCompatActivity implements LoaderManager.Loader
     boolean isNet;
     LinearLayout noNet;
     LoaderManager loaderManager;
+    boolean firstIsNoNet;
     List<Talk> talkList = new ArrayList<Talk>();
     String GET_FOCUS_POST = "http://47.93.222.179/oucfreetalk/getMeFocusPost?id=";
 
@@ -87,6 +88,7 @@ public class FocusPost extends AppCompatActivity implements LoaderManager.Loader
         }else {
             noNet.setVisibility(View.VISIBLE);
             recyclerView.setVisibility(View.GONE);
+            firstIsNoNet = true;
         }
         post.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,14 +116,27 @@ public class FocusPost extends AppCompatActivity implements LoaderManager.Loader
     }
     public void refresh(){
         isNet = new NetworkConnected().isNetworkConnected(this);
-        if (isNet) {
-            loaderManager.restartLoader(0, null, FocusPost.this);
-            noNet.setVisibility(View.GONE);
-            recyclerView.setVisibility(View.VISIBLE);
+        if (firstIsNoNet) {
+            if (isNet) {
+                noNet.setVisibility(View.GONE);
+                recyclerView.setVisibility(View.VISIBLE);
+                loaderManager = getLoaderManager();
+                loaderManager.initLoader(0, null, FocusPost.this);
+            } else {
+                noNet.setVisibility(View.VISIBLE);
+                recyclerView.setVisibility(View.GONE);
+                swipeRefreshLayout.setRefreshing(false);
+            }
         }else {
-            noNet.setVisibility(View.VISIBLE);
-            recyclerView.setVisibility(View.GONE);
-            swipeRefreshLayout.setRefreshing(false);
+            if (isNet) {
+                noNet.setVisibility(View.GONE);
+                recyclerView.setVisibility(View.VISIBLE);
+                loaderManager.restartLoader(0, null, FocusPost.this);
+            } else {
+                noNet.setVisibility(View.VISIBLE);
+                recyclerView.setVisibility(View.GONE);
+                swipeRefreshLayout.setRefreshing(false);
+            }
         }
     }
 

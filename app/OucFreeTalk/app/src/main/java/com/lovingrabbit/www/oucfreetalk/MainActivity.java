@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     String username,nikename="";
     RecyclerView recyclerView;
     LinearLayout noNet;
+    boolean firstIsNoNet;
     TextView name,focus,befocus;
     private List<Talk> talkList = new ArrayList<Talk>();
     private List<Talk> talks = new ArrayList<Talk>();
@@ -126,7 +127,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             @Override
             public void onClick(View v) {
                 if (isLogin == false){
-                    Intent intent = new Intent(MainActivity.this,Login.class);
+                    Intent intent = new Intent(MainActivity.this,PersonSet.class);
                     startActivity(intent);
                 }
             }
@@ -152,6 +153,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         }else {
             noNet.setVisibility(View.VISIBLE);
             recyclerView.setVisibility(View.GONE);
+            firstIsNoNet = true;
         }
         LinearLayout post = (LinearLayout) findViewById(R.id.post);
         LinearLayout find = (LinearLayout) findViewById(R.id.find);
@@ -229,14 +231,27 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     public void refresh(){
         isNet = new NetworkConnected().isNetworkConnected(this);
-        if (isNet) {
-            loaderManager.restartLoader(0, null, MainActivity.this);
-            noNet.setVisibility(View.GONE);
-            recyclerView.setVisibility(View.VISIBLE);
+        if (firstIsNoNet) {
+            if (isNet) {
+                noNet.setVisibility(View.GONE);
+                recyclerView.setVisibility(View.VISIBLE);
+                loaderManager = getLoaderManager();
+                loaderManager.initLoader(0, null, MainActivity.this);
+            } else {
+                noNet.setVisibility(View.VISIBLE);
+                recyclerView.setVisibility(View.GONE);
+                swipeRefreshLayout.setRefreshing(false);
+            }
         }else {
-            noNet.setVisibility(View.VISIBLE);
-            recyclerView.setVisibility(View.GONE);
-            swipeRefreshLayout.setRefreshing(false);
+            if (isNet) {
+                noNet.setVisibility(View.GONE);
+                recyclerView.setVisibility(View.VISIBLE);
+                loaderManager.restartLoader(0, null, MainActivity.this);
+            } else {
+                noNet.setVisibility(View.VISIBLE);
+                recyclerView.setVisibility(View.GONE);
+                swipeRefreshLayout.setRefreshing(false);
+            }
         }
     }
 

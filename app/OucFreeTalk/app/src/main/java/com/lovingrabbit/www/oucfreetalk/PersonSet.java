@@ -61,7 +61,7 @@ public class PersonSet extends AppCompatActivity implements LoaderManager.Loader
         SharedPreferences sharedPreferences = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
         username = sharedPreferences.getString("id","");
         Log.e("username:", username );
-        GET_PERSON_POST_URL = "http://47.93.222.179/oucfreetalk/getPostPerson?id="+username+"&target="+username;;
+        GET_PERSON_POST_URL = "http://47.93.222.179/oucfreetalk/getPostPerson?id="+username+"&target="+username;
         person_user = (TextView) findViewById(R.id.person_username);
         introd = (TextView) findViewById(R.id.person_description);
         noPerson_Post = (LinearLayout) findViewById(R.id.person_noPersonPost);
