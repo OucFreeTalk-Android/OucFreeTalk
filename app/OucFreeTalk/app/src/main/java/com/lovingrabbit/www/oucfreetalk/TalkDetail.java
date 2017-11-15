@@ -213,7 +213,7 @@ public class TalkDetail extends AppCompatActivity implements LoaderManager.Loade
                 int commentid = talk.getInt("commentid");
                 int replybody = talk.getInt("replybody");
                 String pic = talk.getString("pic");
-                Detail detail = new Detail(user, time,stuid, context, people_icon,postion,commentid,replybody);
+                Detail detail = new Detail(user, time,stuid, context, pic,postion,commentid,replybody);
                 detailList.add(detail);
             }
         }
