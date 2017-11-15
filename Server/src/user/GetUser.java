@@ -17,7 +17,7 @@ import Until.Untils;
 
 public class GetUser extends HttpServlet{
 	ResultSet rs;
-	String returnJSon,id,nikename,family,intro,birth,year,mobile,email;
+	String returnJSon,id,nikename,family,intro,birth,year,mobile,email,pic;
 	boolean sex,ifname,ifsex,ifmobile,ifemail;
 	JSONObject jsonobj;
 	@Override
@@ -38,6 +38,7 @@ public class GetUser extends HttpServlet{
 				year = rs.getString("year");
 				mobile =rs.getString("mobile");
 				sex = rs.getBoolean("sex");
+				pic = rs.getString("pic");
 				email = rs.getString("email");
 				System.out.println("intro:"+intro+";nikename:"+nikename);
 				jsonobj.put("nikename", nikename);
@@ -48,6 +49,7 @@ public class GetUser extends HttpServlet{
 				jsonobj.put("sex", sex);
 				jsonobj.put("mobile", mobile);
 				jsonobj.put("email", email);
+				jsonobj.put("pic", pic);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

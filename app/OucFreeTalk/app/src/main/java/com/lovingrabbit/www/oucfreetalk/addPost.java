@@ -55,6 +55,14 @@ public class AddPost extends AppCompatActivity implements LoaderManager.LoaderCa
                 finish();
             }
         });
+        notice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AddPost.this,Notice.class);
+                startActivity(intent);
+                finish();
+            }
+        });
         set.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

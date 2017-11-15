@@ -17,7 +17,7 @@
 
 
             <android.support.design.widget.AppBarLayout
-                android:id="@+id/main_toolbar"
+                android:id="@+id/notice_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_scrollFlags="scroll|enterAlways|snap">
@@ -37,46 +37,26 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
-
-                        <EditText
-                            android:id="@+id/main_search"
-                            android:layout_width="match_parent"
-                            android:layout_height="36dp"
-                            android:focusable="true"
-                            android:singleLine="true"
-                            android:textColorHint="#a1a1a1"
-                            android:hint="搜索 下拉刷新返回"
-                            android:textSize="14sp"
-                            android:imeOptions="actionSearch"
-                            android:focusableInTouchMode="true"
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
                             android:textColor="#000"
-                            android:layout_centerVertical="true"
-                            android:layout_marginRight="20dp"
-                            android:background="@drawable/edittext_bg"
-                            android:paddingLeft="15dp">
-
-                        </EditText>
-
-                        <ImageButton
-                            android:id="@+id/search_btn"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:layout_alignRight="@id/main_search"
-                            android:layout_centerVertical="true"
-                            android:layout_marginRight="10dp"
-                            android:background="@drawable/magnify" />
+                            android:textSize="18sp"
+                            android:gravity="center_vertical"
+                            android:layout_centerHorizontal="true"
+                            android:text="最近通知"/>
                     </RelativeLayout>
 
                 </android.support.v7.widget.Toolbar>
             </android.support.design.widget.AppBarLayout>
             <ImageView
                 android:id="@+id/dp_line"
-                android:layout_above="@id/tab"
+                android:layout_above="@id/notice_tab"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="#c7ced4"/>
             <LinearLayout
-                android:id="@+id/tab"
+                android:id="@+id/notice_tab"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_alignParentBottom="true"
@@ -85,7 +65,7 @@
 
 
                 <LinearLayout
-                    android:id="@+id/post"
+                    android:id="@+id/notice_post"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -96,18 +76,18 @@
                         android:layout_height="29dp"
                         android:layout_gravity="center"
                         android:layout_marginTop="6dp"
-                        android:src="@drawable/globe1" />
+                        android:src="@drawable/globe2" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:text="发现"
-                        android:textColor="#333333" />
+                        android:textColor="#dedede" />
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/find"
+                    android:id="@+id/notice_find"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -129,7 +109,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/add_post"
+                    android:id="@+id/notice_add_post"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -151,7 +131,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/notice"
+                    android:id="@+id/notice_notice"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -162,18 +142,18 @@
                         android:layout_height="30dp"
                         android:layout_gravity="center"
                         android:layout_marginTop="6dp"
-                        android:src="@drawable/twitterbird2" />
+                        android:src="@drawable/twitterbird" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:text=" 通知"
-                        android:textColor="#bebebe" />
+                        android:textColor="#333" />
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/set"
+                    android:id="@+id/notice_set"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -197,15 +177,15 @@
             </LinearLayout>
 
             <android.support.v4.widget.SwipeRefreshLayout
-                android:id="@+id/swipe_refresh"
+                android:id="@+id/notice_swipe_refresh"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_above="@id/dp_line"
 
-                android:layout_below="@id/main_toolbar">
+                android:layout_below="@id/notice_toolbar">
 
                 <android.support.v7.widget.RecyclerView
-                    android:id="@+id/main_recyview"
+                    android:id="@+id/notice_recyview"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
@@ -213,9 +193,9 @@
 
             </android.support.v4.widget.SwipeRefreshLayout>
             <LinearLayout
-                android:id="@+id/noNet"
+                android:id="@+id/notice_noNet"
                 android:visibility="gone"
-                android:layout_below="@id/main_toolbar"
+                android:layout_below="@id/notice_toolbar"
                 android:layout_above="@id/dp_line"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
@@ -232,12 +212,5 @@
 
     </android.support.design.widget.CoordinatorLayout>
 
-
-    <android.support.design.widget.NavigationView
-        android:id="@+id/nav_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        />
 
 </android.support.v4.widget.DrawerLayout>

@@ -21,7 +21,7 @@ import Until.Untils;
 
 public class Editor extends HttpServlet{
 	ResultSet rs;
-	String returnJSon,id,nikename,family,intro,birth,year,mobile,email;
+	String returnJSon,id,nikename,family,intro,birth,year,mobile,email,pic;
 	boolean sex,ifname,ifsex,ifmobile,ifemail;
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
@@ -48,6 +48,7 @@ public class Editor extends HttpServlet{
             birth = jsonObject.getString("birth");
             year = jsonObject.getString("year");
             family = jsonObject.getString("family");
+            pic = jsonObject.getString("pic");
             ifname = jsonObject.getBoolean("ifname");
             ifsex = jsonObject.getBoolean("ifsex");
             ifmobile = jsonObject.getBoolean("ifmobile");
@@ -60,7 +61,7 @@ public class Editor extends HttpServlet{
         }
         String sql = "update students set nikename = \"" + nikename + "\",sex = " + sex +",birth = \""+ birth +"\",year = \""
         		+ year +"\",family = \"" + family + "\",ifname = " + ifname +",ifsex =" +ifsex + ",ifmobile ="+ifmobile+",ifemail = "
-        		+ifemail + ",introduction = \"" + intro +"\" where id = \"" + id +"\"";
+        		+ifemail +",pic =\""+pic+"\",introduction = \"" + intro +"\" where id = \"" + id +"\"";
         System.out.println(sql);
         Untils untils = new Untils();
         try {

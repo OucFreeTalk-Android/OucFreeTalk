@@ -19,14 +19,18 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.lovingrabbit.www.oucfreetalk.talkadapter.Talk;
 import com.lovingrabbit.www.oucfreetalk.talkadapter.TalkAdapter;
 import com.lovingrabbit.www.oucfreetalk.untils.GetPostAysncTaskLoader;
@@ -43,7 +47,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<String> {
@@ -53,31 +58,43 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     NavigationView navigationView;
     TalkAdapter adapter;
     LoaderManager loaderManager;
-    boolean isNet;
-    String username,nikename="";
+    boolean isNet,mSex;
+    String username,mNikename,mBirth,mYear,mIntro,search_text;
     RecyclerView recyclerView;
     LinearLayout noNet;
     boolean firstIsNoNet;
-    TextView name,focus,befocus;
+    EditText main_search;
+    ImageView nv_icon;
+    TextView nv_name,nv_focus,nv_befocus,nv_sex,nv_birth,nv_year,nv_intro;
     private List<Talk> talkList = new ArrayList<Talk>();
     private List<Talk> talks = new ArrayList<Talk>();
     private List<Talk> talks_cache = new ArrayList<Talk>();
+
     private String GET_POST_URL = "http://47.93.222.179/oucfreetalk/getPosts?pclass=1&index=1&id=";
+    String IMG = "http://47.93.222.179/oucfreetalk/img/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main);
         //设置自定义标题栏
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        final EditText main_search = (EditText) findViewById(R.id.main_search);
+        main_search = (EditText) findViewById(R.id.main_search);
+        main_search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if(actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    Search_talk();
+                    return true;
+                }else return false;
+            }
+        });
         ImageView search_btn = (ImageView) findViewById(R.id.search_btn);
         search_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Search_talk();
             }
         });
 
@@ -93,22 +110,16 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         }
         SharedPreferences sharedPreferences = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
         username = sharedPreferences.getString("id","");
-        nikename = sharedPreferences.getString("nikename","");
         GET_POST_URL = GET_POST_URL + username;
 
-        name = (TextView) draw.findViewById(R.id.nvhead_username);
-        focus = (TextView) draw.findViewById(R.id.head_FocusMe);
-        befocus = (TextView) draw.findViewById(R.id.head_MeFocus);
-        name.setText(nikename);
-        //home键被点击滑出菜单栏,菜单栏默认选中第一个
-        navigationView.setCheckedItem(R.id.nav_call);
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                drawerLayout.closeDrawers();
-                return true;
-            }
-        });
+        nv_name = (TextView) draw.findViewById(R.id.nvhead_username);
+        nv_focus = (TextView) draw.findViewById(R.id.head_FocusMe);
+        nv_befocus = (TextView) draw.findViewById(R.id.head_MeFocus);
+        nv_birth = (TextView) draw.findViewById(R.id.nv_user_birth);
+        nv_intro = (TextView) draw.findViewById(R.id.nv_user_intro);
+        nv_year = (TextView) draw.findViewById(R.id.nv_user_year);
+        nv_sex = (TextView) draw.findViewById(R.id.nv_user_sex);
+        nv_icon= (ImageView) draw.findViewById(R.id.nv_icon_img);
 
         //下拉刷新
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
@@ -182,6 +193,14 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 startActivity(intent);
             }
         });
+        notice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this,Notice.class);
+                startActivity(intent);
+                finish();
+            }
+        });
         set.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -192,8 +211,30 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         });
 
     }
-    public static String filterChinese(String chin){
-        return chin.replaceAll("[\\u4e00-\\u9fa5]", "");
+
+    public void Search_talk(){
+        main_search.clearFocus();
+        ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE))
+                .hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
+                        InputMethodManager.HIDE_NOT_ALWAYS);//关闭输入法
+        talkList.clear();
+        search_text = main_search.getText().toString();
+        Log.e("search_text", search_text );
+        if (!search_text.equals("")){
+
+            for (int i= 0 ;i<talks.size();i++) {
+                Pattern p = Pattern.compile(search_text);
+                Matcher mContent = p.matcher(talks.get(i).getArticle_tile()+talks.get(i).getArticle_content());
+                while (mContent.find()) {
+                    if (!mContent.group().equals("")) {
+                        talkList.add(talks.get(i));
+                    }
+                }
+            }
+        }else {
+            talkList = talks;
+        }
+        adapter.notifyDataSetChanged();
     }
 
     public void update(String get_result) throws JSONException, ParseException {
@@ -202,6 +243,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         JSONArray searchJson = jsonObject.getJSONArray("search");
         int mfocus = jsonObject.getInt("focus");
         int mbefocus = jsonObject.getInt("befocus");
+        mBirth = jsonObject.getString("mBirth");
+        mIntro = jsonObject.getString("mIntro");
+        mNikename = jsonObject.getString("mNikename");
+        mSex = jsonObject.getBoolean("mSex");
+        String mPic = jsonObject.getString("mPic");
+        mYear = jsonObject.getString("mYear");
         for (int i =0;i<allpage; i++) {
             JSONObject talk = searchJson.getJSONObject(i);
             String title = talk.getString("title");
@@ -209,15 +256,42 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             String user = talk.getString("nikename");
             int id = talk.getInt("id");
             String owner = talk.getString("owner");
-            String time =talk.getString("updatetime");
+            String time = talk.getString("updatetime");
+            String pic = talk.getString("pic");
             Date date = StringToDate(time);
             time = dateToString(date);
             int realbody = talk.getInt("realbody");
-            Talk talk1 = new Talk(R.drawable.nav_icon,R.drawable.apple,title,user,context,id,owner,time,realbody);
+            Talk talk1 = new Talk(pic,R.drawable.apple,title,user,context,id,owner,time,realbody);
             talkList.add(talk1);
         }
-        focus.setText(String.valueOf(mfocus));
-        befocus.setText(String.valueOf(mbefocus));
+        talks.clear();
+        for (int i = 0 ;i<talkList.size();i++){
+            talks.add(talkList.get(i));
+        }
+        Log.e("talk_size", String.valueOf(talks.size()));
+        if(mNikename.equals("")){
+            nv_focus.setText("暂无");
+            nv_befocus.setText("暂无");
+            nv_sex.setText("暂无");
+            nv_name.setText("暂无");
+            nv_year.setText("暂无");
+            nv_intro.setText("暂无");
+            nv_birth.setText("暂无");
+            nv_icon.setImageResource(R.drawable.nav_icon);
+        }else {
+            nv_focus.setText(String.valueOf(mfocus));
+            nv_befocus.setText(String.valueOf(mbefocus));
+            if (mSex) {
+                nv_sex.setText("男");
+            } else {
+                nv_sex.setText("女");
+            }
+            nv_name.setText(mNikename);
+            nv_year.setText(mYear);
+            nv_intro.setText(mIntro);
+            nv_birth.setText(mBirth);
+            Glide.with(this).load(IMG + mPic).into(nv_icon);
+        }
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -230,6 +304,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     public void refresh(){
+        main_search.setText("");
         isNet = new NetworkConnected().isNetworkConnected(this);
         if (firstIsNoNet) {
             if (isNet) {

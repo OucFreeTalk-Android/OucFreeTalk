@@ -51,7 +51,8 @@
             android:launchMode="standard" />
         <activity android:name=".User_infromation" />
         <activity android:name=".OtherPerson" />
-        <activity android:name=".FocusPost"></activity>
+        <activity android:name=".FocusPost" />
+        <activity android:name=".Notice"></activity>
     </application>
 
 </manifest>

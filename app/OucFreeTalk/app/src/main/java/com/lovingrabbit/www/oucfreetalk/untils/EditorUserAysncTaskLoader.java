@@ -12,10 +12,10 @@ import java.io.IOException;
  */
 
 public class EditorUserAysncTaskLoader extends AsyncTaskLoader<String> {
-    String birth, year, name, intro,mUrl,result,id;
+    String birth, year, name, intro,mUrl,result,id ,pic;
     boolean sex;
 
-    public EditorUserAysncTaskLoader(Context context,String Id ,String Name, String Year, String Birth, String Intro,String Sex, String url) {
+    public EditorUserAysncTaskLoader(Context context,String Id ,String Name, String Year, String Birth, String Intro,String Sex, String mPic,String url) {
         super(context);
         id = Id;
         name = Name;
@@ -28,6 +28,7 @@ public class EditorUserAysncTaskLoader extends AsyncTaskLoader<String> {
             sex = false;
         }
         mUrl = url;
+        pic = mPic;
     }
 
     @Override
@@ -40,7 +41,7 @@ public class EditorUserAysncTaskLoader extends AsyncTaskLoader<String> {
         HttpQutils httpQutils = new HttpQutils();
         String user = null;
         try {
-            user = httpQutils.EditorJson(id, name, birth, year,intro,sex);
+            user = httpQutils.EditorJson(id, name, birth, year,intro,sex,pic);
         } catch (JSONException e) {
             e.printStackTrace();
         }

@@ -5,11 +5,11 @@ package com.lovingrabbit.www.oucfreetalk.talkadapter;
  */
 
 public class Talk {
-    int people_icon,isimg,id,realbody;
+    int isimg,id,realbody;
 
-    String article_tile,article_tag,article_content,owner,time;
+    String article_tile,article_tag,article_content,owner,time,people_icon;
 
-    public Talk(int People_icon,int Isimg,String Article_title,
+    public Talk(String People_icon,int Isimg,String Article_title,
                 String Article_tag,String Article_content,int mId,String mOwner,String mTime,int mRealbody){
         people_icon = People_icon;
         isimg = Isimg;
@@ -21,6 +21,7 @@ public class Talk {
         time = mTime;
         realbody = mRealbody;
     }
+
 
     public int getRealbody() {
         return realbody;
@@ -42,7 +43,7 @@ public class Talk {
         return isimg;
     }
 
-    public int getPeople_icon() {
+    public String getPeople_icon() {
         return people_icon;
     }
 

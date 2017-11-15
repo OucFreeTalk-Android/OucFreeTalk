@@ -53,8 +53,8 @@ public class TalkDetailReply extends AppCompatActivity implements LoaderManager.
     LoaderManager loaderManager;
     String ADD_REPLY_URL = "http://47.93.222.179/oucfreetalk/addReply";
     String GET_COMMENT_URL;
-    String addreply,replyId,ownerId,result="",del_result="";
-    int person_icon,postlocation,commentid;
+    String addreply,replyId,ownerId,result="",del_result="",person_icon;
+    int postlocation,commentid;
     String DELETE_REPLY_URL;
     String replyid;
     @Override
@@ -66,7 +66,7 @@ public class TalkDetailReply extends AppCompatActivity implements LoaderManager.
         time = intent.getStringExtra("time");
         content = intent.getStringExtra("content");
         postlocation = intent.getIntExtra("postlocation",0);
-        person_icon = intent.getIntExtra("icon",0);
+        person_icon = intent.getStringExtra("icon");
         replyId = intent.getStringExtra("id");
         ownerId = intent.getStringExtra("ownerId");
         Log.e("ownerID", ownerId );
@@ -152,7 +152,8 @@ public class TalkDetailReply extends AppCompatActivity implements LoaderManager.
                 time = dateToString(date);
                 String id = talk.getString("stuid");
                 replyid = talk.getString("id");
-                Detail detail = new Detail(user,time,ownerId,id,context, person_icon,replyid);
+                String pic = talk.getString("pic");
+                Detail detail = new Detail(user,time,ownerId,id,context, pic,replyid);
                 detailList.add(detail);
             }
         }

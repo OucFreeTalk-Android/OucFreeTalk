@@ -105,6 +105,14 @@ public class FocusPost extends AppCompatActivity implements LoaderManager.Loader
                 startActivity(intent);
             }
         });
+        notice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(FocusPost.this,Notice.class);
+                startActivity(intent);
+                finish();
+            }
+        });
         set.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -152,10 +160,11 @@ public class FocusPost extends AppCompatActivity implements LoaderManager.Loader
             int id = talk.getInt("id");
             String owner = talk.getString("owner");
             String time =talk.getString("updatetime");
+            String pic = talk.getString("pic");
             Date date = StringToDate(time);
             time = dateToString(date);
             int realbody = talk.getInt("realbody");
-            Talk talk1 = new Talk(R.drawable.nav_icon,R.drawable.apple,title,user,context,id,owner,time,realbody);
+            Talk talk1 = new Talk(pic,R.drawable.apple,title,user,context,id,owner,time,realbody);
             talkList.add(talk1);
         }
     }

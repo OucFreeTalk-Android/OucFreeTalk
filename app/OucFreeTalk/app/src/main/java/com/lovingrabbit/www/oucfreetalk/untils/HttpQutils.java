@@ -75,7 +75,7 @@ public class HttpQutils {
 
         return jsonObject.toString();
     }
-    public String EditorJson(String id,String name ,String birth ,String year,String intro ,boolean sex) throws JSONException {
+    public String EditorJson(String id,String name ,String birth ,String year,String intro ,boolean sex,String pic) throws JSONException {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("id",id);
         jsonObject.put("nikename",name);
@@ -83,6 +83,7 @@ public class HttpQutils {
         jsonObject.put("birth",birth);
         jsonObject.put("year",year);
         jsonObject.put("intro",intro);
+        jsonObject.put("pic",pic);
         jsonObject.put("family","");
         jsonObject.put("ifname",true);
         jsonObject.put("ifsex",true);

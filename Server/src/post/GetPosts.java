@@ -15,18 +15,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.sun.swing.internal.plaf.basic.resources.basic;
+
 
 public class GetPosts extends HttpServlet {
     ResultSet rs;
-    ResultSet rl,rt,re;
+    ResultSet rl,rt,re,ru;
     String returnJSon;
     String title;
     String createtime;
     String updatetime;
     String owner;
-    String content;
+    String content,mNikename,mIntro,mBirth,mYear,mPic;
     String nikename;
     String pic;
+    boolean mSex;
     int id,focus,befocus;
     int outbody;
     int realbody;
@@ -48,6 +51,10 @@ public class GetPosts extends HttpServlet {
         System.out.println(selectPost);
         Untils untils = new Untils();
         page = 0;
+        mNikename ="";
+        mBirth="";
+        mIntro="";
+        mYear="";
         try {
             rs = untils.select(selectPost);
             while (rs.next()) {
@@ -88,13 +95,29 @@ public class GetPosts extends HttpServlet {
             while (re.next()) {
 				befocus = re.getInt("befocus");
 			}
+            String selectMe = "select * from students where id ="+userid;
+            ru = untils.select(selectMe);
+            while(ru.next()) {
+            	mNikename = ru.getString("nikename");
+            	mIntro = ru.getString("introduction");
+				mBirth = ru.getString("birth");
+				mYear = ru.getString("year");
+				mSex = ru.getBoolean("sex");
+				mPic = ru.getString("pic");
+            }
             
         } catch (SQLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
         JSONObject returnJSon = new JSONObject();
+        returnJSon.put("mPic", mPic);
         returnJSon.put("focus", focus);
+        returnJSon.put("mNikename", mNikename);
+        returnJSon.put("mIntro", mIntro);
+        returnJSon.put("mYear", mYear);
+        returnJSon.put("mBirth", mBirth);
+        returnJSon.put("mSex", mSex);
         returnJSon.put("befocus", befocus);
         returnJSon.put("search", jsonArray);
         returnJSon.put("allpage",page);

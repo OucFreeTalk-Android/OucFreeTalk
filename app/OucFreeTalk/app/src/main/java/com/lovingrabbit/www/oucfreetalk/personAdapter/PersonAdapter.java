@@ -1,5 +1,6 @@
 package com.lovingrabbit.www.oucfreetalk.personAdapter;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.lovingrabbit.www.oucfreetalk.R;
 import com.lovingrabbit.www.oucfreetalk.TalkDetail;
 import com.lovingrabbit.www.oucfreetalk.talkadapter.Talk;
@@ -20,12 +22,15 @@ import java.util.List;
  */
 
 public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.ViewHolder> {
+    String IMG = "http://47.93.222.179/oucfreetalk/img/";
+    Context context;
     List<Person> personList;
     public PersonAdapter(List<Person> persons){
         personList = persons;
     }
     @Override
     public ViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
+        context = parent.getContext();
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.talk_list,parent,false);
         final ViewHolder holder = new ViewHolder(view);
 
@@ -56,7 +61,12 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.ViewHolder
         }else {
             holder.isImg.setImageResource(person.getIsimg());
         }
-        holder.people_icon_img.setImageResource(person.getPeople_icon());
+        if (!person.getPeople_icon().equals("pic")){
+            Glide.with(context).load(IMG+person.getPeople_icon()).into(holder.people_icon_img);
+        }
+        else {
+            holder.people_icon_img.setImageResource(R.drawable.nav_icon);
+        }
         holder.article_title_text.setText(person.getArticle_tile());
         holder.article_tag_text.setText(person.getNikename());
         holder.article_content_text.setText(person.getArticle_content());

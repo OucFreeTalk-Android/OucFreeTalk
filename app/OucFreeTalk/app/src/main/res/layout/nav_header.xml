@@ -1,66 +1,180 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="210dp"
     android:id="@+id/header"
-    android:padding="10dp"
-    android:background="@drawable/person_bg">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/icon_img"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:src="@drawable/nav_icon" />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/head_description"
-        android:text=""
-        android:textColor="#929191"
-        android:layout_centerHorizontal="true"
-        android:textSize="14sp"
-        android:layout_alignParentBottom="true"/>
+    <RelativeLayout
+        android:id="@+id/nv_header_main"
+        android:layout_width="match_parent"
+        android:layout_height="210dp"
+        android:background="@drawable/person_bg">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/nv_icon_img"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/nav_icon" />
+
+        <TextView
+            android:id="@+id/head_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:text=""
+            android:textColor="#929191"
+            android:textSize="14sp" />
+
+        <LinearLayout
+            android:id="@+id/attention"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/head_description"
+            android:layout_centerHorizontal="true"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="关注:" />
+
+            <TextView
+                android:id="@+id/head_MeFocus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:text="300"
+                android:textColor="#929191"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="粉丝:" />
+
+            <TextView
+                android:id="@+id/head_FocusMe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="100"
+                android:textColor="#929191"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/nvhead_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/attention"
+            android:layout_centerHorizontal="true"
+            android:text="用户名"
+            android:textColor="#333"
+            android:textSize="14sp" />
+    </RelativeLayout>
+
     <LinearLayout
-        android:id="@+id/attention"
-        android:orientation="horizontal"
-        android:layout_above="@id/head_description"
-        android:layout_centerHorizontal="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="关注:"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_marginRight="10dp"
-            android:id="@+id/head_MeFocus"
-            android:layout_height="wrap_content"
-            android:text="300"
-            android:textColor="#929191"
-            android:textSize="14sp" />
-        <TextView
-            android:layout_marginLeft="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="粉丝:"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="100"
-            android:id="@+id/head_FocusMe"
-            android:textColor="#929191"
-            android:textSize="14sp" />
-    </LinearLayout>
-    <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@id/attention"
-        android:layout_centerHorizontal="true"
-        android:textColor="#333"
-        android:text="用户名"
-        android:textSize="14sp"
-        android:id="@+id/nvhead_username"/>
+        android:layout_marginTop="10dp"
+        android:gravity="center_horizontal"
+        android:layout_below="@id/nv_header_main"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp">
+
+            <TextView
+                android:layout_width="70dp"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text="性别"
+                android:textSize="16sp" />
+
+            <TextView
+                android:text="暂无"
+                android:gravity="center_vertical"
+                android:id="@+id/nv_user_sex"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="20dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp">
+
+            <TextView
+                android:layout_width="70dp"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text="生日"
+                android:textSize="16sp" />
+
+            <TextView
+                android:text="暂无"
+                android:gravity="center_vertical"
+                android:id="@+id/nv_user_birth"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="20dp"
+                 />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp">
+
+            <TextView
+                android:layout_width="70dp"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text="入学年份"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/nv_user_year"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="暂无"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="20dp"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp">
+
+            <TextView
+                android:layout_width="70dp"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text="个人签名"
+                android:textSize="16sp" />
+
+            <TextView
+                android:text="暂无"
+                android:singleLine="true"
+                android:gravity="center_vertical"
+                android:id="@+id/nv_user_intro"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="20dp"
+                />
+        </LinearLayout>
+    </LinearLayout>
 </RelativeLayout>

@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.lovingrabbit.www.oucfreetalk.OtherPerson;
 import com.lovingrabbit.www.oucfreetalk.R;
 import com.lovingrabbit.www.oucfreetalk.TalkDetailReply;
@@ -22,6 +23,8 @@ import java.util.List;
  */
 
 public class DetailReplyAdapter extends RecyclerView.Adapter<DetailReplyAdapter.ViewHolder>{
+    String IMG = "http://47.93.222.179/oucfreetalk/img/";
+    Context context;
     List<Detail> detailList;
     String userOwner,userId;
     ButtonInterface buttonInterface;
@@ -30,6 +33,7 @@ public class DetailReplyAdapter extends RecyclerView.Adapter<DetailReplyAdapter.
     }
     @Override
     public ViewHolder onCreateViewHolder(final ViewGroup parent, int viewType) {
+        context =parent.getContext();
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.detail_reply_list,parent,false);
         final DetailReplyAdapter.ViewHolder viewHolder = new DetailReplyAdapter.ViewHolder(view);
         SharedPreferences sharedPreferences = parent.getContext().getSharedPreferences("userInfo", Context.MODE_PRIVATE);
@@ -72,7 +76,12 @@ public class DetailReplyAdapter extends RecyclerView.Adapter<DetailReplyAdapter.
         if (!detail.getOwnerID().equals(detail.getId())){
             holder.owner.setVisibility(View.GONE);
         }
-        holder.icon.setImageResource(detail.getPeople_icon());
+        if (!detail.getPeople_icon().equals("pic")){
+            Glide.with(context).load(IMG+detail.getPeople_icon()).into(holder.icon);
+        }
+        else {
+            holder.icon.setImageResource(R.drawable.nav_icon);
+        }
     }
 
     @Override

@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.lovingrabbit.www.oucfreetalk.personAdapter.Person;
 import com.lovingrabbit.www.oucfreetalk.personAdapter.PersonAdapter;
 import com.lovingrabbit.www.oucfreetalk.untils.AddFocusAysncTaskLoader;
@@ -26,7 +27,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class OtherPerson extends AppCompatActivity implements LoaderManager.LoaderCallbacks<String>{
@@ -38,6 +43,8 @@ public class OtherPerson extends AppCompatActivity implements LoaderManager.Load
     LinearLayout noPerson_Post;
     PersonAdapter adapter;
     String result="";
+    ImageView other_person_icon;
+    String IMG = "http://47.93.222.179/oucfreetalk/img/";
     List<Person> personList = new ArrayList<Person>();
     private String GET_PERSON_POST_URL;
     private String ADD_FOCUS_URL = "http://47.93.222.179/oucfreetalk/addFocus";
@@ -55,10 +62,10 @@ public class OtherPerson extends AppCompatActivity implements LoaderManager.Load
         adapter = new PersonAdapter(personList);
         recyclerView.setAdapter(adapter);
 
-
         mfocus = (TextView) findViewById(R.id.other_person_FocusMe);
         mbefocus = (TextView) findViewById(R.id.other_person_MeFocus);
         addFocus = (TextView) findViewById(R.id.addfocus);
+        other_person_icon = (ImageView) findViewById(R.id.other_person_icon_img);
 
         SharedPreferences sharedPreferences = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
         username = sharedPreferences.getString("id","");
@@ -101,7 +108,7 @@ public class OtherPerson extends AppCompatActivity implements LoaderManager.Load
         loaderManager.initLoader(1,null,OtherPerson.this);
 
     }
-    public void update(String get_result) throws JSONException {
+    public void update(String get_result) throws JSONException, ParseException {
         Log.e("result", get_result);
 
         JSONObject jsonObject = new JSONObject(get_result);
@@ -119,6 +126,7 @@ public class OtherPerson extends AppCompatActivity implements LoaderManager.Load
             isfocus = jsonObject.getBoolean("isfocus");
             nikename = jsonObject.getString("nikename");
             intro = jsonObject.getString("intro");
+            String pic = jsonObject.getString("pic");
             JSONArray searchJson = jsonObject.getJSONArray("search");
             for (int i = allpage - 1; i >= 0; i--) {
                 JSONObject talk = searchJson.getJSONObject(i);
@@ -127,12 +135,19 @@ public class OtherPerson extends AppCompatActivity implements LoaderManager.Load
                 int id = talk.getInt("id");
                 String owner = talk.getString("owner");
                 String time = talk.getString("createtime");
+                Date date = StringToDate(time);
+                time = dateToString(date);
                 int realbody = talk.getInt("realbody");
-                Person person = new Person(R.drawable.nav_icon, R.drawable.apple, title, nikename, context, id, owner, time, intro, realbody, focus, befocus);
+                Person person = new Person(pic, R.drawable.apple, title, nikename, context, id, owner, time, intro, realbody, focus, befocus);
                 personList.add(person);
             }
             if (isfocus && !addFocus.getText().toString().equals("无法关注自己")){
                 addFocus.setText("取消关注");
+            }
+            if (pic.equals("pic")){
+                other_person_icon.setImageResource(R.drawable.nav_icon);
+            }else {
+                Glide.with(this).load(IMG + pic).into(other_person_icon);
             }
             mbefocus.setText(String.valueOf(befocus));
             mfocus.setText(String.valueOf(focus));
@@ -158,6 +173,8 @@ public class OtherPerson extends AppCompatActivity implements LoaderManager.Load
         try {
             update(data);
         } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
             e.printStackTrace();
         }
         if (!result.equals("")){
@@ -193,5 +210,16 @@ public class OtherPerson extends AppCompatActivity implements LoaderManager.Load
     @Override
     public void onLoaderReset(Loader<String> loader) {
 
+    }
+    public static Date StringToDate(String time) throws ParseException {
+        DateFormat format =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = format.parse(time);
+        return date;
+    }
+    public static String dateToString(Date time){
+        SimpleDateFormat formatter;
+        formatter = new SimpleDateFormat ("yyyy-MM-dd HH:mm");
+        String ctime = formatter.format(time);
+        return ctime;
     }
 }

@@ -45,7 +45,7 @@ public class TalkDetail extends AppCompatActivity implements LoaderManager.Loade
     int postid,postion;
     String addreply;
     LoaderManager loaderManager;
-    private int people_icon;
+    private String people_icon;
     EditText editText;
     DetailAdapter adapter;
     Button delete_post;
@@ -67,7 +67,7 @@ public class TalkDetail extends AppCompatActivity implements LoaderManager.Loade
         time = intent.getStringExtra("time");
         postid =intent.getIntExtra("id",0);
         article_content = intent.getStringExtra("content");
-        people_icon = intent.getIntExtra("icon",0);
+        people_icon = intent.getStringExtra("icon");
         SharedPreferences sharedPreferences = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
         String username = sharedPreferences.getString("id","");
         delete_post = (Button) findViewById(R.id.delete_post);
@@ -212,6 +212,7 @@ public class TalkDetail extends AppCompatActivity implements LoaderManager.Loade
                 time = dateToString(date);
                 int commentid = talk.getInt("commentid");
                 int replybody = talk.getInt("replybody");
+                String pic = talk.getString("pic");
                 Detail detail = new Detail(user, time,stuid, context, people_icon,postion,commentid,replybody);
                 detailList.add(detail);
             }

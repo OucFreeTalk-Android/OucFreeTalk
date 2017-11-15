@@ -5,9 +5,9 @@ package com.lovingrabbit.www.oucfreetalk.detailAdapter;
  */
 
 public class Detail {
-    String username,time,content,id,ownerID,replyId;
-    int people_icon,postlocation,postcID,realbody;
-    public Detail(String nikename,String createtime,String mid,String contenttext,int icon,int position,int postcid,int body){
+    String username,time,content,id,ownerID,replyId,people_icon;
+    int postlocation,postcID,realbody;
+    public Detail(String nikename,String createtime,String mid,String contenttext,String icon,int position,int postcid,int body){
         username = nikename;
         time = createtime;
         id = mid;
@@ -17,7 +17,7 @@ public class Detail {
         postcID = postcid;
         realbody = body;
     }
-    public Detail(String nikename,String createtime,String ownerid,String mid,String contenttext,int icon,String replyid){
+    public Detail(String nikename,String createtime,String ownerid,String mid,String contenttext,String icon,String replyid){
         username = nikename;
         time = createtime;
         content =contenttext;
@@ -59,7 +59,7 @@ public class Detail {
         return content;
     }
 
-    public int getPeople_icon() {
+    public String getPeople_icon() {
         return people_icon;
     }
 

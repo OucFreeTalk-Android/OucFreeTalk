@@ -13,10 +13,12 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.lovingrabbit.www.oucfreetalk.personAdapter.Person;
 import com.lovingrabbit.www.oucfreetalk.personAdapter.PersonAdapter;
 import com.lovingrabbit.www.oucfreetalk.talkadapter.Talk;
@@ -28,7 +30,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -43,9 +49,11 @@ public class PersonSet extends AppCompatActivity implements LoaderManager.Loader
     List<Person> personList = new ArrayList<Person>();
     LoaderManager loaderManager;
     LinearLayout noNet,noPerson_Post;
+    ImageView person_icon;
     RecyclerView recyclerView;
     boolean isNet;
     private String GET_PERSON_POST_URL ;
+    String IMG = "http://47.93.222.179/oucfreetalk/img/";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -64,6 +72,7 @@ public class PersonSet extends AppCompatActivity implements LoaderManager.Loader
         GET_PERSON_POST_URL = "http://47.93.222.179/oucfreetalk/getPostPerson?id="+username+"&target="+username;
         person_user = (TextView) findViewById(R.id.person_username);
         introd = (TextView) findViewById(R.id.person_description);
+        person_icon = (ImageView) findViewById(R.id.person_icon_img);
         noPerson_Post = (LinearLayout) findViewById(R.id.person_noPersonPost);
         LinearLayout post = (LinearLayout) findViewById(R.id.person_post);
         LinearLayout find = (LinearLayout) findViewById(R.id.person_find);
@@ -83,6 +92,14 @@ public class PersonSet extends AppCompatActivity implements LoaderManager.Loader
             public void onClick(View v) {
                 Intent intent = new Intent(PersonSet.this,AddPost.class);
                 startActivity(intent);
+            }
+        });
+        notice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PersonSet.this,Notice.class);
+                startActivity(intent);
+                finish();
             }
         });
         find.setOnClickListener(new View.OnClickListener() {
@@ -128,7 +145,7 @@ public class PersonSet extends AppCompatActivity implements LoaderManager.Loader
             noNet.setVisibility(View.VISIBLE);
         }
     }
-    public void update(String get_result) throws JSONException {
+    public void update(String get_result) throws JSONException, ParseException {
         Log.e("result", get_result );
         JSONObject jsonObject = new JSONObject(get_result);
         int allpage = jsonObject.getInt("allpage");
@@ -140,6 +157,7 @@ public class PersonSet extends AppCompatActivity implements LoaderManager.Loader
         int befocus = jsonObject.getInt("befocus");
         nikename = jsonObject.getString("nikename");
         intro = jsonObject.getString("intro");
+        String pic = jsonObject.getString("pic");
         JSONArray searchJson = jsonObject.getJSONArray("search");
         for (int i = allpage-1;i>=0; i--) {
             JSONObject talk = searchJson.getJSONObject(i);
@@ -148,15 +166,21 @@ public class PersonSet extends AppCompatActivity implements LoaderManager.Loader
             int id = talk.getInt("id");
             String owner = talk.getString("owner");
             String time =talk.getString("createtime");
+            Date date = StringToDate(time);
+            time = dateToString(date);
             int realbody = talk.getInt("realbody");
-
-            Person person = new Person(R.drawable.nav_icon,R.drawable.apple,title,nikename,context,id,owner,time,intro,realbody,focus,befocus);
+            Person person = new Person(pic,R.drawable.apple,title,nikename,context,id,owner,time,intro,realbody,focus,befocus);
             personList.add(person);
         }
         mbefocus.setText(String.valueOf(befocus));
         mfocus.setText(String.valueOf(focus));
         person_user.setText(nikename);
         introd.setText(intro);
+        if (pic.equals("pic")){
+            person_icon.setImageResource(R.drawable.nav_icon);
+        }else {
+            Glide.with(this).load(IMG + pic).into(person_icon);
+        }
         SharedPreferences sharedPreferences = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("nikename",nikename);
@@ -175,6 +199,8 @@ public class PersonSet extends AppCompatActivity implements LoaderManager.Loader
             update(data);
         } catch (JSONException e) {
             e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
         adapter.notifyDataSetChanged();
     }
@@ -182,5 +208,16 @@ public class PersonSet extends AppCompatActivity implements LoaderManager.Loader
     @Override
     public void onLoaderReset(Loader<String> loader) {
         personList.clear();
+    }
+    public static Date StringToDate(String time) throws ParseException {
+        DateFormat format =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = format.parse(time);
+        return date;
+    }
+    public static String dateToString(Date time){
+        SimpleDateFormat formatter;
+        formatter = new SimpleDateFormat ("yyyy-MM-dd HH:mm");
+        String ctime = formatter.format(time);
+        return ctime;
     }
 }

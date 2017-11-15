@@ -44,6 +44,10 @@ public class GetPersonPosts extends HttpServlet{
         String selectisFocus = "Select * from friends where focus = "+userId+" and befocus ="+username;
         System.out.println(selectPost);
         Untils untils = new Untils();
+        nikename= "";
+        intro = "";
+        focus= 0;
+        befocus = 0;
         isFocus=false;
         page = 0;
         try {
