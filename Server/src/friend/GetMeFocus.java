@@ -20,7 +20,7 @@ public class GetMeFocus extends HttpServlet{
 	ResultSet rs,rl;
 	JSONObject returnjson,jsonObject;
 	JSONArray jsonArray;
-	String id,nikename,intro,birth,year;
+	String id,nikename,intro,birth,year,pic;
 	boolean sex;
 	int count;
 	@Override
@@ -45,7 +45,8 @@ public class GetMeFocus extends HttpServlet{
 					intro = rl.getString("introduction");
 					birth = rl.getString("birth");
 					year = rl.getString("year");
-					sex = rl.getBoolean("sex");					
+					sex = rl.getBoolean("sex");		
+					pic = rl.getString("pic");
 				}
 				jsonObject = new JSONObject();
 				jsonObject.put("stuid", userid);
@@ -54,6 +55,7 @@ public class GetMeFocus extends HttpServlet{
 				jsonObject.put("birth", birth);
 				jsonObject.put("year", year);
 				jsonObject.put("sex", sex);
+				jsonObject.put("pic",pic);
 				System.out.println(jsonObject.toString());
 				jsonArray.add(count,jsonObject);
 				count = count+1;

@@ -51,6 +51,9 @@ public class UploadUtil{
             if (filename.endsWith(".jpg")) {
                 contentType = "image/jpg";
             }
+            if (filename.endsWith(".jpeg")){
+                contentType = "image/jpeg";
+            }
             if (filename.endsWith(".gif")) {
                 contentType = "image/gif";
             }

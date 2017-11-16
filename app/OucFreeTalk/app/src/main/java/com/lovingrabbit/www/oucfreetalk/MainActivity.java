@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
 import android.content.SharedPreferences;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -29,7 +31,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.baidu.android.pushservice.PushConstants;
+import com.baidu.android.pushservice.PushManager;
 import com.bumptech.glide.Glide;
 import com.lovingrabbit.www.oucfreetalk.talkadapter.Talk;
 import com.lovingrabbit.www.oucfreetalk.talkadapter.TalkAdapter;
@@ -71,12 +76,46 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private List<Talk> talks_cache = new ArrayList<Talk>();
 
     private String GET_POST_URL = "http://47.93.222.179/oucfreetalk/getPosts?pclass=1&index=1&id=";
-    String IMG = "http://47.93.222.179/oucfreetalk/img/";
+    String IMG = "http://47.93.222.179/oucfreetalk/upload/";
+    // 定义一个变量，来标识是否退出
+    private static boolean isExit = false;
+
+    Handler mHandler = new Handler() {
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            isExit = false;
+        }
+    };
+    private void exit() {
+        if (!isExit) {
+            isExit = true;
+            Toast.makeText(getApplicationContext(), "再按一次退出程序",
+                    Toast.LENGTH_SHORT).show();
+            // 利用handler延迟发送更改状态信息
+            mHandler.sendEmptyMessageDelayed(0, 2000);
+        } else {
+            finish();
+            System.exit(0);
+        }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            exit();
+            return false;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        PushManager.startWork(getApplicationContext(), PushConstants.LOGIN_TYPE_API_KEY,"4lnUKTgqnq5B6Njip7zpmrLW");
         //设置自定义标题栏
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -277,7 +316,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             nv_year.setText("暂无");
             nv_intro.setText("暂无");
             nv_birth.setText("暂无");
-            nv_icon.setImageResource(R.drawable.nav_icon);
         }else {
             nv_focus.setText(String.valueOf(mfocus));
             nv_befocus.setText(String.valueOf(mbefocus));
@@ -290,7 +328,13 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             nv_year.setText(mYear);
             nv_intro.setText(mIntro);
             nv_birth.setText(mBirth);
+
+        }
+        if (!mPic.equals("pic")) {
             Glide.with(this).load(IMG + mPic).into(nv_icon);
+        }
+        else {
+            Glide.with(this).load(R.drawable.nav_icon).into(nv_icon);
         }
     }
     @Override

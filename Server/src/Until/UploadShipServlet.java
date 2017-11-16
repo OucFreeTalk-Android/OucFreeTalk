@@ -44,7 +44,7 @@ public class UploadShipServlet extends HttpServlet {
         //获得磁盘文件条目工厂    
         DiskFileItemFactory factory = new DiskFileItemFactory();    
         //获取文件需要上传到的路径    
-        String path = req.getRealPath("/img");    
+        String path = req.getRealPath("/upload");    
         File file=new File(path);  
         if(!file.exists()){  
             file.mkdirs();  

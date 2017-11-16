@@ -26,6 +26,8 @@ public class Register extends HttpServlet {
 		// TODO Auto-generated method stub
 		 req.setCharacterEncoding("utf8");
 		 StringBuffer jb = new StringBuffer();
+		 returnJSon= "";
+		 truePassword = "";
          String line = null;
          String result = "";
          String intro = "海大学生";
@@ -50,11 +52,11 @@ public class Register extends HttpServlet {
            // crash and burn
            throw new IOException("Error parsing JSON request string");
          }
-         String selectSQL = "select PASSWORD FROM students WHERE id = " + id ;
+         String selectSQL = "select PASSWORD FROM students WHERE id =" + id ;
          String insertSQL = "INSERT INTO students(id, password,nikename,name,sex,birth,year,pic,ifname,ifemail,ifbirth,ifmobile,ifsex,introduction)"
  				+ " VALUES(\""+ id +"\",\""+ pass +"\",\"" + nikename +"\","+ "\"\" " +","+ false +", \""+ birth +"\" ,\""+ year +
  				"\"," + "\"pic\"" + "," + false + "," + false + "," + false + "," + false + "," + false + ",\"" + intro + "\")" ;
-         System.out.println(insertSQL);
+         System.out.println(selectSQL);
          Untils untils = new Untils();
          try {
  			rs = untils.select(selectSQL);
@@ -66,7 +68,7 @@ public class Register extends HttpServlet {
  			// TODO Auto-generated catch block
  			e.printStackTrace();
  		}
-         if (truePassword != null) {
+         if (!truePassword.equals("")) {
  			returnJSon = "{'result':" + 2 + "}";
  		}else {
  			try {

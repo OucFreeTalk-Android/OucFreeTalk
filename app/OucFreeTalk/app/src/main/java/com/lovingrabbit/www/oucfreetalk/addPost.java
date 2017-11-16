@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -77,8 +78,17 @@ public class AddPost extends AppCompatActivity implements LoaderManager.LoaderCa
             public void onClick(View v) {
                 EditText titleEd = (EditText) findViewById(R.id.addpost_title);
                 EditText contentEd = (EditText) findViewById(R.id.addpost_content);
+                try {
+                    Typeface typeFace = Typeface.createFromAsset(getResources().getAssets(), "fonts/AndroidEmoji.ttf");
+                    titleEd.setTypeface(typeFace);
+                    contentEd.setTypeface(typeFace);
+                } catch (Exception e) {
+
+                }
                 title = titleEd.getText().toString();
                 content = contentEd.getText().toString();
+                Log.e("title", title);
+                Log.e("content", content);
                 loaderManager = getLoaderManager();
 
                 // Initialize the loader. Pass in the int ID constant defined above and pass in null for
@@ -95,7 +105,9 @@ public class AddPost extends AppCompatActivity implements LoaderManager.LoaderCa
             }
         });
     }
-
+    private String getEmojiStringByUnicode(int unicode){
+        return new String(Character.toChars(unicode));
+    }
     @Override
     public Loader<String> onCreateLoader(int id, Bundle args) {
         SharedPreferences sharedPreferences = getSharedPreferences("userInfo", Context.MODE_PRIVATE);

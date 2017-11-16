@@ -22,7 +22,7 @@ import java.util.List;
  */
 
 public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.ViewHolder> {
-    String IMG = "http://47.93.222.179/oucfreetalk/img/";
+    String IMG = "http://47.93.222.179/oucfreetalk/upload/";
     Context context;
     List<Person> personList;
     public PersonAdapter(List<Person> persons){

@@ -54,11 +54,12 @@ public class GetComment extends HttpServlet{
                 content = rs.getString("contenttext");
                 createtime = rs.getString("createtime");
                 replyid = rs.getString("replyto");
-                String selectUser = "select nikename from students where id = \""+ owner + "\"";
+                String selectUser = "select nikename,pic from students where id = \""+ owner + "\"";
                 System.out.println(selectUser);
                 rl = untils.select(selectUser);
                 while (rl.next()) {
                     nikename = rl.getString("nikename");
+                    pic = rl.getString("pic");
                 }
                 jsonObject = new JSONObject();
                 jsonObject.put("id", id);
@@ -66,6 +67,7 @@ public class GetComment extends HttpServlet{
                 jsonObject.put("commentcontext", content);
                 jsonObject.put("createtime", createtime);
                 jsonObject.put("replyid", replyid);
+                jsonObject.put("pic", pic);
                 jsonObject.put("nikename", nikename);
                 System.out.println(jsonObject);
                 System.out.println(page);

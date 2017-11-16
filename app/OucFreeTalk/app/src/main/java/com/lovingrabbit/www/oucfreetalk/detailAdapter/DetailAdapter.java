@@ -28,7 +28,7 @@ import java.util.List;
  */
 
 public class DetailAdapter extends RecyclerView.Adapter<DetailAdapter.ViewHolder> {
-    String IMG = "http://47.93.222.179/oucfreetalk/img/";
+    String IMG = "http://47.93.222.179/oucfreetalk/upload/";
     Context context;
     private List<Detail> detailList;
     String userOwner,userId;

@@ -44,7 +44,7 @@ public class OtherPerson extends AppCompatActivity implements LoaderManager.Load
     PersonAdapter adapter;
     String result="";
     ImageView other_person_icon;
-    String IMG = "http://47.93.222.179/oucfreetalk/img/";
+    String IMG = "http://47.93.222.179/oucfreetalk/upload/";
     List<Person> personList = new ArrayList<Person>();
     private String GET_PERSON_POST_URL;
     private String ADD_FOCUS_URL = "http://47.93.222.179/oucfreetalk/addFocus";

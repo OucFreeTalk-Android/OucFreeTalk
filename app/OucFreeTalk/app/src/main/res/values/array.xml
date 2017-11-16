@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="notice_list">
+        <item>最近通知</item>
+        <item>关注列表</item>
+    </string-array>
+</resources>
