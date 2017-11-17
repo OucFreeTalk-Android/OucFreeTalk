@@ -1,7 +1,8 @@
 package com.lovingrabbit.www.oucfreetalk;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.baidu.android.pushservice.PushMessageReceiver;
 
@@ -13,28 +14,58 @@ import java.util.List;
 
 public class PushTestReceiver extends PushMessageReceiver {
     @Override
-    public void onBind(Context context, int i, String s, String s1, String s2, String s3) {
+    public void onBind(Context context, int errorCode, String appid,
+                       String userId, String channelId, String requestId) {
+        String responseString = "onBind errorCode=" + errorCode + " appid="
+                + appid + " userId=" + userId + " channelId=" + channelId
+                + " requestId=" + requestId;
+
+        Log. e(TAG, responseString);
+
+        if (errorCode == 0) {
+            // 绑定成功
+            Log.e(TAG, "绑定成功");
+        }
+    }
+
+    @Override
+    public void onUnbind(Context context, int errorCode, String requestId) {
+        String responseString = "onUnbind errorCode=" + errorCode
+                + " requestId = " + requestId;
+        Log.e(TAG, responseString);
 
     }
 
     @Override
-    public void onUnbind(Context context, int i, String s) {
-
+    public void onSetTags(Context context, int errorCode,
+                          List<String> sucessTags, List<String> failTags, String requestId) {
+        String responseString = "onSetTags errorCode=" + errorCode
+                + " sucessTags=" + sucessTags + " failTags=" + failTags
+                + " requestId=" + requestId;
+        Log.e(TAG, responseString);
+        if (errorCode == 0){
+            Log.e(TAG, "设置标签成功");
+        }
     }
 
     @Override
-    public void onSetTags(Context context, int i, List<String> list, List<String> list1, String s) {
-
+    public void onDelTags(Context context, int errorCode,
+                          List<String> sucessTags, List<String> failTags, String requestId) {
+        String responseString = "onDelTags errorCode=" + errorCode
+                + " sucessTags=" + sucessTags + " failTags=" + failTags
+                + " requestId=" + requestId;
+        Log.e(TAG, responseString);
+        if (errorCode == 0){
+            Log.e(TAG, "删除标签成功");
+        }
     }
 
     @Override
-    public void onDelTags(Context context, int i, List<String> list, List<String> list1, String s) {
-
-    }
-
-    @Override
-    public void onListTags(Context context, int i, List<String> list, String s) {
-
+    public void onListTags(Context context, int errorCode, List<String> tags,
+                           String requestId) {
+        String responseString = "onListTags errorCode=" + errorCode + " tags="
+                + tags;
+        Log.e(TAG, responseString);
     }
 
     @Override

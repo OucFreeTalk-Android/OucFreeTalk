@@ -48,6 +48,7 @@
                             android:gravity="center_vertical"/>
                         <ImageView
                             android:layout_width="15dp"
+                            android:id="@+id/notice_img"
                             android:layout_height="match_parent"
                             android:layout_marginLeft="5dp"
                             android:layout_toRightOf="@id/notice_near"

@@ -35,6 +35,7 @@ import android.widget.Toast;
 
 import com.baidu.android.pushservice.PushConstants;
 import com.baidu.android.pushservice.PushManager;
+import com.baidu.android.pushservice.PushMessageReceiver;
 import com.bumptech.glide.Glide;
 import com.lovingrabbit.www.oucfreetalk.talkadapter.Talk;
 import com.lovingrabbit.www.oucfreetalk.talkadapter.TalkAdapter;
@@ -74,6 +75,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private List<Talk> talkList = new ArrayList<Talk>();
     private List<Talk> talks = new ArrayList<Talk>();
     private List<Talk> talks_cache = new ArrayList<Talk>();
+    List<String> tag = new ArrayList<String>() ;
 
     private String GET_POST_URL = "http://47.93.222.179/oucfreetalk/getPosts?pclass=1&index=1&id=";
     String IMG = "http://47.93.222.179/oucfreetalk/upload/";
@@ -115,7 +117,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        PushManager.startWork(getApplicationContext(), PushConstants.LOGIN_TYPE_API_KEY,"4lnUKTgqnq5B6Njip7zpmrLW");
         //设置自定义标题栏
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -149,6 +150,13 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         }
         SharedPreferences sharedPreferences = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
         username = sharedPreferences.getString("id","");
+        if (!username.equals("")) {
+            tag.add(username);
+            PushManager.startWork(getApplicationContext(), PushConstants.LOGIN_TYPE_API_KEY, "4lnUKTgqnq5B6Njip7zpmrLW");
+            PushManager.setTags(getApplicationContext(),tag);
+        }else {
+            PushManager.stopWork(getApplicationContext());
+        }
         GET_POST_URL = GET_POST_URL + username;
 
         nv_name = (TextView) draw.findViewById(R.id.nvhead_username);
@@ -235,7 +243,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         notice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this,Notice.class);
+                Intent intent = new Intent(MainActivity.this,NoticeView.class);
                 startActivity(intent);
                 finish();
             }

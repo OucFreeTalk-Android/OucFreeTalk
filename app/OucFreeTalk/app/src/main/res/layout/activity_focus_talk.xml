@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f3f8fb"
+    tools:context="com.lovingrabbit.www.oucfreetalk.TalkDetail">
+
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/detail_bar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize">
+
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/detail_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="#fff"
+                app:contentInsetStart="0dp">
+                <ImageView
+                    android:layout_width="20dp"
+                    android:id="@+id/detail_back"
+                    android:src="@drawable/back"
+                    android:layout_marginLeft="10dp"
+                    android:layout_height="match_parent" />
+
+                <TextView
+                    android:id="@+id/airtcle_detail_title"
+                    android:layout_width="230dp"
+                    android:singleLine="true"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="15dp"
+                    android:text="这是一个标题"
+                    android:gravity="center_vertical"
+                    android:maxLines="1"
+                    android:textColor="#222"
+                    android:textSize="20sp" />
+
+            </android.support.v7.widget.Toolbar>
+        </android.support.design.widget.AppBarLayout>
+    </android.support.design.widget.CoordinatorLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/detail_main"
+        android:layout_below="@id/detail_bar"
+        android:orientation="vertical">
+
+    </LinearLayout>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/detail_rcy"
+        android:layout_below="@id/detail_main"
+        android:layout_above="@id/detail_input"
+        android:layout_width="match_parent"
+        android:layout_marginBottom="10dp"
+        android:layout_height="match_parent">
+
+    </android.support.v7.widget.RecyclerView>
+    <LinearLayout
+        android:id="@+id/detail_input"
+        android:background="#fff"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+        <EditText
+            android:layout_width="0dp"
+            android:id="@+id/detail_edit"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:background="@null"
+            android:inputType="textMultiLine"
+            android:hint="说点什么"
+            android:layout_weight="7"/>
+        <Button
+            android:layout_width="0dp"
+            android:id="@+id/detail_submit"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:background="#79b4ff"
+            android:text="发送"
+            android:textColor="#fff"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+</RelativeLayout>

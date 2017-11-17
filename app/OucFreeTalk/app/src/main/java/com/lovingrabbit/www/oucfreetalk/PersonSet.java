@@ -132,7 +132,7 @@ public class PersonSet extends AppCompatActivity implements LoaderManager.Loader
         notice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(PersonSet.this,Notice.class);
+                Intent intent = new Intent(PersonSet.this,NoticeView.class);
                 startActivity(intent);
                 finish();
             }

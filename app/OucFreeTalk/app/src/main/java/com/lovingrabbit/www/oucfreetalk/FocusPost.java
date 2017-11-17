@@ -144,7 +144,7 @@ public class FocusPost extends AppCompatActivity implements LoaderManager.Loader
         notice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(FocusPost.this,Notice.class);
+                Intent intent = new Intent(FocusPost.this,NoticeView.class);
                 startActivity(intent);
                 finish();
             }

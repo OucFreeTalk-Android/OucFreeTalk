@@ -29,7 +29,14 @@ public class FocusAdapter extends RecyclerView.Adapter<FocusAdapter.ViewHolder> 
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         context = parent.getContext();
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.myfocus_list,parent,false);
-        ViewHolder holder = new ViewHolder(view);
+        final ViewHolder holder = new ViewHolder(view);
+        holder.focusView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int postion = holder.getAdapterPosition();
+                Focus focus =focusList.get(postion);
+            }
+        });
         return holder;
     }
 

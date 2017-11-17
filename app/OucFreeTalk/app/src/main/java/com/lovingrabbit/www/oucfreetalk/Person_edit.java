@@ -12,9 +12,15 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.baidu.android.pushservice.PushManager;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindViews;
 
 public class Person_edit extends AppCompatActivity {
+    List<String> tags = new ArrayList<String>();
     @BindViews({R.id.information,R.id.power,R.id.jwc,R.id.score,R.id.stu_number})
     RelativeLayout mInformation,mPower,mJwc,mScore,mStu_number;
 
@@ -42,6 +48,9 @@ public class Person_edit extends AppCompatActivity {
             public void onClick(View v) {
                 SharedPreferences sharedPreferences = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
+                String username = sharedPreferences.getString("id","");
+                tags.add(username);
+                PushManager.delTags(getApplicationContext(),tags);
                 editor.clear();
                 editor.commit();
                 Toast.makeText(Person_edit.this,"注销成功",Toast.LENGTH_SHORT).show();

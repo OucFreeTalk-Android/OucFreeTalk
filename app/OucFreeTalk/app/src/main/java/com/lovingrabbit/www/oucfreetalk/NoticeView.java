@@ -18,15 +18,15 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.lovingrabbit.www.oucfreetalk.notice.Focus;
 import com.lovingrabbit.www.oucfreetalk.notice.FocusAdapter;
-import com.lovingrabbit.www.oucfreetalk.personAdapter.Person;
+import com.lovingrabbit.www.oucfreetalk.notice.NoticeAdapter;
 import com.lovingrabbit.www.oucfreetalk.untils.GetReplyAysncTaskLoader;
 import com.lovingrabbit.www.oucfreetalk.untils.NetworkConnected;
 
@@ -41,27 +41,29 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class Notice extends AppCompatActivity implements LoaderManager.LoaderCallbacks<String> {
+public class NoticeView extends AppCompatActivity implements LoaderManager.LoaderCallbacks<String> {
     TextView title;
     RecyclerView recyclerView;
     PopupWindow mPopupWindow;
     String username;
     LoaderManager loaderManager;
     LinearLayout noNet;
-    int IsFocus;
+    int IsFocus=0;
     boolean isNet,firstIsNoNet;
     SwipeRefreshLayout swipeRefreshLayout;
-    FocusAdapter adapter;
+    FocusAdapter Fadapter;
+    NoticeAdapter Nadapter;
     TextView near_notice,myfocus;
     Boolean IsFirst = true;
     DisplayMetrics metrics = new DisplayMetrics();
     final int sWidth = metrics.widthPixels;
     final int sHeight = metrics.heightPixels;
     String GET_ME_FOCUS_URL = "http://47.93.222.179/oucfreetalk/getMeFocus?id=";
+    String GET_NOTICE_URL = "http://47.93.222.179/oucfreetalk/getNotice?id=";
     // 定义一个变量，来标识是否退出
     private static boolean isExit = false;
     List<Focus> focusList = new ArrayList<Focus>();
-
+//    List<Notice> noticeList = new ArrayList<Notice>();
     Handler mHandler = new Handler() {
 
         @Override
@@ -96,12 +98,19 @@ public class Notice extends AppCompatActivity implements LoaderManager.LoaderCal
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notice);
         LinearLayout post = (LinearLayout) findViewById(R.id.notice_post);
-        LinearLayout find = (LinearLayout) findViewById(R.id.notice_find);
+        final LinearLayout find = (LinearLayout) findViewById(R.id.notice_find);
         LinearLayout addPost = (LinearLayout) findViewById(R.id.notice_add_post);
         final LinearLayout notice = (LinearLayout) findViewById(R.id.notice_notice);
         LinearLayout set = (LinearLayout) findViewById(R.id.notice_set);
         View popupView = getLayoutInflater().inflate(R.layout.poplist, null);
+
         recyclerView = (RecyclerView) findViewById(R.id.notice_recyview);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        Nadapter = new NoticeAdapter(focusList);
+        recyclerView.setAdapter(Nadapter);
+        ImageView imageView = (ImageView) findViewById(R.id.notice_img);
+
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.notice_swipe_refresh);
         swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
         swipeRefreshLayout.setProgressViewOffset(false,0,120);
@@ -121,6 +130,12 @@ public class Notice extends AppCompatActivity implements LoaderManager.LoaderCal
         mPopupWindow.setOutsideTouchable(true);
         mPopupWindow.setBackgroundDrawable(new BitmapDrawable(getResources(), (Bitmap) null));
         title = (TextView) findViewById(R.id.notice_near);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPopupWindow.showAsDropDown(findViewById(R.id.notice_near),-80,0);
+            }
+        });
         title.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -130,48 +145,42 @@ public class Notice extends AppCompatActivity implements LoaderManager.LoaderCal
         SharedPreferences sharedPreferences = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
         username = sharedPreferences.getString("id","");
         GET_ME_FOCUS_URL = GET_ME_FOCUS_URL + username;
+        GET_NOTICE_URL =GET_NOTICE_URL +username;
         near_notice = (TextView) popupView.findViewById(R.id.iv_item1);
         myfocus = (TextView) popupView.findViewById(R.id.iv_item2);
+
         near_notice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                title.setText("最近通知");
+                Nadapter.notifyDataSetChanged();
                 IsFocus = 0;
                 mPopupWindow.dismiss();
+                title.setText("最近通知");
+                refresh();
+                Nadapter = new NoticeAdapter(focusList);
+                recyclerView.setAdapter(Nadapter);
             }
         });
         myfocus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isNet) {
-                    title.setText("我的关注");
-                    IsFocus = 1;
-                    loaderManager = getLoaderManager();
-                    if (IsFirst) {
-                        loaderManager.initLoader(2, null, Notice.this);
-                    } else {
-                        loaderManager.restartLoader(2, null, Notice.this);
-                    }
-                    mPopupWindow.dismiss();
-                    noNet.setVisibility(View.GONE);
-                    recyclerView.setVisibility(View.VISIBLE);
-                }else {
-                    noNet.setVisibility(View.VISIBLE);
-                    recyclerView.setVisibility(View.GONE);
-                    firstIsNoNet = true;
-                }
+                mPopupWindow.dismiss();
+                title.setText("我的关注");
+                IsFocus = 1;
+                Fadapter = new FocusAdapter(focusList);
+                recyclerView.setAdapter(Fadapter);
+                refresh();
             }
         });
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(linearLayoutManager);
-        adapter = new FocusAdapter(focusList);
-        recyclerView.setAdapter(adapter);
 
+
+        loaderManager =getLoaderManager();
+        loaderManager.initLoader(1,null,NoticeView.this);
 
         post.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Notice.this,MainActivity.class);
+                Intent intent = new Intent(NoticeView.this,MainActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -179,7 +188,7 @@ public class Notice extends AppCompatActivity implements LoaderManager.LoaderCal
         find.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Notice.this,FocusPost.class);
+                Intent intent = new Intent(NoticeView.this,FocusPost.class);
                 startActivity(intent);
                 finish();
             }
@@ -187,14 +196,14 @@ public class Notice extends AppCompatActivity implements LoaderManager.LoaderCal
         addPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Notice.this,AddPost.class);
+                Intent intent = new Intent(NoticeView.this,AddPost.class);
                 startActivity(intent);
             }
         });
         notice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Notice.this,Notice.class);
+                Intent intent = new Intent(NoticeView.this,NoticeView.class);
                 startActivity(intent);
                 finish();
             }
@@ -202,13 +211,14 @@ public class Notice extends AppCompatActivity implements LoaderManager.LoaderCal
         set.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Notice.this,PersonSet.class);
+                Intent intent = new Intent(NoticeView.this,PersonSet.class);
                 startActivity(intent);
                 finish();
             }
         });
     }
     public void refresh(){
+        focusList.clear();
         isNet = new NetworkConnected().isNetworkConnected(this);
         if (IsFocus == 1) {
             if (firstIsNoNet) {
@@ -216,7 +226,7 @@ public class Notice extends AppCompatActivity implements LoaderManager.LoaderCal
                     noNet.setVisibility(View.GONE);
                     recyclerView.setVisibility(View.VISIBLE);
                     loaderManager = getLoaderManager();
-                    loaderManager.initLoader(2, null, Notice.this);
+                    loaderManager.initLoader(2, null, NoticeView.this);
                 } else {
                     noNet.setVisibility(View.VISIBLE);
                     recyclerView.setVisibility(View.GONE);
@@ -226,7 +236,7 @@ public class Notice extends AppCompatActivity implements LoaderManager.LoaderCal
                 if (isNet) {
                     noNet.setVisibility(View.GONE);
                     recyclerView.setVisibility(View.VISIBLE);
-                    loaderManager.restartLoader(2, null, Notice.this);
+                    loaderManager.restartLoader(2, null, NoticeView.this);
                 } else {
                     noNet.setVisibility(View.VISIBLE);
                     recyclerView.setVisibility(View.GONE);
@@ -239,7 +249,7 @@ public class Notice extends AppCompatActivity implements LoaderManager.LoaderCal
                     noNet.setVisibility(View.GONE);
                     recyclerView.setVisibility(View.VISIBLE);
                     loaderManager = getLoaderManager();
-                    loaderManager.initLoader(1, null, Notice.this);
+                    loaderManager.initLoader(1, null, NoticeView.this);
                 } else {
                     noNet.setVisibility(View.VISIBLE);
                     recyclerView.setVisibility(View.GONE);
@@ -248,48 +258,67 @@ public class Notice extends AppCompatActivity implements LoaderManager.LoaderCal
                 if (isNet) {
                     noNet.setVisibility(View.GONE);
                     recyclerView.setVisibility(View.VISIBLE);
-                    loaderManager.restartLoader(1, null, Notice.this);
+                    loaderManager.restartLoader(1, null, NoticeView.this);
                 } else {
                     noNet.setVisibility(View.VISIBLE);
                     recyclerView.setVisibility(View.GONE);
-
                 }
             }
-
         }
-
     }
 
-    public void update(String data) throws JSONException {
+    public void update(String data) throws JSONException, ParseException {
         JSONObject jsonObject = new JSONObject(data);
-        int count = jsonObject.getInt("count");
-        JSONArray searchJson = jsonObject.getJSONArray("search");
-        for (int i = 0;i<count; i++) {
-            JSONObject talk = searchJson.getJSONObject(i);
-            String id = talk.getString("stuid");
-            String intro = talk.getString("intro");
-            String nikename = talk.getString("nikename");
-            String pic =talk.getString("pic");
-            Focus focus= new Focus(id,nikename,pic,intro);
-            focusList.add(focus);
+        if (IsFocus == 1) {
+            int count = jsonObject.getInt("count");
+            JSONArray searchJson = jsonObject.getJSONArray("search");
+            for (int i = 0; i < count; i++) {
+                JSONObject talk = searchJson.getJSONObject(i);
+                String id = talk.getString("stuid");
+                String intro = talk.getString("intro");
+                String nikename = talk.getString("nikename");
+                String pic = talk.getString("pic");
+                Focus focus = new Focus(id, nikename, pic, intro);
+                focusList.add(focus);
+            }
+            Fadapter.notifyDataSetChanged();
+        }else if (IsFocus ==0){
+            int count = jsonObject.getInt("count");
+            JSONArray searchJson = jsonObject.getJSONArray("search");
+            for (int i = 0; i < 20; i++) {
+                JSONObject talk = searchJson.getJSONObject(i);
+                String id = talk.getString("stuid");
+                String time = talk.getString("time");
+                Date date = StringToDate(time);
+                time = dateToString(date);
+                String nikename = talk.getString("nikename");
+                int noticeClass = talk.getInt("noticeClass");
+                String pic = talk.getString("pic");
+                String postTime = talk.getString("postTime");
+                String context = talk.getString("context");
+                Focus focus;
+                if (noticeClass == 1){
+                    int postid = talk.getInt("postid");
+                    String title = talk.getString("title");
+                    focus = new Focus(id,nikename,pic,postid,time,noticeClass,title,postTime,context);
+                    focusList.add(focus);
+                }else if(noticeClass == 2) {
+                    int position = talk.getInt("postlocation");
+                    int commentid = talk.getInt("commentid");
+                    focus = new Focus(id,nikename,pic,time,commentid,noticeClass,postTime,context,position);
+                    focusList.add(focus);
+                }
+            }
+            Nadapter.notifyDataSetChanged();
         }
-    }
-    public static Date StringToDate(String time) throws ParseException {
-        DateFormat format =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date date = format.parse(time);
-        return date;
-    }
-    public static String dateToString(Date time){
-        SimpleDateFormat formatter;
-        formatter = new SimpleDateFormat ("yyyy-MM-dd HH:mm");
-        String ctime = formatter.format(time);
-        return ctime;
     }
 
     @Override
     public Loader<String> onCreateLoader(int id, Bundle args) {
         if (id == 2){
             return new GetReplyAysncTaskLoader(this,GET_ME_FOCUS_URL);
+        }else if (id == 1){
+            return new GetReplyAysncTaskLoader(this,GET_NOTICE_URL);
         }
         return null;
     }
@@ -298,17 +327,36 @@ public class Notice extends AppCompatActivity implements LoaderManager.LoaderCal
     public void onLoadFinished(Loader<String> loader, String data) {
         focusList.clear();
         Log.e("data", data );
+        Log.e("IsFocus", String.valueOf(IsFocus) );
         try {
             update(data);
         } catch (JSONException e) {
             e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
-        adapter.notifyDataSetChanged();
+        if (IsFocus == 0){
+            Nadapter.notifyDataSetChanged();
+        }else if (IsFocus == 1){
+            Fadapter.notifyDataSetChanged();
+        }
         swipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
     public void onLoaderReset(Loader<String> loader) {
         focusList.clear();
+    }
+
+    public static Date StringToDate(String time) throws ParseException {
+        DateFormat format =new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = format.parse(time);
+        return date;
+    }
+    public static String dateToString(Date time){
+        SimpleDateFormat formatter;
+        formatter = new SimpleDateFormat ("MM-dd HH:mm");
+        String ctime = formatter.format(time);
+        return ctime;
     }
 }

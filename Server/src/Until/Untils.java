@@ -12,7 +12,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-
 public class Untils {
 	Connection connection;
 	String driver = "com.mysql.jdbc.Driver";
@@ -23,20 +22,20 @@ public class Untils {
 		try {
 			Class.forName(driver);
 			connection = DriverManager.getConnection(url, user, passwd);
-			
+
 		} catch (Exception e) {
 			// TODO: handle exception
 			System.out.println("连接失败");
-		}finally {
+		} finally {
 			System.out.println("连接成功");
-			
+
 		}
-		
+
 	}
 	public ResultSet select(String sql) throws SQLException {
 		Statement st = connection.createStatement();
 		ResultSet rs = st.executeQuery(sql);
-        return rs;
+		return rs;
 	}
 	public void insert(String sql) throws SQLException {
 		Statement stmt = connection.createStatement();
@@ -50,6 +49,5 @@ public class Untils {
 		Statement stmt = connection.createStatement();
 		stmt.executeUpdate(sql);
 	}
-	
-	
+
 }

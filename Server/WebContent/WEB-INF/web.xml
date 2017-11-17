@@ -182,12 +182,21 @@
     <url-pattern>/deleteMeFocus</url-pattern> 
   </servlet-mapping>
  
-    <servlet> 
+   <servlet> 
     <servlet-name>upload</servlet-name>  
     <servlet-class>Until.UploadShipServlet</servlet-class> 
   </servlet>  
   <servlet-mapping> 
     <servlet-name>upload</servlet-name>  
     <url-pattern>/upload</url-pattern> 
+  </servlet-mapping>
+  
+  <servlet> 
+    <servlet-name>getNotice</servlet-name>  
+    <servlet-class>notices.GetNotice</servlet-class> 
+  </servlet>  
+  <servlet-mapping> 
+    <servlet-name>getNotice</servlet-name>  
+    <url-pattern>/getNotice</url-pattern> 
   </servlet-mapping>
 </web-app>
