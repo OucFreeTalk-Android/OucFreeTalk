@@ -24,6 +24,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.baidu.android.pushservice.PushConstants;
 import com.lovingrabbit.www.oucfreetalk.notice.Focus;
 import com.lovingrabbit.www.oucfreetalk.notice.FocusAdapter;
 import com.lovingrabbit.www.oucfreetalk.notice.NoticeAdapter;
@@ -45,7 +46,7 @@ public class NoticeView extends AppCompatActivity implements LoaderManager.Loade
     TextView title;
     RecyclerView recyclerView;
     PopupWindow mPopupWindow;
-    String username;
+    String username,notice;
     LoaderManager loaderManager;
     LinearLayout noNet;
     int IsFocus=0;
@@ -93,6 +94,21 @@ public class NoticeView extends AppCompatActivity implements LoaderManager.Loade
         }
         return super.onKeyDown(keyCode, event);
     }
+
+    @Override
+    protected void onStart() {
+        Log.e("onStart", "onStart: " );
+        refresh();
+        super.onStart();
+
+    }
+
+    @Override
+    protected void onRestart() {
+        Log.e("onRestart", "onRestart: " );
+        super.onRestart();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,7 +119,6 @@ public class NoticeView extends AppCompatActivity implements LoaderManager.Loade
         final LinearLayout notice = (LinearLayout) findViewById(R.id.notice_notice);
         LinearLayout set = (LinearLayout) findViewById(R.id.notice_set);
         View popupView = getLayoutInflater().inflate(R.layout.poplist, null);
-
         recyclerView = (RecyclerView) findViewById(R.id.notice_recyview);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -172,10 +187,13 @@ public class NoticeView extends AppCompatActivity implements LoaderManager.Loade
                 refresh();
             }
         });
-
-
-        loaderManager =getLoaderManager();
-        loaderManager.initLoader(1,null,NoticeView.this);
+        if (IsFocus ==0) {
+            loaderManager = getLoaderManager();
+            loaderManager.initLoader(1, null, NoticeView.this);
+        }else {
+            loaderManager = getLoaderManager();
+            loaderManager.initLoader(2, null, NoticeView.this);
+        }
 
         post.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -278,14 +296,21 @@ public class NoticeView extends AppCompatActivity implements LoaderManager.Loade
                 String intro = talk.getString("intro");
                 String nikename = talk.getString("nikename");
                 String pic = talk.getString("pic");
-                Focus focus = new Focus(id, nikename, pic, intro);
+                String time = talk.getString("createtime");
+                Date date = StringToDate(time);
+                time = dateToString(date);
+                Focus focus = new Focus(id, nikename, pic, intro,time);
                 focusList.add(focus);
             }
             Fadapter.notifyDataSetChanged();
         }else if (IsFocus ==0){
             int count = jsonObject.getInt("count");
             JSONArray searchJson = jsonObject.getJSONArray("search");
-            for (int i = 0; i < 20; i++) {
+            int size;
+            if (count >20){
+                size = 20;
+            }else size = count;
+            for (int i = 0; i < size; i++) {
                 JSONObject talk = searchJson.getJSONObject(i);
                 String id = talk.getString("stuid");
                 String time = talk.getString("time");
@@ -295,17 +320,22 @@ public class NoticeView extends AppCompatActivity implements LoaderManager.Loade
                 int noticeClass = talk.getInt("noticeClass");
                 String pic = talk.getString("pic");
                 String postTime = talk.getString("postTime");
-                String context = talk.getString("context");
                 Focus focus;
                 if (noticeClass == 1){
                     int postid = talk.getInt("postid");
                     String title = talk.getString("title");
+                    String context = talk.getString("context");
                     focus = new Focus(id,nikename,pic,postid,time,noticeClass,title,postTime,context);
                     focusList.add(focus);
                 }else if(noticeClass == 2) {
                     int position = talk.getInt("postlocation");
                     int commentid = talk.getInt("commentid");
+                    String context = talk.getString("context");
                     focus = new Focus(id,nikename,pic,time,commentid,noticeClass,postTime,context,position);
+                    focusList.add(focus);
+                }else {
+                    int replyid = talk.getInt("replyid");
+                    focus = new Focus(id,nikename,pic,time,replyid,noticeClass);
                     focusList.add(focus);
                 }
             }

@@ -154,8 +154,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             tag.add(username);
             PushManager.startWork(getApplicationContext(), PushConstants.LOGIN_TYPE_API_KEY, "4lnUKTgqnq5B6Njip7zpmrLW");
             PushManager.setTags(getApplicationContext(),tag);
-        }else {
-            PushManager.stopWork(getApplicationContext());
         }
         GET_POST_URL = GET_POST_URL + username;
 

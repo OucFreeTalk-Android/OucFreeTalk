@@ -93,7 +93,7 @@ public class Addreply extends HttpServlet {
 		try {
 			untils.insert(sql);
 			PushMsgToTag push = new PushMsgToTag();
-			push.push(replyid, nikename);
+			push.push(replyid, nikename,2);
 			untils.insert(insertNotice);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

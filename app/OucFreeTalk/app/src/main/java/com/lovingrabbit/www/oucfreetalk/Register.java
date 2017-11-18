@@ -13,6 +13,10 @@ import com.lovingrabbit.www.oucfreetalk.untils.LoginAsyncTaskLoader;
 import com.lovingrabbit.www.oucfreetalk.untils.RegisterAsyncTaskLoader;
 
 import org.json.JSONObject;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import butterknife.BindView;
 
 public class Register extends AppCompatActivity implements LoaderManager.LoaderCallbacks<String>{
@@ -36,24 +40,38 @@ public class Register extends AppCompatActivity implements LoaderManager.LoaderC
             @Override
             public void onClick(View v) {
                 userID = id.getText().toString();
-                username = name.getText().toString();
-                password = passwd.getText().toString();
-                passwordAgain = passwdAgain.getText().toString();
-                if (password.equals(passwordAgain)) {
-                    loaderManager = getLoaderManager();
+                if (isStuNO(userID)){
+                    username = name.getText().toString();
+                    if (username.equals("")){
+                        Toast.makeText(Register.this,"昵称不允许为空",Toast.LENGTH_SHORT).show();
+                    }else {
+                        password = passwd.getText().toString();
+                        passwordAgain = passwdAgain.getText().toString();
+                        if (password.equals(passwordAgain)) {
+                            loaderManager = getLoaderManager();
 
-                    // Initialize the loader. Pass in the int ID constant defined above and pass in null for
-                    // the bundle. Pass in this activity for the LoaderCallbacks parameter (which is valid
-                    // because this activity implements the LoaderCallbacks interface).
-                    loaderManager.initLoader(0, null, Register.this);
+                            // Initialize the loader. Pass in the int ID constant defined above and pass in null for
+                            // the bundle. Pass in this activity for the LoaderCallbacks parameter (which is valid
+                            // because this activity implements the LoaderCallbacks interface).
+                            loaderManager.initLoader(0, null, Register.this);
+                        } else {
+                            Toast.makeText(Register.this, "密码不一致", Toast.LENGTH_SHORT).show();
+                        }
+                    }
                 }else {
-                    Toast.makeText(Register.this,"密码不一致",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Register.this,"账号不合规则",Toast.LENGTH_SHORT).show();
                 }
+
             }
         });
 
     }
-
+    public static boolean isStuNO(String mobiles) {
+        Pattern p = Pattern
+                .compile("^((1[3-8]0[0-9]00[0-4][1-4]0[0-9][0-9])|(1[3-8]0[0-8]00[0-4][1-4]1[0-8][0-9]))");
+        Matcher m = p.matcher(mobiles);
+        return m.matches();
+    }
 
     @Override
     public Loader<String> onCreateLoader(int id, Bundle args) {

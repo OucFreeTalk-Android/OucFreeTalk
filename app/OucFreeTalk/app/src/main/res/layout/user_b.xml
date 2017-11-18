@@ -2,29 +2,27 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="10dp">
 
-    <android.support.v4.widget.CircleImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/ic_user"
-        app:border_color="#E0E0E0"
-        app:border_width="2dp"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
+        android:layout_alignParentTop="true"
         android:src="@drawable/nav_icon" />
 
     <TextView
         android:id="@+id/tv"
+        android:maxWidth="230dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_marginRight="8dp"
+        android:layout_marginRight="10dp"
         android:layout_toLeftOf="@+id/ic_user"
         android:background="#ccc"
         android:padding="10dp"
-        android:gravity="center"
+        android:gravity="left"
         android:paddingBottom="6dp"
         android:paddingLeft="8dp"
         android:paddingRight="8dp"

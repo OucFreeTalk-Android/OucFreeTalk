@@ -20,7 +20,7 @@ public class GetMeFocus extends HttpServlet {
 	ResultSet rs, rl;
 	JSONObject returnjson, jsonObject;
 	JSONArray jsonArray;
-	String id, nikename, intro, birth, year, pic;
+	String id, nikename, intro, birth, year, pic,createtime;
 	boolean sex;
 	int count;
 	@Override
@@ -28,7 +28,7 @@ public class GetMeFocus extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		id = req.getParameter("id");
-		String selectfocus = "SELECT befocus FROM friends where focus =\"" + id
+		String selectfocus = "SELECT befocus,createtime FROM friends where focus =\"" + id
 				+ "\"";
 		System.out.println(selectfocus);
 		Untils untils = new Untils();
@@ -38,6 +38,7 @@ public class GetMeFocus extends HttpServlet {
 			rs = untils.select(selectfocus);
 			while (rs.next()) {
 				String userid = rs.getString("befocus");
+				String createtime =rs.getString("createtime");
 				String selectUser = "select * from students where id =\""
 						+ userid + "\"";
 				System.out.println(selectUser);
@@ -52,6 +53,7 @@ public class GetMeFocus extends HttpServlet {
 				}
 				jsonObject = new JSONObject();
 				jsonObject.put("stuid", userid);
+				jsonObject.put("createtime", createtime);
 				jsonObject.put("nikename", nikename);
 				jsonObject.put("intro", intro);
 				jsonObject.put("birth", birth);

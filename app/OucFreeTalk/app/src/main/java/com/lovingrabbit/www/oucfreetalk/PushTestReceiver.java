@@ -1,6 +1,7 @@
 package com.lovingrabbit.www.oucfreetalk;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
 
@@ -74,12 +75,25 @@ public class PushTestReceiver extends PushMessageReceiver {
     }
 
     @Override
-    public void onNotificationClicked(Context context, String s, String s1, String s2) {
+    public void onNotificationClicked(Context context, String title,
+                                      String description, String customContentString) {
+        String notifyString = "通知点击 onNotificationClicked title=\"" + title + "\" description=\""
+                + description + "\" customContent=" + customContentString;
+
+        Intent intent = new Intent();
+        intent.setClass(context.getApplicationContext(), NoticeView.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.getApplicationContext().startActivity(intent);
+    }
+
+    public void onNotificationArrived(Context context, String title,
+                                      String description, String customContentString) {
+
+        String notifyString = "通知到达 onNotificationArrived  title=\"" + title
+                + "\" description=\"" + description + "\" customContent="
+                + customContentString;
+        Log.d(TAG, notifyString);
 
     }
 
-    @Override
-    public void onNotificationArrived(Context context, String s, String s1, String s2) {
-
-    }
 }

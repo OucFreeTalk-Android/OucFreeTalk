@@ -50,6 +50,7 @@ public class TalkDetail extends AppCompatActivity implements LoaderManager.Loade
     DetailAdapter adapter;
     Button delete_post;
     String GET_POST_URL ;
+    boolean IsFirst= true;
     String DELETE_POST_URL;
     String DELETE_COMMENT_URL;
     String ADD_COMMENT_URL = "http://47.93.222.179/oucfreetalk/addComments";
@@ -118,16 +119,20 @@ public class TalkDetail extends AppCompatActivity implements LoaderManager.Loade
             public void onClick(View v) {
                 editText = (EditText) findViewById(R.id.detail_edit);
                 addreply = editText.getText().toString();
-                if (addreply.equals("")) {
-                    loaderManager = getLoaderManager();
-                    loaderManager.initLoader(2,null ,TalkDetail.this);
+                if(addreply.equals("")){
+                    Toast.makeText(TalkDetail.this,"回复不能为空",Toast.LENGTH_SHORT).show();
                 }else {
-                    loaderManager = getLoaderManager();
-                    loaderManager.restartLoader(2,null ,TalkDetail.this);
+                    if (IsFirst) {
+                        loaderManager = getLoaderManager();
+                        loaderManager.initLoader(2, null, TalkDetail.this);
+                        IsFirst = false;
+                    } else {
+                        loaderManager = getLoaderManager();
+                        loaderManager.restartLoader(2, null, TalkDetail.this);
 
+                    }
+                    editText.setText("");
                 }
-                editText.setText("");
-
             }
         });
 

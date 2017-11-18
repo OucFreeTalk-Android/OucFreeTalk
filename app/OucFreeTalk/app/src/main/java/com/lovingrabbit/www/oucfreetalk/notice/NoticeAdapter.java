@@ -2,6 +2,7 @@ package com.lovingrabbit.www.oucfreetalk.notice;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.lovingrabbit.www.oucfreetalk.FocusTalk;
 import com.lovingrabbit.www.oucfreetalk.R;
 import com.lovingrabbit.www.oucfreetalk.TalkDetail;
 import com.lovingrabbit.www.oucfreetalk.TalkDetailReply;
@@ -25,6 +27,7 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ViewHolder
     List<Focus> noticeList;
     Intent intent;
     Context context;
+    String postId;
     public NoticeAdapter(List<Focus> notices){
         noticeList = notices;
     }
@@ -33,6 +36,8 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ViewHolder
         context = parent.getContext();
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.myfocus_list,parent,false);
         final ViewHolder holder = new ViewHolder(view);
+        SharedPreferences sharedPreferences = context.getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+        postId = sharedPreferences.getString("id","");
         holder.noticeView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,8 +62,12 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ViewHolder
                     intent.putExtra("ownerId",focus.getId());
                     intent.putExtra("commentid", focus.getCommentid());
                     intent.putExtra("content", focus.getContext());
+                }else if (focus.getNoticeclass() == 3){
+                    intent = new Intent(parent.getContext(), FocusTalk.class);
+                    intent.putExtra("recieveId",focus.getId());
+                    intent.putExtra("postId",postId);
+                    intent.putExtra("nikename",focus.getNikename());
                 }
-
                 parent.getContext().startActivity(intent);
             }
         });
@@ -74,7 +83,13 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.ViewHolder
             Glide.with(context).load(IMG+notice.getPic()).into(holder.focusIcon);
         }
         holder.nikename.setText(notice.getNikename());
-        holder.intro.setText("回复了你");
+        if (notice.getNoticeclass() == 1) {
+            holder.intro.setText("回复了你的帖子");
+        }else if (notice.getNoticeclass() == 2){
+            holder.intro.setText("回复了你的评论");
+        }else if(notice.getNoticeclass() == 3){
+            holder.intro.setText("给你发了新消息");
+        }
         holder.time.setText(notice.getTime());
     }
 

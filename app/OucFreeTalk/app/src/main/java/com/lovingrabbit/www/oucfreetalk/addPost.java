@@ -77,6 +77,7 @@ public class AddPost extends AppCompatActivity implements LoaderManager.LoaderCa
             @Override
             public void onClick(View v) {
                 EditText titleEd = (EditText) findViewById(R.id.addpost_title);
+
                 EditText contentEd = (EditText) findViewById(R.id.addpost_content);
                 try {
                     Typeface typeFace = Typeface.createFromAsset(getResources().getAssets(), "fonts/AndroidEmoji.ttf");
@@ -86,15 +87,21 @@ public class AddPost extends AppCompatActivity implements LoaderManager.LoaderCa
 
                 }
                 title = titleEd.getText().toString();
-                content = contentEd.getText().toString();
-                Log.e("title", title);
-                Log.e("content", content);
-                loaderManager = getLoaderManager();
+                if (title.equals("")){
+                    Toast.makeText(AddPost.this,"标题不能为空",Toast.LENGTH_SHORT).show();
+                }else {
+                    content = contentEd.getText().toString();
+                    if (content.equals("")){
+                        Toast.makeText(AddPost.this,"内容不能为空",Toast.LENGTH_SHORT).show();
+                    }else {
+                        loaderManager = getLoaderManager();
 
-                // Initialize the loader. Pass in the int ID constant defined above and pass in null for
-                // the bundle. Pass in this activity for the LoaderCallbacks parameter (which is valid
-                // because this activity implements the LoaderCallbacks interface).
-                loaderManager.initLoader(0, null, AddPost.this);
+                        // Initialize the loader. Pass in the int ID constant defined above and pass in null for
+                        // the bundle. Pass in this activity for the LoaderCallbacks parameter (which is valid
+                        // because this activity implements the LoaderCallbacks interface).
+                        loaderManager.initLoader(0, null, AddPost.this);
+                    }
+                }
             }
         });
         ImageView re_btn = (ImageView) findViewById(R.id.return_btn);

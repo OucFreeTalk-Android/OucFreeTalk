@@ -15,6 +15,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.baidu.android.pushservice.PushConstants;
+import com.baidu.android.pushservice.PushManager;
 import com.lovingrabbit.www.oucfreetalk.personAdapter.Person;
 import com.lovingrabbit.www.oucfreetalk.untils.HttpQutils;
 import com.lovingrabbit.www.oucfreetalk.untils.LoginAsyncTaskLoader;
@@ -22,12 +24,16 @@ import com.lovingrabbit.www.oucfreetalk.untils.LoginAsyncTaskLoader;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Login extends AppCompatActivity implements LoaderManager.LoaderCallbacks<String> {
     LoaderManager loaderManager;
     EditText username,password;
     String name,passwd;
     CheckBox ifSava;
+    List<String> tag = new ArrayList<String>() ;
+
     private String url = "http://47.93.222.179/oucfreetalk/login";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,6 +115,9 @@ public class Login extends AppCompatActivity implements LoaderManager.LoaderCall
                 editor.putString("id",name);
                 editor.putString("password",passwd);
                 editor.commit();
+                tag.add(name);
+                PushManager.startWork(getApplicationContext(), PushConstants.LOGIN_TYPE_API_KEY, "4lnUKTgqnq5B6Njip7zpmrLW");
+                PushManager.setTags(getApplicationContext(),tag);
             }
             else {
                 SharedPreferences sharedPreferences = getSharedPreferences("userInfo", Context.MODE_PRIVATE);

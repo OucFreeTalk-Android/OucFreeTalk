@@ -5,13 +5,14 @@ package com.lovingrabbit.www.oucfreetalk.notice;
  */
 
 public class Focus {
-    int postid,commentid,noticeclass,postlocation;
+    int postid,commentid,noticeclass,postlocation,replyid;
     String id,nikename,pic,time,intro,title,postTime,context;
-    public Focus(String mId,String mNikename,String mPic,String mIntro){
+    public Focus(String mId,String mNikename,String mPic,String mIntro,String mTime){
         id = mId;
         nikename = mNikename;
         pic = mPic;
         intro = mIntro;
+        time = mTime;
     }
     public Focus(String mId,String mNikename,String mPic,int mPostid,String mTime,int mclass,String mtitle,String pTime,String mContext){
         id = mId;
@@ -34,6 +35,18 @@ public class Focus {
         postTime = pTime;
         context = mContext;
         postlocation= position;
+    }
+    public Focus(String mId,String mNikename,String mPic,String mTime,int mReplyid,int mclass){
+        id = mId;
+        nikename = mNikename;
+        pic = mPic;
+        time = mTime;
+        noticeclass = mclass;
+        replyid = mReplyid;
+    }
+
+    public int getReplyid() {
+        return replyid;
     }
 
     public String getTitle() {

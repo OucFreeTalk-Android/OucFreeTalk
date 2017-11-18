@@ -199,4 +199,22 @@
     <servlet-name>getNotice</servlet-name>  
     <url-pattern>/getNotice</url-pattern> 
   </servlet-mapping>
+  
+   <servlet> 
+    <servlet-name>addMessage</servlet-name>  
+    <servlet-class>stumessage.AddMessage</servlet-class> 
+  </servlet>  
+  <servlet-mapping> 
+    <servlet-name>addMessage</servlet-name>  
+    <url-pattern>/addMessage</url-pattern> 
+  </servlet-mapping>
+  
+  <servlet> 
+    <servlet-name>getMessage</servlet-name>  
+    <servlet-class>stumessage.GetMessage</servlet-class> 
+  </servlet>  
+  <servlet-mapping> 
+    <servlet-name>getMessage</servlet-name>  
+    <url-pattern>/getMessage</url-pattern> 
+  </servlet-mapping>
 </web-app>

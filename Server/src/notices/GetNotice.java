@@ -20,7 +20,7 @@ public class GetNotice extends HttpServlet {
 	JSONObject jsonObject,returnjson;
 	JSONArray jsonArray;
 	String stuid,time,pic,nikename,title,postTime,context;
-	int noticeClass,postid,commentid,count,postlocation;
+	int noticeClass,postid,commentid,count,postlocation,replyid,messageid;
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
@@ -43,6 +43,8 @@ public class GetNotice extends HttpServlet {
 					postid = rs.getInt("postid");
 				}else if(noticeClass == 2){
 					commentid = rs.getInt("commentsid");
+				}else if (noticeClass == 3) {
+					replyid = rs.getInt("replyid");
 				}
 				if (noticeClass == 1) {
 					String selectPost = "select title,contenttext,createtime from posts where id = "+postid;
@@ -59,6 +61,13 @@ public class GetNotice extends HttpServlet {
 						postTime = re.getString("createtime");
 						context =re.getString("body");
 						postlocation = re.getInt("postlocation");
+					}	
+				}else if (noticeClass == 3) {
+					String selectPost = "select content,createtime from stumessage where id = "+replyid;
+					re = untils.select(selectPost);
+					while(re.next()) {
+						postTime = re.getString("createtime");
+						context =re.getString("content");
 					}	
 				}
 				String selectUser = "select * from students where id = "+stuid;
@@ -78,6 +87,8 @@ public class GetNotice extends HttpServlet {
 					}else if(noticeClass == 2){
 						jsonObject.put("commentid", commentid);
 						jsonObject.put("postlocation", postlocation);
+					}else if (noticeClass == 3) {
+						jsonObject.put("replyid", replyid);
 					}
 					jsonObject.put("noticeClass", noticeClass);
 					jsonObject.put("pic", pic);

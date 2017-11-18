@@ -1,8 +1,7 @@
-package post;
+package stumessage;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -22,12 +21,10 @@ import com.baidu.yun.push.exception.PushServerException;
 import Until.PushMsgToTag;
 import Until.Untils;
 
-public class AddComments extends HttpServlet {
-	String id, context, createTime;
-	int postId, body;
-	String truePassword = null;
-	ResultSet rs, rt, rl;
-	String returnJSon, owner, nikename;
+public class AddMessage extends HttpServlet {
+	ResultSet rs, rl;
+	String id, receiveid, content, nikename, createTime, returnJSon;
+	int replyid;
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
@@ -44,77 +41,59 @@ public class AddComments extends HttpServlet {
 
 		} catch (Exception e) {
 			/* report an error */ }
-
+		Date date = new Date();
 		try {
 			// 使用JSONObject的parseObject方法解析JSON字符串
 			JSONObject jsonObject = new JSONObject(jb.toString());
 			id = jsonObject.getString("id");
-			postId = jsonObject.getInt("postid");
-			context = jsonObject.getString("context");
+			receiveid = jsonObject.getString("receiveid");
+			content = jsonObject.getString("content");
 		} catch (Exception e) {
 			// crash and burn
 			throw new IOException("Error parsing JSON request string");
-		}
+		} ;
 		Untils untils = new Untils();
-		String select_sql = "select owner,body from posts where id = " + postId;
-		System.out.println(select_sql);
-		try {
-			rs = untils.select(select_sql);
-			while (rs.next()) {
-				owner = rs.getString("owner");
-				body = rs.getInt("body");
-			}
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-			returnJSon = "{\"result\": \"" + 4 + "\" }";
-
-		}
 		String selectNikename = "select nikename from students where id =" + id;
 		try {
-			rt = untils.select(selectNikename);
-			while (rt.next()) {
-				nikename = rt.getString("nikename");
+			rs = untils.select(selectNikename);
+			while (rs.next()) {
+				nikename = rs.getString("nikename");
 			}
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		Date date = new Date();
-		createTime = dateToString(date);
-		body = body + 1;
-		String sql = "insert into postc(postlocation,owner,createtime,body,ownpost,state) "
-				+ "Values(" + body + ",\"" + id + "\",\"" + createTime + "\",\""
-				+ context + "\"," + postId + "," + true + ")";
-		String insertNotice = "insert into notices(noticeclass,postid,stuid,replystuid,state,createtime)"
-				+ "values(" + 1 + "," + postId + ",\"" + id + "\",\"" + owner
-				+ "\"," + true + ",\"" + createTime + "\")";
-		System.out.println(insertNotice);
-		System.out.println(sql);
-		try {
-			untils.insert(sql);
-			PushMsgToTag pushMsgToSmartTag = new PushMsgToTag();
-			pushMsgToSmartTag.push(owner, nikename,1);
-			untils.insert(insertNotice);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
 			returnJSon = "{\"result\": \"" + 2 + "\" }";
+			e.printStackTrace();
+		}
+		createTime = dateToString(date);
+		String insertMessage = "insert into stumessage(postid,receiveid,state,createtime,content)"
+				+ "values(\"" + id + "\",\"" + receiveid + "\"," + true + ",\""
+				+ createTime + "\",\"" + content + "\")";
+		String selectId = "SELECT LAST_INSERT_ID()";
+		System.out.println(insertMessage);
+		try {
+			untils.insert(insertMessage);
+			PushMsgToTag pushMsgToTag = new PushMsgToTag();
+			pushMsgToTag.push(receiveid, nikename, 3);
+			rl = untils.select(selectId);
+			while (rl.next()) {
+				replyid = rl.getInt("LAST_INSERT_ID()");
+			}
+			String insertNotice = "insert into notices(noticeclass,stuid,replyid,replystuid,state,createtime)"
+					+ "values(" + 3 + ",\"" + id + "\"," + replyid + ",\""
+					+ receiveid + "\"," + true + ",\"" + createTime + "\")";
+			untils.insert(insertNotice);
+			returnJSon = "{\"result\": \"" + 1 + "\" }";
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			returnJSon = "{\"result\": \"" + 2 + "\" }";
+			e.printStackTrace();
 		} catch (PushClientException e) {
 			// TODO Auto-generated catch block
+			returnJSon = "{\"result\": \"" + 2 + "\" }";
 			e.printStackTrace();
 		} catch (PushServerException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		returnJSon = "{\"result\": \"" + 1 + "\" }";
-		String update_Sql = "update posts set updatetime = \"" + createTime
-				+ "\",realbody = realbody+1,body = body+1 where id = " + postId;
-		System.out.println(update_Sql);
-		try {
-			untils.update(update_Sql);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			returnJSon = "{\"result\": \"" + 2 + "\" }";
 			e.printStackTrace();
 		}
 		JSONObject rjson = new JSONObject(returnJSon);
@@ -122,15 +101,14 @@ public class AddComments extends HttpServlet {
 		resp.setCharacterEncoding("utf8");
 		PrintWriter out = resp.getWriter();
 		out.println(rjson);
-	}
 
+	}
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		super.doGet(req, resp);
 	}
-
 	public static String dateToString(Date time) {
 		SimpleDateFormat formatter;
 		formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

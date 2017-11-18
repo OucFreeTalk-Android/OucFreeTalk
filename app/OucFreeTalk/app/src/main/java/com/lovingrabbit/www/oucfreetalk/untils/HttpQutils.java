@@ -99,4 +99,11 @@ public class HttpQutils {
         Log.e("Json",jsonObject.toString() );
         return jsonObject.toString();
     }
+    public String AddMessageJson(String id,String recieveid,String content) throws JSONException {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("id",id);
+        jsonObject.put("receiveid",recieveid);
+        jsonObject.put("content",content);
+        return jsonObject.toString();
+    }
 }

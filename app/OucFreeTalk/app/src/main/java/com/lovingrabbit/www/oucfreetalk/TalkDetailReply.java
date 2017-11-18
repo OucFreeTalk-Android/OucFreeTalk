@@ -56,6 +56,7 @@ public class TalkDetailReply extends AppCompatActivity implements LoaderManager.
     String addreply,replyId,ownerId,result="",del_result="",person_icon;
     int postlocation,commentid;
     String DELETE_REPLY_URL;
+    boolean IsFirst = true;
     String replyid;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -81,16 +82,19 @@ public class TalkDetailReply extends AppCompatActivity implements LoaderManager.
             public void onClick(View v) {
                 editText = (EditText) findViewById(R.id.detail_reply_edit);
                 addreply = editText.getText().toString();
-                if (addreply.equals("")) {
-                    loaderManager = getLoaderManager();
-                    loaderManager.initLoader(2,null ,TalkDetailReply.this);
+                if (addreply.equals("")){
+                    Toast.makeText(TalkDetailReply.this,"回复不能为空",Toast.LENGTH_SHORT).show();
                 }else {
-                    loaderManager = getLoaderManager();
-                    loaderManager.restartLoader(2,null ,TalkDetailReply.this);
+                    if (IsFirst) {
+                        loaderManager = getLoaderManager();
+                        loaderManager.initLoader(2, null, TalkDetailReply.this);
+                    } else {
+                        loaderManager = getLoaderManager();
+                        loaderManager.restartLoader(2, null, TalkDetailReply.this);
 
+                    }
+                    editText.setText("");
                 }
-                editText.setText("");
-
             }
         });
 

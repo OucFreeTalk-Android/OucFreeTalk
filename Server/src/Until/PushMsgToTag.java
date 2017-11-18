@@ -38,7 +38,7 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 public class PushMsgToTag {
-	public void push(String tag, String nikename)
+	public void push(String tag, String nikename,int pclass)
 			throws PushClientException, PushServerException {
 		// 1. get apiKey and secretKey from developer console
 		String apiKey = "4lnUKTgqnq5B6Njip7zpmrLW";
@@ -59,15 +59,32 @@ public class PushMsgToTag {
 		});
 
 		try {
+			PushMsgToTagRequest request = new PushMsgToTagRequest();
+			if (pclass == 1) {
+				request.addTagName(tag).addMsgExpires(new Integer(3600))
+						.addMessageType(1)
+						// .addSendTime(System.currentTimeMillis() / 1000 + 70).
+						.addMessage("{\"title\":\"有人回复了你的帖子\",\"description\": \""
+								+ nikename + "回复了你的帖子\"}")
+						.addDeviceType(3);
+			}else if (pclass == 2) {
+				request.addTagName(tag).addMsgExpires(new Integer(3600))
+						.addMessageType(1)
+						// .addSendTime(System.currentTimeMillis() / 1000 + 70).
+						.addMessage("{\"title\":\"有人回复了你的评论\",\"description\": \""
+								+ nikename + "回复了你的评论\"}")
+						.addDeviceType(3);
+			}else {
+				request.addTagName(tag).addMsgExpires(new Integer(3600))
+						.addMessageType(1)
+						// .addSendTime(System.currentTimeMillis() / 1000 + 70).
+						.addMessage("{\"title\":\"有人给你发了消息\",\"description\": \""
+								+ nikename + "给你发了消息\"}")
+						.addDeviceType(3);
+			}
 			// 4. specify request arguments
 			// pushTagTpye = 1 for common tag pushing
-			PushMsgToTagRequest request = new PushMsgToTagRequest()
-					.addTagName(tag).addMsgExpires(new Integer(3600))
-					.addMessageType(1)
-					// .addSendTime(System.currentTimeMillis() / 1000 + 70).
-					.addMessage("{\"title\":\"有人回复了你\",\"description\": \""
-							+ nikename + "回复了你\"}")
-					.addDeviceType(3);
+			
 			// 5. http request
 			PushMsgToTagResponse response = pushClient.pushMsgToTag(request);
 			// Http请求返回值解析
